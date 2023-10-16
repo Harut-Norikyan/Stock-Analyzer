@@ -9,7 +9,7 @@ import Api from "./Api";
 export default function App() {
 
   const dispatch = useDispatch();
-  const [isShowWaitingModal, setIsShowWaitingModal] = useState(true);
+  const [isShowWaitingModal, setIsShowWaitingModal] = useState(false);
 
   useEffect(() => {
     checkUserAuth();
