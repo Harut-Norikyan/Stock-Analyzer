@@ -1,10 +1,10 @@
-import React from "react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
 export default function Home(props) {
   return (
     <div>
+
       <main role="main">
         <div className="jumbotron">
           <div className="container">

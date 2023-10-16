@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://2fd3-87-241-138-217.ngrok-free.app";
+const API_URL = "https://a261-87-241-138-217.ngrok-free.app";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -153,6 +153,9 @@ export class Api {
 
   static createTwoInstrumentsNotifier(data) {
     return api.post(`/stock/createTwoInstrumentsNotifier`, data);
+  }
+  static checkUserIsAuth() {
+    return api.get(`/stock/Tickle`);
   }
 }
 export default Api;
