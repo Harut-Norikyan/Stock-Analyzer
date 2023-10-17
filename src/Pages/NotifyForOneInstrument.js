@@ -11,9 +11,8 @@ import { setIsLoading } from "../redux/actions/itemActions";
 export default function Components(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [allOneInstrumentNotifiers, setAllOneInstrumentNotifiers] = useState(
-    []
-  );
+  const data = useLoaderData()
+  const [allOneInstrumentNotifiers, setAllOneInstrumentNotifiers] = useState(data);
   const [deletedItemId, setDeletedItemId] = useState(null);
   const deleteOneInstrumentsNotifier = async () => {
     if (!deletedItemId) return false;
