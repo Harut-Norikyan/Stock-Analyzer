@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const API_URL = "https://a261-87-241-138-217.ngrok-free.app";
-const API_URL = "https://api.stockanalyzer.online";
+const API_URL = "http://api.stockanalyzer.online";
 
 const api = axios.create({
   baseURL: API_URL,
