@@ -164,6 +164,8 @@ function Components(props) {
     }
   };
 
+  console.log(analysisResult);
+
   return (
     <>
       <section style={{ marginTop: "80px", marginBottom: "80px" }}>
@@ -544,7 +546,7 @@ function Components(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {securities.map((item, index) => {
+                  {analysisResult.map((item, index) => {
                     return (
                       <tr key={index}>
                         <td>

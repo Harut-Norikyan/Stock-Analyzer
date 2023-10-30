@@ -11,7 +11,6 @@ export const convertDateFormat = (dateStr) => {
 export const onNumberChange = (event, cb, name, maxValue = Infinity) => {
   if (
     event.target.value.includes("e") ||
-    event.target.value.includes(".") ||
     event.target.value.includes("-") ||
     event.target.value === "0"
   ) {
