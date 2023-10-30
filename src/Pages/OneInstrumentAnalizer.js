@@ -510,7 +510,6 @@ function Components(props) {
                 </div>
               </>
             ) : null}
-            {console.log(analysisResult)}
             {analysisResult && analysisResult.length ? (
               <Table responsive className="table table-striped mb-0">
                 <thead>
@@ -522,6 +521,7 @@ function Components(props) {
                     <th className="nowrap">Changed Percent</th>
                     <th className="nowrap">Deviationed Price</th>
                     <th className="nowrap">Deviationed Date Time</th>
+                    <th className="nowrap">Deviationed Percent</th>
                   </tr>
                 </thead>
                 <tbody>

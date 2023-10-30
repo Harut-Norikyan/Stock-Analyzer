@@ -46,7 +46,7 @@ export default function App() {
             </b>
           </div>
           <div className="d-flex justify-content-center my-4">
-            <div class="spinner-border text-primary" role="status" />
+            <div className="spinner-border text-primary" role="status" />
           </div>
         </Modal.Body>
         <Modal.Footer>

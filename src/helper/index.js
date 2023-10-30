@@ -8,7 +8,7 @@ export const convertDateFormat = (dateStr) => {
   const formattedDate = inputMoment.format("DD.MM.YYYY HH:mm");
   return formattedDate;
 };
-export const onNumberChange = (event, cb, name, maxValue = null) => {
+export const onNumberChange = (event, cb, name, maxValue = Infinity) => {
   if (
     event.target.value.includes("e") ||
     event.target.value.includes(".") ||
@@ -25,7 +25,7 @@ export const onNumberChange = (event, cb, name, maxValue = null) => {
     event.target.value === "" ||
     (typeof +event.target.value === "number" &&
       Number(event.target.value) &&
-      +event.target.value <= maxValue)
+      +event.target.value <= maxValue) 
   ) {
     cb((prevFields) => ({
       ...prevFields,
