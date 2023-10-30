@@ -118,7 +118,7 @@ function Components(props) {
       bar: "",
       changePercentage: "",
       deviationPercentage: "",
-      changeDirection: true,
+      direction: true,
     });
 
   console.log(analizeInstrumentFormFields);
@@ -474,14 +474,14 @@ function Components(props) {
                     <div>
                       <label className="mb-1 fw-500">Direction*</label>
                       <ReactSelectOption
-                        value={analizeInstrumentFormFields.changeDirection}
+                        value={analizeInstrumentFormFields.direction}
                         isSearchable={true}
                         selectedValue={(() => {
                           const selectedItem = {
                             ...directions.find(
                               (data) =>
                                 data.name ===
-                                analizeInstrumentFormFields.changeDirection
+                                analizeInstrumentFormFields.direction
                             ),
                           };
                           if (Object.keys(selectedItem).length) {
@@ -501,7 +501,7 @@ function Components(props) {
                           onSelectOptionChange(
                             item,
                             setAnalizeInstrumentFormFields,
-                            "changeDirection"
+                            "direction"
                           )
                         }
                       />

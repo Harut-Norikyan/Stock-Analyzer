@@ -542,7 +542,7 @@ function Components(props) {
                     <th className="nowrap">Date</th>
                     <th className="nowrap">Price 1</th>
                     <th className="nowrap">Price 2</th>
-                    <th className="nowrap">ComputedRatio </th>
+                    <th className="nowrap">Computed Ratio</th>
                   </tr>
                 </thead>
                 <tbody>
