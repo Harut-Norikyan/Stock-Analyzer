@@ -18,7 +18,7 @@ export default function Components(props) {
 	const deleteOneInstrumentsNotifier = async () => {
 		if (!deletedItemId) return false;
 		dispatch(setIsLoading(true));
-		Api.deleteOneInstrumentsNotifier(deletedItemId)
+		Api.deletePriceChangeNotifier(deletedItemId)
 			.then(response => {
 				setAllOneInstrumentNotifiers(
 					allOneInstrumentNotifiers.find(item => item.id !== deletedItemId),
@@ -32,7 +32,6 @@ export default function Components(props) {
 				setDeletedItemId(null);
 			});
 	};
-
 	return (
 		<section style={{ marginTop: "80px", marginBottom: "80px" }}>
 			<div className="mb-3">
@@ -45,7 +44,7 @@ export default function Components(props) {
 				</p>
 				<Link
 					className="btn btn-primary btn-sm btn-lg px-3"
-					to="/notify-for-one-instrument/form"
+					to="form"
 					role="button">
 					Create notify
 				</Link>
@@ -81,11 +80,13 @@ export default function Components(props) {
 								<tr className="cursor-default">
 									<th className="nowrap">Company Name</th>
 									<th className="nowrap">Contract Id</th>
-									<th className="nowrap">Deviation Percentage</th>
-									<th className="nowrap">Change Percentage</th>
+									<th className="nowrap">Desired Percentage</th>
+									<th className="nowrap">Desired Price</th>
+									<th className="nowrap">Undesired Percentage</th>
+									<th className="nowrap">Undesired Price</th>
 									<th className="nowrap">Direction</th>
-									<th className="nowrap">Start Price</th>
-									<th className="nowrap">Start Date</th>
+									<th className="nowrap">Price</th>
+									<th className="nowrap">Price Date</th>
 									<th className="nowrap">Actions</th>
 								</tr>
 							</thead>
@@ -105,12 +106,22 @@ export default function Components(props) {
 											</td>
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
-													{item.deviationPercentage}
+													{item.desiredPercent}
 												</p>
 											</td>
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
-													{item.changePercentage}
+													{item.desiredPrice}
+												</p>
+											</td>
+											<td className="fw-500">
+												<p className="word-break-break-word max-line-3 m-0">
+													{item.undesiredPercent}
+												</p>
+											</td>
+											<td className="fw-500">
+												<p className="word-break-break-word max-line-3 m-0">
+													{item.undesiredPrice}
 												</p>
 											</td>
 											<td className="fw-500">
@@ -120,12 +131,12 @@ export default function Components(props) {
 											</td>
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
-													{item.startPrice}
+													{item.price}
 												</p>
 											</td>
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
-													{convertDateFormat(item.startPriceDate)}
+													{convertDateFormat(item.priceDate)}
 												</p>
 											</td>
 											<td className="fw-500">
@@ -134,9 +145,7 @@ export default function Components(props) {
 														type="button"
 														className="btn btn-sm btn-outline-success me-1"
 														onClick={() =>
-															navigate(
-																`/notify-for-one-instrument/form/${item.id}`,
-															)
+															navigate(`/notify-for-price/form/${item.id}`)
 														}>
 														Edit
 													</button>
@@ -165,16 +174,13 @@ export default function Components(props) {
 		</section>
 	);
 }
-const loader = async () => {
+
+const loader = async ({ params: { itemId } }) => {
 	try {
-		const response = await Api.getAllOneInstrumentNotifiers();
-		if (response && response.data) {
-			return response.data;
-		} else {
-			return [];
-		}
+		const responseSecurityTypes = await Api.getAllPriceChangeNotifiers();
+		return responseSecurityTypes.data || [];
 	} catch (error) {
 		console.error(error);
 	}
 };
-export const NotifyForOneInstrument = Object.assign(Components, { loader });
+export const NotifyForPrice = Object.assign(Components, { loader });

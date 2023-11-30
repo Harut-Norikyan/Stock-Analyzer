@@ -1,78 +1,166 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Col, Row, Card } from "react-bootstrap";
+import CardHeader from "react-bootstrap/esm/CardHeader";
+import { Link } from "react-router-dom";
+import OneInstrumentAnalyze from "../assets/OneInstrumentAnalyze.png";
+import OneInstrumentNotification from "../assets/OneInstrumentNotification.png";
+import PriceChangeNotification from "../assets/PriceChangeNotification.png";
+import TwoInstrumentAnalyzes from "../assets/TwoInstrumentAnalyzes.png";
+import TwoInstrumentNotification from "../assets/TwoInstrumentNotification.png";
 
 export default function Home(props) {
-  return (
-    <div>
-
-      <main role="main">
-        <div className="jumbotron">
-          <div className="container">
-            <h1 className="display-3">Instruments Analizer</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
-            <Link
-              className="btn btn-primary btn-lg m-1"
-              to="/one-instrument-analizer"
-              role="button">
-              One Instrument Analizer »
-            </Link>
-            <Link
-              className="btn btn-primary btn-lg m-1"
-              to="/two-instruments-analizer"
-              role="button">
-              Two Instruments Analizer »
-            </Link>
-          </div>
-        </div>
-
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <h2>Notify for one instrument</h2>
-              <p>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.{" "}
-              </p>
-              <p>
-                <Link
-                  to="/notify-for-one-instrument"
-                  className="btn btn-secondary px-4"
-                  role="button">
-                  View »
-                </Link>
-              </p>
-            </div>
-            <div className="col-md-6">
-              <h2>Notify for two instruments</h2>
-              <p>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.{" "}
-              </p>
-              <p>
-                <Link
-                  to="/notify-for-two-instruments"
-                  className="btn btn-secondary px-4"
-                  role="button">
-                  View »
-                </Link>
-              </p>
-            </div>
-          </div>
-          <hr />
-        </div>
-      </main>
-      <footer className="container">
-        <p>© Company</p>
-      </footer>
-    </div>
-  );
+	return (
+		<div>
+			<main role="main">
+				<Row style={{ paddingTop: 80 }}>
+					<Col lg={6} className="h-100 my-2">
+						<div
+							className=" w-100 rounded p-2"
+							style={{
+								backgroundImage: `url(${OneInstrumentAnalyze})`,
+								backgroundSize: "cover",
+								backgroundRepeat: "no-repeat",
+								backgroundPosition: "center",
+								height: "400px",
+							}}>
+							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+								<Link
+									style={{
+										backgroundColor: " rgba(203, 202, 203, 0.50)",
+										fontWeight: 800,
+									}}
+									className="btn btn-outline-dark btn-lg m-1"
+									to="/one-instrument-analizer"
+									role="button">
+									One Instrument Analizer
+								</Link>
+								{/* <Link
+										className="btn btn-primary btn-lg m-1"
+										to="/two-instruments-analizer"
+										role="button">
+										Two Instruments Analizer »
+									</Link> */}
+							</div>
+						</div>
+					</Col>
+					<Col lg={6} className="h-100 my-2">
+						<div
+							className=" w-100 rounded p-2"
+							style={{
+								backgroundImage: `url(${TwoInstrumentAnalyzes})`,
+								backgroundSize: "cover",
+								backgroundRepeat: "no-repeat",
+								height: "400px",
+							}}>
+							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+								<Link
+									style={{
+										backgroundColor: " rgba(203, 202, 203, 0.50)",
+										fontWeight: 800,
+									}}
+									className="btn btn-outline-dark btn-lg m-1"
+									to="/two-instruments-analizer"
+									role="button">
+									Two Instruments Analizer
+								</Link>
+								{/* <Link
+										className="btn btn-primary btn-lg m-1"
+										to="/two-instruments-analizer"
+										role="button">
+										Two Instruments Analizer »
+									</Link> */}
+							</div>
+						</div>
+					</Col>
+					<Col lg={6} className="h-100 my-2">
+						<div
+							className=" w-100 rounded p-2"
+							style={{
+								backgroundImage: `url(${OneInstrumentNotification})`,
+								backgroundSize: "cover",
+								backgroundRepeat: "no-repeat",
+								height: "400px",
+							}}>
+							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+								<Link
+									style={{
+										backgroundColor: " rgba(203, 202, 203, 0.50)",
+										fontWeight: 800,
+									}}
+									className="btn btn-outline-dark btn-lg m-1"
+									to="/notify-for-one-instrument"
+									role="button">
+									Notify for one instrument
+								</Link>
+								{/* <Link
+										className="btn btn-primary btn-lg m-1"
+										to="/two-instruments-analizer"
+										role="button">
+										Two Instruments Analizer »
+									</Link> */}
+							</div>
+						</div>
+					</Col>
+					<Col lg={6} className="h-100 my-2">
+						<div
+							className=" w-100 rounded p-2"
+							style={{
+								backgroundImage: `url(${TwoInstrumentNotification})`,
+								backgroundSize: "cover",
+								backgroundRepeat: "no-repeat",
+								height: "400px",
+							}}>
+							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+								<Link
+									style={{
+										backgroundColor: " rgba(203, 202, 203, 0.50)",
+										fontWeight: 800,
+									}}
+									className="btn btn-outline-dark btn-lg m-1"
+									to="/notify-for-two-instruments"
+									role="button">
+									Notify for two instruments
+								</Link>
+								{/* <Link
+										className="btn btn-primary btn-lg m-1"
+										to="/two-instruments-analizer"
+										role="button">
+										Two Instruments Analizer »
+									</Link> */}
+							</div>
+						</div>
+					</Col>
+					<Col lg={6} className="h-100 my-2">
+						<div
+							className=" w-100 rounded p-2"
+							style={{
+								backgroundImage: `url(${PriceChangeNotification})`,
+								backgroundSize: "cover",
+								backgroundRepeat: "no-repeat",
+								height: "400px",
+							}}>
+							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+								<Link
+									style={{
+										backgroundColor: " rgba(203, 202, 203, 0.50)",
+										fontWeight: 800,
+									}}
+									className="btn btn-outline-dark bgcolor btn-lg m-1"
+									to="/notify-for-price"
+									role="button">
+									Notify for price
+								</Link>
+								{/* <Link
+										className="btn btn-primary btn-lg m-1"
+										to="/two-instruments-analizer"
+										role="button">
+										Two Instruments Analizer »
+									</Link> */}
+							</div>
+						</div>
+					</Col>
+				</Row>
+			</main>
+		</div>
+	);
 }
