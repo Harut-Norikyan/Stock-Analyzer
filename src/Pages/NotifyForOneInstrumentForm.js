@@ -236,6 +236,7 @@ export default function Components(props) {
 							<Table responsive className="table table-striped mb-0">
 								<thead>
 									<tr className="cursor-default">
+										<th className="nowrap">#</th>
 										<th className="nowrap">Company Name</th>
 										<th className="nowrap">Symbol</th>
 										<th className="nowrap">Market</th>
@@ -273,6 +274,11 @@ export default function Components(props) {
 														name: item.companyName,
 													}));
 												}}>
+												<td className="fw-500 w-25">
+													<p className="word-break-break-word max-line-3 m-0">
+														{index + 1}
+													</p>
+												</td>
 												<td className="fw-500 w-25">
 													<p className="word-break-break-word max-line-3 m-0">
 														{item.companyName}

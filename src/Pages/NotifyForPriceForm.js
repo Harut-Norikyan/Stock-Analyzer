@@ -22,9 +22,6 @@ const directions = [
 ];
 
 export default function Components(props) {
-	console.log("====================================");
-	console.log("price");
-	console.log("====================================");
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(state => state.isLoading);
 
@@ -198,6 +195,40 @@ export default function Components(props) {
 								</div>
 							</div>
 						) : null}
+						{!!itemId && !!fields && (
+							<Row>
+								<Col lg={12}>
+									<Card className="card">
+										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
+											<h5>Compamy name &rarr; {fields?.name}</h5>
+										</Card.Header>
+										<ul className="list-group not_rounded">
+											<li className="list-group-item">
+												Price &rarr; {fields?.price}
+											</li>
+											<li className="list-group-item">
+												Desired price &rarr; {fields?.desiredPrice}
+											</li>
+											<li className="list-group-item">
+												Desired percent &rarr; {fields?.desiredPercent}
+											</li>
+											<li className="list-group-item">
+												Undesired price &rarr; {fields?.undesiredPrice}
+											</li>
+											<li className="list-group-item">
+												Undesired percent &rarr; {fields?.undesiredPercent}
+											</li>
+											<li className="list-group-item">
+												Date &rarr; {fields?.priceDate}
+											</li>
+											<li className="list-group-item">
+												Id &rarr; {fields?.conId}
+											</li>
+										</ul>
+									</Card>
+								</Col>
+							</Row>
+						)}
 
 						{data && (
 							<Row>
@@ -240,6 +271,7 @@ export default function Components(props) {
 							<Table responsive className="table table-striped mb-0">
 								<thead>
 									<tr className="cursor-default">
+										<th className="nowrap">#</th>
 										<th className="nowrap">Company Name</th>
 										<th className="nowrap">Symbol</th>
 										<th className="nowrap">Market</th>
@@ -277,6 +309,11 @@ export default function Components(props) {
 														name: item.companyName,
 													}));
 												}}>
+												<td className="fw-500 w-25">
+													<p className="word-break-break-word max-line-3 m-0">
+														{index + 1}
+													</p>
+												</td>
 												<td className="fw-500 w-25">
 													<p className="word-break-break-word max-line-3 m-0">
 														{item.companyName}
@@ -395,7 +432,6 @@ export default function Components(props) {
 											Direction
 										</label>
 										<div className="custom-control custom-checkbox">
-											{console.log(analizeInstrumentFormFields.direction)}
 											<input
 												type="checkbox"
 												className="custom-control-input mr-2"

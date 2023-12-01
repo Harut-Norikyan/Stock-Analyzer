@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table, Card } from "react-bootstrap";
 import Api from "../Api";
 import { Link, useNavigate, useLoaderData } from "react-router-dom";
 import Button from "react-bootstrap/Button";
@@ -32,16 +32,10 @@ export default function Components(props) {
 				setDeletedItemId(null);
 			});
 	};
+
 	return (
-		<section style={{ marginTop: "80px", marginBottom: "80px" }}>
+		<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 			<div className="mb-3">
-				<p>
-					Lorem Ipsum is simply dummy text of the printing and typesetting
-					industry. Lorem Ipsum has been the industry's standard dummy text ever
-					since the 1500s Lorem Ipsum is simply dummy text of the printing and
-					typesetting industry. Lorem Ipsum has been the industry's standard
-					dummy text ever since the 1500s
-				</p>
 				<Link
 					className="btn btn-primary btn-sm btn-lg px-3"
 					to="form"
@@ -78,6 +72,7 @@ export default function Components(props) {
 						<Table responsive className="table table-striped mb-0">
 							<thead>
 								<tr className="cursor-default">
+									<th className="nowrap">#</th>
 									<th className="nowrap">Company Name</th>
 									<th className="nowrap">Contract Id</th>
 									<th className="nowrap">Desired Percentage</th>
@@ -93,71 +88,83 @@ export default function Components(props) {
 							<tbody>
 								{allOneInstrumentNotifiers.map((item, index) => {
 									return (
-										<tr key={index} className="cursor-pointer">
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.name}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.conId}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.desiredPercent}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.desiredPrice}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.undesiredPercent}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.undesiredPrice}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.direction ? "Positive" : "Negative"}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.price}
-												</p>
-											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{convertDateFormat(item.priceDate)}
-												</p>
-											</td>
-											<td className="fw-500">
-												<div className="nowrap">
-													<button
-														type="button"
-														className="btn btn-sm btn-outline-success me-1"
-														onClick={() =>
-															navigate(`/notify-for-price/form/${item.id}`)
-														}>
-														Edit
-													</button>
-													<button
-														type="button"
-														className="btn btn-sm btn-outline-danger me-1"
-														onClick={() => setDeletedItemId(item.id)}>
-														Delete
-													</button>
-												</div>
-											</td>
-										</tr>
+										<React.Fragment key={index}>
+											<tr
+												key={index}
+												className="cursor-pointer"
+												onClick={async () => {
+													navigate(`/notify-for-price/${item.id}`);
+												}}>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{index + 1}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.name}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.conId}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.desiredPercent}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.desiredPrice}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.undesiredPercent}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.undesiredPrice}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.direction ? "Positive" : "Negative"}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{item.price}
+													</p>
+												</td>
+												<td className="fw-500">
+													<p className="word-break-break-word max-line-3 m-0">
+														{convertDateFormat(item.priceDate)}
+													</p>
+												</td>
+												<td className="fw-500">
+													<div className="nowrap">
+														<button
+															type="button"
+															className="btn btn-sm btn-outline-success me-1"
+															onClick={() =>
+																navigate(`/notify-for-price/form/${item.id}`)
+															}>
+															Edit
+														</button>
+														<button
+															type="button"
+															className="btn btn-sm btn-outline-danger me-1"
+															onClick={() => setDeletedItemId(item.id)}>
+															Delete
+														</button>
+													</div>
+												</td>
+											</tr>
+										</React.Fragment>
 									);
 								})}
 							</tbody>

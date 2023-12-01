@@ -13,7 +13,6 @@ function Components(props) {
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(state => state.isLoading);
 	const { secTypes, fields } = useLoaderData();
-	console.log(secTypes, fields);
 	const [searchFormFields, setSearchFormFields] = useState({
 		secType: "",
 		name: false,
@@ -70,7 +69,6 @@ function Components(props) {
 	}, [searchFormDebounced, dispatch, analizeInstrumentFormFields.conId1]);
 
 	const onSubmit = async () => {
-		console.log(analizeInstrumentFormFields);
 		if (
 			analizeInstrumentFormFields.conId1 &&
 			analizeInstrumentFormFields.conId2 &&
@@ -198,6 +196,7 @@ function Components(props) {
 									className="table table-striped mb-0 border rounded">
 									<thead>
 										<tr className="cursor-default">
+											<th className="nowrap">#</th>
 											<th className="nowrap">Company Name</th>
 											<th className="nowrap">Symbol</th>
 											<th className="nowrap">Market</th>
@@ -222,6 +221,11 @@ function Components(props) {
 															symbol: "",
 														}));
 													}}>
+													<td className="fw-500 w-25">
+														<p className="word-break-break-word max-line-3 m-0">
+															{index + 1}
+														</p>
+													</td>
 													<td className="fw-500 w-25">
 														<p className="word-break-break-word max-line-3 m-0">
 															{item.companyName}
@@ -283,6 +287,7 @@ function Components(props) {
 								<Table responsive className="table table-striped border mb-0">
 									<thead>
 										<tr className="cursor-default">
+											<th className="nowrap">#</th>
 											<th className="nowrap">Company Name</th>
 											<th className="nowrap">Symbol</th>
 											<th className="nowrap">Market</th>
@@ -307,6 +312,11 @@ function Components(props) {
 															symbol: "",
 														}));
 													}}>
+													<td className="fw-500 w-25">
+														<p className="word-break-break-word max-line-3 m-0">
+															{index + 1}
+														</p>
+													</td>
 													<td className="fw-500 w-25">
 														<p className="word-break-break-word max-line-3 m-0">
 															{item.companyName}

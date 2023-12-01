@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactSelectOption from "../Components/ReactSelectOption";
 import { useDebounce } from "use-debounce";
 import { useEffect } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table, Card, Button } from "react-bootstrap";
 import Api from "../Api";
 import {
 	convertDateFormat,
@@ -12,6 +12,7 @@ import {
 import { useLoaderData } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
+import { IoCloseSharp } from "react-icons/io5";
 
 const barTypes = [
 	{
@@ -121,12 +122,11 @@ function Components(props) {
 			direction: true,
 		});
 
-	console.log(analizeInstrumentFormFields);
-
 	const secTypes = useLoaderData();
 	const [securities, setSecurities] = useState([]);
 	const [analysisResult, setAnalysisResult] = useState([]);
 	const [searchFormDebounced] = useDebounce(searchFormFields, 500);
+	const [data, setData] = useState();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -276,10 +276,50 @@ function Components(props) {
 							</div>
 						</div>
 
-						{securities && securities.length ? (
+						{data && (
+							<Row>
+								<Col lg={12}>
+									<Card className="card">
+										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
+											<h5>Compamy name &rarr; {data?.companyName}</h5>
+											<Button
+												onClick={() => {
+													setData(null);
+													setAnalizeInstrumentFormFields({
+														conId: null,
+														startDate: "",
+														endDate: "",
+														bar: "",
+														changePercentage: "",
+														deviationPercentage: "",
+														direction: true,
+													});
+												}}
+												variant="outline-dark">
+												<IoCloseSharp />
+											</Button>
+										</Card.Header>
+										<ul className="list-group not_rounded">
+											<li className="list-group-item">
+												Price &rarr; {data?.price}
+											</li>
+											<li className="list-group-item">
+												Date &rarr; {data?.priceDate}
+											</li>
+											<li className="list-group-item">
+												Id &rarr; {data?.conId}
+											</li>
+										</ul>
+									</Card>
+								</Col>
+							</Row>
+						)}
+
+						{securities && securities.length && !data ? (
 							<Table responsive className="table table-striped mb-0">
 								<thead>
 									<tr className="cursor-default">
+										<th className="nowrap">#</th>
 										<th className="nowrap">Company Name</th>
 										<th className="nowrap">Symbol</th>
 										<th className="nowrap">Market</th>
@@ -294,11 +334,33 @@ function Components(props) {
 												key={index}
 												className="cursor-pointer"
 												onClick={async () => {
+													dispatch(setIsLoading(true));
+													const data = {
+														conId: item.conId,
+														companyName: item.companyName,
+													};
+													await Api.getContractWithPrice(data)
+														.then(res => {
+															if (res?.data && res.status === 200) {
+																setData(res.data);
+															} else {
+																setData(item);
+															}
+														})
+														.catch(err => {
+															console.log(err);
+														})
+														.finally(() => dispatch(setIsLoading(false)));
 													setAnalizeInstrumentFormFields(prevFields => ({
 														...prevFields,
 														conId: item.conId,
 													}));
 												}}>
+												<td className="fw-500 w-25">
+													<p className="word-break-break-word max-line-3 m-0">
+														{index + 1}
+													</p>
+												</td>
 												<td className="fw-500 w-25">
 													<p className="word-break-break-word max-line-3 m-0">
 														{item.companyName}
