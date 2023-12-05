@@ -7,7 +7,7 @@ import Api from "../Api";
 import { useParams, useNavigate, useLoaderData } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
-import { onNumberChange, onSelectOptionChange } from "../helper";
+import { newPath, onNumberChange, onSelectOptionChange } from "../helper";
 import { IoCloseSharp } from "react-icons/io5";
 
 const directions = [
@@ -88,7 +88,7 @@ export default function Components(props) {
 				await (itemId
 					? Api.updatePriceChangeNotifier(analizeInstrumentFormFields)
 					: Api.createPriceChangeNotifier(analizeInstrumentFormFields));
-				navigate("/notify-for-price");
+				navigate(newPath("/notify-for-price"));
 				dispatch(setIsLoading(false));
 			} catch (error) {
 				console.error(error);

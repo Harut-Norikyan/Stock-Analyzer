@@ -1,12 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigation } from "react-router-dom";
+import { Link, useNavigate, useNavigation, useParams } from "react-router-dom";
 import logo from "../assets/Logo.png";
+import { Dropdown } from "react-bootstrap";
+import { Ru, Uk } from "../assets";
+import { newPath } from "../helper";
 
 export default function (props) {
 	const navigation = useNavigation();
 	const { isLoading } = useSelector(state => state.isLoading);
 	const elementRef = useRef(null);
+	const navigate = useNavigate();
+	const { lang } = useParams();
 	const [elementHeight, setElementHeight] = useState(0);
 
 	useEffect(() => {
@@ -28,19 +33,48 @@ export default function (props) {
 			<nav
 				className="navbar navbar-expand-md navbar-dark fixed-top bg-dark px-3"
 				ref={elementRef}>
-				<Link className="navbar-brand" to="/">
-					<img alt="/" style={{ height: 40 }} src={logo} />
-				</Link>
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-toggle="collapse"
-					data-target="#navbarsExampleDefault"
-					aria-controls="navbarsExampleDefault"
-					aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span className="navbar-toggler-icon"></span>
-				</button>
+				<div className="container d-flex justify-content-between align-items-center text-white py-1 flex-wrap">
+					<Link className="navbar-brand" to={`/${lang}`}>
+						<img alt="/" style={{ height: 40 }} src={logo} />
+					</Link>
+					{/* <button
+						className="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarsExampleDefault"
+						aria-controls="navbarsExampleDefault"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span className="navbar-toggler-icon"></span>
+					</button> */}
+					<Dropdown>
+						<Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+							{lang === "ru" ? (
+								<Ru style={{ height: 20, width: 20 }} />
+							) : (
+								<Uk style={{ height: 20, width: 20 }} />
+							)}
+						</Dropdown.Toggle>
+
+						{/* <Dropdown.Menu style={{ minWidth: "100%" }}>
+							{lang === "ru" ? (
+								<Dropdown.Item
+									onClick={() => {
+										navigate(newPath("", "uk"));
+									}}>
+									<Uk style={{ height: 20, width: 20 }} />
+								</Dropdown.Item>
+							) : (
+								<Dropdown.Item
+									onClick={() => {
+										navigate(newPath("", "ru"));
+									}}>
+									<Ru style={{ height: 20, width: 20 }} />
+								</Dropdown.Item>
+							)}
+						</Dropdown.Menu> */}
+					</Dropdown>
+				</div>
 
 				{/* <div className="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul className="navbar-nav me-auto">

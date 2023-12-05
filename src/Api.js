@@ -1,4 +1,5 @@
 import axios from "axios";
+import AlertService from "./helper/alertService";
 
 // const API_URL = "https://a261-87-241-138-217.ngrok-free.app";
 const API_URL = "https://api.stockanalyzer.online";
@@ -22,7 +23,7 @@ api.interceptors.response.use(
 			return response.data;
 		}
 		if (response && response.data && response.data?.status === 500) {
-			console.error("Something went wrong");
+			AlertService.alert("error", response.data.message);
 		}
 		if (response && response.data && response.data.status !== 200) {
 			const currentError = response.data;
@@ -33,6 +34,7 @@ api.interceptors.response.use(
 				(!currentError.errors ||
 					(currentError.errors && !currentError.errors.length))
 			) {
+				AlertService.alert("error", currentError.message);
 				return Promise.reject(currentError);
 			}
 			//if typeof error === Array
@@ -65,6 +67,7 @@ api.interceptors.response.use(
 				(!currentError.errors ||
 					(currentError.errors && !currentError.errors.length))
 			) {
+				AlertService.alert("error", currentError.message);
 				return Promise.reject(currentError);
 			}
 			//if typeof error === Array

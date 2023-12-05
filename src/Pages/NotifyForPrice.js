@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Row, Col, Table, Card } from "react-bootstrap";
+import { Row, Col, Table } from "react-bootstrap";
 import Api from "../Api";
 import { Link, useNavigate, useLoaderData } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { convertDateFormat } from "../helper";
+import { convertDateFormat, newPath } from "../helper";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 
@@ -38,7 +38,7 @@ export default function Components(props) {
 			<div className="mb-3">
 				<Link
 					className="btn btn-primary btn-sm btn-lg px-3"
-					to="form"
+					to={newPath("/notify-for-price/form")}
 					role="button">
 					Create notify
 				</Link>
@@ -93,7 +93,7 @@ export default function Components(props) {
 												key={index}
 												className="cursor-pointer"
 												onClick={async () => {
-													navigate(`/notify-for-price/${item.id}`);
+													navigate(newPath(`/notify-for-price/${item.id}`));
 												}}>
 												<td className="fw-500">
 													<p className="word-break-break-word max-line-3 m-0">
@@ -150,15 +150,21 @@ export default function Components(props) {
 														<button
 															type="button"
 															className="btn btn-sm btn-outline-success me-1"
-															onClick={() =>
-																navigate(`/notify-for-price/form/${item.id}`)
-															}>
+															onClick={e => {
+																e.stopPropagation();
+																navigate(
+																	newPath(`/notify-for-price/form/${item.id}`),
+																);
+															}}>
 															Edit
 														</button>
 														<button
 															type="button"
 															className="btn btn-sm btn-outline-danger me-1"
-															onClick={() => setDeletedItemId(item.id)}>
+															onClick={e => {
+																e.stopPropagation();
+																setDeletedItemId(item.id);
+															}}>
 															Delete
 														</button>
 													</div>

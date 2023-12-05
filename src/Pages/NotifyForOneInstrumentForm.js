@@ -7,7 +7,7 @@ import Api from "../Api";
 import { useParams, useNavigate, useLoaderData } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
-import { onNumberChange, onSelectOptionChange } from "../helper";
+import { newPath, onNumberChange, onSelectOptionChange } from "../helper";
 import { IoCloseSharp } from "react-icons/io5";
 
 const directions = [
@@ -87,7 +87,7 @@ export default function Components(props) {
 				await (itemId
 					? Api.updateOneInstrumentNotifier(analizeInstrumentFormFields)
 					: Api.createOneInstrumentNotifier(analizeInstrumentFormFields));
-				navigate("/notify-for-one-instrument");
+				navigate(newPath("/notify-for-one-instrument"));
 				dispatch(setIsLoading(false));
 			} catch (error) {
 				console.error(error);

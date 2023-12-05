@@ -20,87 +20,89 @@ import { NotifyForOneInstrumentByid } from "./Pages/NotifyForOneInstrumentByid";
 export const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<App />} errorElement={<Navigate to={"/"} />}>
-			<Route index element={<Home />} />
-			<Route
-				path="one-instrument-analizer"
-				element={<OneInstrumentAnalizer />}
-				loader={OneInstrumentAnalizer.loader}
-			/>
-			<Route
-				path="two-instruments-analizer"
-				loader={TwoInstrumentsAnalizer.loader}
-				element={<TwoInstrumentsAnalizer />}
-			/>
-			<Route path="notify-for-one-instrument">
+			<Route path=":lang">
+				<Route index element={<Home />} />
 				<Route
-					index
-					element={<NotifyForOneInstrument />}
-					loader={NotifyForOneInstrument.loader}
+					path="one-instrument-analizer"
+					element={<OneInstrumentAnalizer />}
+					loader={OneInstrumentAnalizer.loader}
 				/>
 				<Route
-					path=":id"
-					element={<NotifyForOneInstrumentByid />}
-					loader={NotifyForOneInstrumentByid.loader}
+					path="two-instruments-analizer"
+					loader={TwoInstrumentsAnalizer.loader}
+					element={<TwoInstrumentsAnalizer />}
 				/>
-				<Route
-					index
-					element={<NotifyForOneInstrument />}
-					loader={NotifyForOneInstrument.loader}
-				/>
-				<Route path="form">
+				<Route path="notify-for-one-instrument">
 					<Route
 						index
-						element={<NotifyForOneInstrumentForm />}
-						loader={NotifyForOneInstrumentForm.loader}
+						element={<NotifyForOneInstrument />}
+						loader={NotifyForOneInstrument.loader}
 					/>
 					<Route
-						path=":itemId"
-						element={<NotifyForOneInstrumentForm />}
-						loader={NotifyForOneInstrumentForm.loader}
+						path=":id"
+						element={<NotifyForOneInstrumentByid />}
+						loader={NotifyForOneInstrumentByid.loader}
 					/>
+					<Route
+						index
+						element={<NotifyForOneInstrument />}
+						loader={NotifyForOneInstrument.loader}
+					/>
+					<Route path="form">
+						<Route
+							index
+							element={<NotifyForOneInstrumentForm />}
+							loader={NotifyForOneInstrumentForm.loader}
+						/>
+						<Route
+							path=":itemId"
+							element={<NotifyForOneInstrumentForm />}
+							loader={NotifyForOneInstrumentForm.loader}
+						/>
+					</Route>
 				</Route>
-			</Route>
-			<Route path="notify-for-price">
-				<Route
-					index
-					element={<NotifyForPrice />}
-					loader={NotifyForPrice.loader}
-				/>
-				<Route
-					path=":id"
-					element={<NotifyForPriceById />}
-					loader={NotifyForPriceById.loader}
-				/>
-				<Route path="form">
+				<Route path="notify-for-price">
 					<Route
 						index
-						element={<NotifyForPriceForm />}
-						loader={NotifyForPriceForm.loader}
+						element={<NotifyForPrice />}
+						loader={NotifyForPrice.loader}
 					/>
 					<Route
-						path=":itemId"
-						element={<NotifyForPriceForm />}
-						loader={NotifyForPriceForm.loader}
+						path=":id"
+						element={<NotifyForPriceById />}
+						loader={NotifyForPriceById.loader}
 					/>
+					<Route path="form">
+						<Route
+							index
+							element={<NotifyForPriceForm />}
+							loader={NotifyForPriceForm.loader}
+						/>
+						<Route
+							path=":itemId"
+							element={<NotifyForPriceForm />}
+							loader={NotifyForPriceForm.loader}
+						/>
+					</Route>
 				</Route>
-			</Route>
-			<Route path="notify-for-two-instruments">
-				<Route
-					index
-					element={<NotifyForTwoInstruments />}
-					loader={NotifyForTwoInstruments.loader}
-				/>
-				<Route path="form">
+				<Route path="notify-for-two-instruments">
 					<Route
 						index
-						element={<NotifyForTwoInstrumentsForm />}
-						loader={NotifyForTwoInstrumentsForm.loader}
+						element={<NotifyForTwoInstruments />}
+						loader={NotifyForTwoInstruments.loader}
 					/>
-					<Route
-						path=":itemId"
-						element={<NotifyForTwoInstrumentsForm />}
-						loader={NotifyForTwoInstrumentsForm.loader}
-					/>
+					<Route path="form">
+						<Route
+							index
+							element={<NotifyForTwoInstrumentsForm />}
+							loader={NotifyForTwoInstrumentsForm.loader}
+						/>
+						<Route
+							path=":itemId"
+							element={<NotifyForTwoInstrumentsForm />}
+							loader={NotifyForTwoInstrumentsForm.loader}
+						/>
+					</Route>
 				</Route>
 			</Route>
 		</Route>,

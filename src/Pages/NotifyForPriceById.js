@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Row, Col, Table, Button, Card } from "react-bootstrap";
+import { Row, Col, Table, Card } from "react-bootstrap";
 import Api from "../Api";
 import { useLoaderData, Link } from "react-router-dom";
 
-import { convertDateFormat } from "../helper";
+import { convertDateFormat, newPath } from "../helper";
 
 export default function Components(props) {
 	const data = useLoaderData();
@@ -16,7 +16,7 @@ export default function Components(props) {
 						<div className="mb-3">
 							<Link
 								className="btn btn-primary btn-sm btn-lg px-3"
-								to="/notify-for-price"
+								to={newPath("/notify-for-price")}
 								role="button">
 								Back
 							</Link>

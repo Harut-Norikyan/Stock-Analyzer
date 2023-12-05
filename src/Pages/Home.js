@@ -7,6 +7,7 @@ import OneInstrumentNotification from "../assets/OneInstrumentNotification.png";
 import PriceChangeNotification from "../assets/PriceChangeNotification.png";
 import TwoInstrumentAnalyzes from "../assets/TwoInstrumentAnalyzes.png";
 import TwoInstrumentNotification from "../assets/TwoInstrumentNotification.png";
+import { newPath } from "../helper";
 
 export default function Home(props) {
 	return (
@@ -30,7 +31,7 @@ export default function Home(props) {
 										fontWeight: 800,
 									}}
 									className="btn btn-outline-dark btn-lg m-1"
-									to="/one-instrument-analizer"
+									to={newPath("/one-instrument-analizer")}
 									role="button">
 									One Instrument Analizer
 								</Link>
@@ -59,7 +60,7 @@ export default function Home(props) {
 										fontWeight: 800,
 									}}
 									className="btn btn-outline-dark btn-lg m-1"
-									to="/two-instruments-analizer"
+									to={newPath("/two-instruments-analizer")}
 									role="button">
 									Two Instruments Analizer
 								</Link>
@@ -88,7 +89,7 @@ export default function Home(props) {
 										fontWeight: 800,
 									}}
 									className="btn btn-outline-dark btn-lg m-1"
-									to="/notify-for-one-instrument"
+									to={newPath("/notify-for-one-instrument")}
 									role="button">
 									Notify for one instrument
 								</Link>
@@ -117,7 +118,7 @@ export default function Home(props) {
 										fontWeight: 800,
 									}}
 									className="btn btn-outline-dark btn-lg m-1"
-									to="/notify-for-two-instruments"
+									to={newPath("/notify-for-two-instruments")}
 									role="button">
 									Notify for two instruments
 								</Link>
@@ -146,7 +147,7 @@ export default function Home(props) {
 										fontWeight: 800,
 									}}
 									className="btn btn-outline-dark bgcolor btn-lg m-1"
-									to="/notify-for-price"
+									to={newPath("/notify-for-price")}
 									role="button">
 									Notify for price
 								</Link>

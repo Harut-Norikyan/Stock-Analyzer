@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "./redux/actions/itemActions";
@@ -9,7 +9,19 @@ import Api from "./Api";
 export default function App() {
 	const dispatch = useDispatch();
 	const [isShowWaitingModal, setIsShowWaitingModal] = useState(false);
-
+	const navigate = useNavigate();
+	const defaultLeng = "ru";
+	useEffect(() => {
+		const language = localStorage.getItem("lang");
+		const lang = window.location.href.split("/").splice(3, 1).join("");
+		if (lang) {
+			localStorage.setItem("lang", lang);
+		}
+		if (!language) {
+			localStorage.setItem("lang", defaultLeng);
+			navigate(`/${defaultLeng}`);
+		}
+	}, [navigate]);
 	useEffect(() => {
 		checkUserAuth();
 	}, []);

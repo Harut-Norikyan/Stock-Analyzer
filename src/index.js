@@ -7,10 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { router } from "./router";
 import { RouterProvider } from "react-router-dom";
 import store from "./redux/store";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <RouterProvider router={router} />
-  </Provider>
+	<Provider store={store}>
+		<RouterProvider router={router} />
+		<ToastContainer autoClose={5000} />
+	</Provider>,
 );

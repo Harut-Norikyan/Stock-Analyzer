@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactSelectOption from "../Components/ReactSelectOption";
 import { useDebounce } from "use-debounce";
 import { useEffect } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table, Card, Button } from "react-bootstrap";
 import Api from "../Api";
 import {
 	convertDateFormat,
@@ -12,6 +12,7 @@ import {
 import { useLoaderData } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
+import { IoCloseSharp } from "react-icons/io5";
 
 const barTypes = [
 	{
@@ -99,6 +100,8 @@ function Components(props) {
 	const [_securities, _setSecurities] = useState([]);
 	const secTypes = useLoaderData();
 	const [analysisResult, setAnalysisResult] = useState([]);
+	const [firstData, setFirstdata] = useState(null);
+	const [secondData, setSecondData] = useState(null);
 
 	const [searchFormDebounced] = useDebounce(searchFormFields, 500);
 	const [analizeInstrumentFormDebounced] = useDebounce(
@@ -258,8 +261,41 @@ function Components(props) {
 								)}
 							</div>
 						</div>
-
-						{securities && securities.length ? (
+						{firstData && (
+							<Row>
+								<h4>First instrument*</h4>
+								<Col lg={12}>
+									<Card className="card">
+										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
+											<h5>Compamy name &rarr; {firstData?.companyName}</h5>
+											<Button
+												onClick={() => {
+													setFirstdata(null);
+													setAnalizeInstrumentFormFields(prev => ({
+														...prev,
+														conId1: null,
+													}));
+												}}
+												variant="outline-dark">
+												<IoCloseSharp />
+											</Button>
+										</Card.Header>
+										<ul className="list-group not_rounded">
+											<li className="list-group-item">
+												Price &rarr; {firstData?.price}
+											</li>
+											<li className="list-group-item">
+												Date &rarr; {firstData?.priceDate}
+											</li>
+											<li className="list-group-item">
+												Id &rarr; {firstData?.conId}
+											</li>
+										</ul>
+									</Card>
+								</Col>
+							</Row>
+						)}
+						{securities && securities.length && !firstData ? (
 							<div className="mt-3">
 								<h4>First instrument*</h4>
 								<Table
@@ -281,7 +317,26 @@ function Components(props) {
 												<tr
 													key={index}
 													className="cursor-pointer"
-													onClick={() => {
+													onClick={async () => {
+														dispatch(setIsLoading(true));
+														const data = {
+															conId: item.conId,
+															companyName: item.companyName,
+														};
+														await Api.getContractWithPrice(data)
+															.then(res => {
+																if (res?.data && res.status === 200) {
+																	setFirstdata(res.data);
+																} else {
+																	setFirstdata(item);
+																}
+															})
+															.catch(err => {
+																console.log(err);
+															})
+															.finally(() => {
+																dispatch(setIsLoading(false));
+															});
 														setAnalizeInstrumentFormFields(prevFields => ({
 															...prevFields,
 															conId1: item.conId,
@@ -350,7 +405,41 @@ function Components(props) {
 								</Table>
 							</div>
 						) : null}
-						{_securities && _securities.length ? (
+						{secondData && (
+							<Row>
+								<h4>Second instrument*</h4>
+								<Col lg={12}>
+									<Card className="card">
+										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
+											<h5>Compamy name &rarr; {secondData?.companyName}</h5>
+											<Button
+												onClick={() => {
+													setSecondData(null);
+													setAnalizeInstrumentFormFields(prev => ({
+														...prev,
+														conId2: null,
+													}));
+												}}
+												variant="outline-dark">
+												<IoCloseSharp />
+											</Button>
+										</Card.Header>
+										<ul className="list-group not_rounded">
+											<li className="list-group-item">
+												Price &rarr; {secondData?.price}
+											</li>
+											<li className="list-group-item">
+												Date &rarr; {secondData?.priceDate}
+											</li>
+											<li className="list-group-item">
+												Id &rarr; {secondData?.conId}
+											</li>
+										</ul>
+									</Card>
+								</Col>
+							</Row>
+						)}
+						{_securities && _securities.length && !secondData ? (
 							<div className="mt-3">
 								<h4>Second instrument*</h4>
 								<Table responsive className="table table-striped border mb-0">
@@ -370,7 +459,24 @@ function Components(props) {
 												<tr
 													key={index}
 													className="cursor-pointer"
-													onClick={() => {
+													onClick={async () => {
+														dispatch(setIsLoading(true));
+														const data = {
+															conId: item.conId,
+															companyName: item.companyName,
+														};
+														await Api.getContractWithPrice(data)
+															.then(res => {
+																if (res?.data && res.status === 200) {
+																	setSecondData(res.data);
+																} else {
+																	setSecondData(item);
+																}
+															})
+															.catch(err => {
+																console.log(err);
+															})
+															.finally(() => dispatch(setIsLoading(false)));
 														setAnalizeInstrumentFormFields(prevFields => ({
 															...prevFields,
 															conId2: item.conId,

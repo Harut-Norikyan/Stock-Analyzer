@@ -4,7 +4,7 @@ import Api from "../Api";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { convertDateFormat } from "../helper";
+import { convertDateFormat, newPath } from "../helper";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 
@@ -39,7 +39,7 @@ function Components(props) {
 			<div className="mb-3">
 				<Link
 					className="btn btn-primary btn-sm btn-lg px-3"
-					to="/notify-for-two-instruments/form"
+					to={newPath("/notify-for-two-instruments/form")}
 					role="button">
 					Create notify
 				</Link>
@@ -147,7 +147,9 @@ function Components(props) {
 														className="btn btn-sm btn-outline-success me-1"
 														onClick={() =>
 															navigate(
-																`/notify-for-two-instruments/form/${item.id}`,
+																newPath(
+																	`/notify-for-two-instruments/form/${item.id}`,
+																),
 															)
 														}>
 														Edit

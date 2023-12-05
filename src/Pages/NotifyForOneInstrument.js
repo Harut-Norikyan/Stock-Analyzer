@@ -4,7 +4,7 @@ import Api from "../Api";
 import { Link, useNavigate, useLoaderData } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { convertDateFormat } from "../helper";
+import { convertDateFormat, newPath } from "../helper";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 
@@ -38,7 +38,7 @@ export default function Components(props) {
 			<div className="mb-3">
 				<Link
 					className="btn btn-primary btn-sm btn-lg px-3"
-					to="/notify-for-one-instrument/form"
+					to={newPath("/notify-for-one-instrument/form")}
 					role="button">
 					Create notify
 				</Link>
@@ -90,7 +90,9 @@ export default function Components(props) {
 											key={index}
 											className="cursor-pointer"
 											onClick={() => {
-												navigate(`/notify-for-one-instrument/${item.id}`);
+												navigate(
+													newPath(`/notify-for-one-instrument/${item.id}`),
+												);
 											}}>
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
@@ -137,17 +139,23 @@ export default function Components(props) {
 													<button
 														type="button"
 														className="btn btn-sm btn-outline-success me-1"
-														onClick={() =>
+														onClick={e => {
+															e.stopPropagation();
 															navigate(
-																`/notify-for-one-instrument/form/${item.id}`,
-															)
-														}>
+																newPath(
+																	`/notify-for-one-instrument/form/${item.id}`,
+																),
+															);
+														}}>
 														Edit
 													</button>
 													<button
 														type="button"
 														className="btn btn-sm btn-outline-danger me-1"
-														onClick={() => setDeletedItemId(item.id)}>
+														onClick={e => {
+															e.stopPropagation();
+															setDeletedItemId(item.id);
+														}}>
 														Delete
 													</button>
 												</div>
