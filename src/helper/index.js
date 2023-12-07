@@ -41,10 +41,17 @@ export const onSelectOptionChange = (item, cb, name) => {
 };
 
 export function newPath(path = "", lang) {
+	if (lang) {
+		const newPath = window.location.href.split("/").splice(4).join("/");
+		localStorage.setItem("i18nextLng", lang);
+		return `/${lang}/${newPath}`;
+	}
 	if (!path) {
-		return localStorage.getItem("lang") || process.env.REACT_APP_DEFAULT_LANG;
+		return (
+			localStorage.getItem("i18nextLng") || process.env.REACT_APP_DEFAULT_LANG
+		);
 	}
 	return `/${
-		localStorage.getItem("lang") || process.env.REACT_APP_DEFAULT_LANG
+		localStorage.getItem("i18nextLng") || process.env.REACT_APP_DEFAULT_LANG
 	}${path}`;
 }

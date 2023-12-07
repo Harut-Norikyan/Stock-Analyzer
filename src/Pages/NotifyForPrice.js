@@ -7,8 +7,11 @@ import Modal from "react-bootstrap/Modal";
 import { convertDateFormat, newPath } from "../helper";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
+import { useTranslation } from "react-i18next";
+import { DowenTable, UpTable } from "../assets";
 
 export default function Components(props) {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const data = useLoaderData();
@@ -21,7 +24,7 @@ export default function Components(props) {
 		Api.deletePriceChangeNotifier(deletedItemId)
 			.then(response => {
 				setAllOneInstrumentNotifiers(
-					allOneInstrumentNotifiers.find(item => item.id !== deletedItemId),
+					allOneInstrumentNotifiers.filter(item => item.id !== deletedItemId),
 				);
 				dispatch(setIsLoading(false));
 				setDeletedItemId(null);
@@ -36,18 +39,21 @@ export default function Components(props) {
 	return (
 		<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 			<div className="mb-3">
+				<div className="d-flex flex-wrap-reverse justify-content-between mb-2">
+					<h3 className="text-muted">{t("priceChangeNotifier")}</h3>
+				</div>
 				<Link
 					className="btn btn-primary btn-sm btn-lg px-3"
 					to={newPath("/notify-for-price/form")}
 					role="button">
-					Create notify
+					{t("createNotify")}
 				</Link>
 			</div>
 			{deletedItemId ? (
 				<Modal size="sm" show={true} centered>
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">
-							Are you sure ?
+							{t("title")}
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Footer>
@@ -55,13 +61,13 @@ export default function Components(props) {
 							variant="secondary"
 							className="px-3"
 							onClick={() => setDeletedItemId(false)}>
-							No
+							{t("no")}
 						</Button>
 						<Button
 							variant="primary"
 							className="px-3"
 							onClick={deleteOneInstrumentsNotifier}>
-							Yes
+							{t("yes")}
 						</Button>
 					</Modal.Footer>
 				</Modal>
@@ -73,16 +79,16 @@ export default function Components(props) {
 							<thead>
 								<tr className="cursor-default">
 									<th className="nowrap">#</th>
-									<th className="nowrap">Company Name</th>
-									<th className="nowrap">Contract Id</th>
-									<th className="nowrap">Desired Percentage</th>
-									<th className="nowrap">Desired Price</th>
-									<th className="nowrap">Undesired Percentage</th>
-									<th className="nowrap">Undesired Price</th>
-									<th className="nowrap">Direction</th>
-									<th className="nowrap">Price</th>
-									<th className="nowrap">Price Date</th>
-									<th className="nowrap">Actions</th>
+									<th className="nowrap">{t("companyName")}</th>
+									<th className="nowrap">{t("conid")}</th>
+									<th className="nowrap">{t("desiredPercentage")}</th>
+									<th className="nowrap">{t("desiredPrice")}</th>
+									<th className="nowrap">{t("undesiredPercentage")}</th>
+									<th className="nowrap">{t("undesiredPrice")}</th>
+									<th className="nowrap">{t("direction")}</th>
+									<th className="nowrap">{t("price")}</th>
+									<th className="nowrap">{t("priceDate")}</th>
+									<th className="nowrap">{t("actions")}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -131,8 +137,12 @@ export default function Components(props) {
 													</p>
 												</td>
 												<td className="fw-500">
-													<p className="word-break-break-word max-line-3 m-0">
-														{item.direction ? "Positive" : "Negative"}
+													<p className="d-flex justify-content-around button_container">
+														{item.direction ? (
+															<UpTable style={{ width: 20, height: 20 }} />
+														) : (
+															<DowenTable style={{ width: 20, height: 20 }} />
+														)}
 													</p>
 												</td>
 												<td className="fw-500">
@@ -156,7 +166,7 @@ export default function Components(props) {
 																	newPath(`/notify-for-price/form/${item.id}`),
 																);
 															}}>
-															Edit
+															{t("edit")}
 														</button>
 														<button
 															type="button"
@@ -165,7 +175,7 @@ export default function Components(props) {
 																e.stopPropagation();
 																setDeletedItemId(item.id);
 															}}>
-															Delete
+															{t("delete")}
 														</button>
 													</div>
 												</td>

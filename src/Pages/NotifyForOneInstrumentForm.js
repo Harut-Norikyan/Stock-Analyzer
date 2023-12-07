@@ -9,19 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { newPath, onNumberChange, onSelectOptionChange } from "../helper";
 import { IoCloseSharp } from "react-icons/io5";
-
-const directions = [
-	{
-		id: "Positive",
-		name: true,
-	},
-	{
-		id: "Negative",
-		name: false,
-	},
-];
+import { useTranslation } from "react-i18next";
+import Switch from "../Components/Switch";
 
 export default function Components(props) {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(state => state.isLoading);
 
@@ -101,8 +93,10 @@ export default function Components(props) {
 				<Row>
 					<Col lg={12}>
 						<div className="d-flex flex-wrap-reverse justify-content-between">
-							<h3>Search Instrument</h3>
-							<h3 className="text-muted">(Notify for one instrument form)</h3>
+							<h3>{t("searchInstrument")}</h3>
+							<h3 className="text-muted">
+								{t("notifyForOneInstrumentFormSubTitle")}
+							</h3>
 						</div>
 						{!itemId ? (
 							<div>
@@ -110,7 +104,7 @@ export default function Components(props) {
 									{secTypes && secTypes.length && (
 										<div>
 											<label className="mb-1 fw-500">
-												Choose Security Type*
+												{t("searchSecurityType")}
 											</label>
 											<ReactSelectOption
 												value={searchFormFields.secType}
@@ -149,7 +143,7 @@ export default function Components(props) {
 									<label
 										className="form-check-label cursor-pointer fw-500"
 										htmlFor="flexCheckDefault">
-										Search by Compamy Name
+										{t("searchByCompamyName")}
 									</label>
 								</div>
 
@@ -157,7 +151,7 @@ export default function Components(props) {
 									{!searchFormFields.name ? (
 										<div className="form-group">
 											<label htmlFor="symbol" className="mb-1 fw-500">
-												Symbol*
+												{t("symbol")}*
 											</label>
 											<input
 												type="text"
@@ -175,7 +169,7 @@ export default function Components(props) {
 									) : (
 										<div className="form-group">
 											<label htmlFor="companyName" className="mb-1 fw-500">
-												Company Name*
+												{t("companyName")}*
 											</label>
 											<input
 												type="text"
@@ -200,7 +194,9 @@ export default function Components(props) {
 								<Col lg={12}>
 									<Card className="card">
 										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-											<h5>Compamy name &rarr; {data?.companyName}</h5>
+											<h5>
+												{t("companyName")} &rarr; {data?.companyName}
+											</h5>
 											<Button
 												onClick={() => {
 													setData(null);
@@ -218,13 +214,13 @@ export default function Components(props) {
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												Price &rarr; {data?.price}
+												{t("price")} &rarr; {data?.price}
 											</li>
 											<li className="list-group-item">
-												Date &rarr; {data?.priceDate}
+												{t("date")} &rarr; {data?.priceDate}
 											</li>
 											<li className="list-group-item">
-												Id &rarr; {data?.conId}
+												{t("conid")} &rarr; {data?.conId}
 											</li>
 										</ul>
 									</Card>
@@ -237,11 +233,11 @@ export default function Components(props) {
 								<thead>
 									<tr className="cursor-default">
 										<th className="nowrap">#</th>
-										<th className="nowrap">Company Name</th>
-										<th className="nowrap">Symbol</th>
-										<th className="nowrap">Market</th>
-										<th className="nowrap">Conid</th>
-										<th className="nowrap">Choose</th>
+										<th className="nowrap">{t("companyName")}</th>
+										<th className="nowrap">{t("symbol")}</th>
+										<th className="nowrap">{t("market")}</th>
+										<th className="nowrap">{t("conid")}</th>
+										<th className="nowrap">{t("choose")}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -332,7 +328,7 @@ export default function Components(props) {
 								<div className="mb-4">
 									<div className="form-group mb-2">
 										<label htmlFor="changePercentage" className="mb-1 fw-500">
-											Change Percentage*
+											{t("changePercentage")}*
 										</label>
 										<input
 											type="number"
@@ -353,7 +349,7 @@ export default function Components(props) {
 										<label
 											htmlFor="deviationPercentage"
 											className="mb-1 fw-500">
-											Deviation Percentage*
+											{t("deviationPercentage")}*
 										</label>
 										<input
 											type="number"
@@ -370,43 +366,18 @@ export default function Components(props) {
 											}
 										/>
 									</div>
-									{directions && directions.length ? (
-										<div>
-											<label className="mb-1 fw-500">Direction*</label>
-											<ReactSelectOption
-												value={analizeInstrumentFormFields.direction}
-												isSearchable={true}
-												selectedValue={(() => {
-													const selectedItem = {
-														...directions.find(
-															data =>
-																data.name ===
-																analizeInstrumentFormFields.direction,
-														),
-													};
-													if (Object.keys(selectedItem).length) {
-														selectedItem.label = selectedItem.id;
-														selectedItem.value = selectedItem.name;
-														return selectedItem;
-													} else {
-														return { value: null, label: "Choose" };
-													}
-												})()}
-												items={directions.map(data => ({
-													...data,
-													label: data.id,
-													value: data.name,
-												}))}
-												onChange={item =>
-													onSelectOptionChange(
-														item,
-														setAnalizeInstrumentFormFields,
-														"direction",
-													)
-												}
-											/>
-										</div>
-									) : null}
+									<div>
+										<label className="mb-1 fw-500">{t("direction")}*</label>
+										<Switch
+											isOn={analizeInstrumentFormFields?.direction}
+											handleToggle={() => {
+												setAnalizeInstrumentFormFields(prev => ({
+													...prev,
+													direction: !prev.direction,
+												}));
+											}}
+										/>
+									</div>
 								</div>
 							</div>
 						) : null}
@@ -424,7 +395,7 @@ export default function Components(props) {
 									isLoading
 								}
 								onClick={onSubmit}>
-								{itemId ? "Update" : "Create"}
+								{itemId ? t("update") : t("create")}
 							</button>
 						</div>
 					</Col>

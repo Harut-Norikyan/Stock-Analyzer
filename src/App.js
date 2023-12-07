@@ -1,27 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "./redux/actions/itemActions";
+import { useTranslation, Trans } from "react-i18next";
 import Api from "./Api";
+import Footer from "./Components/Footer";
 
+const languages = ["ru", "en"];
 export default function App() {
+	const { t, i18n } = useTranslation();
 	const dispatch = useDispatch();
 	const [isShowWaitingModal, setIsShowWaitingModal] = useState(false);
 	const navigate = useNavigate();
+	const { lang } = useParams();
 	const defaultLeng = "ru";
 	useEffect(() => {
-		const language = localStorage.getItem("lang");
-		const lang = window.location.href.split("/").splice(3, 1).join("");
-		if (lang) {
-			localStorage.setItem("lang", lang);
-		}
+		const language = localStorage.getItem("i18nextLng");
 		if (!language) {
-			localStorage.setItem("lang", defaultLeng);
+			i18n.changeLanguage(defaultLeng);
+			// localStorage.setItem("i18nextLng", defaultLeng);
 			navigate(`/${defaultLeng}`);
 		}
 	}, [navigate]);
+	useEffect(() => {
+		if (!languages.includes(lang)) {
+			const language = localStorage.getItem("i18nextLng");
+			i18n.changeLanguage(language);
+			navigate(`/${language}`);
+		}
+	}, [lang]);
 	useEffect(() => {
 		checkUserAuth();
 	}, []);
@@ -49,31 +58,34 @@ export default function App() {
 		}
 	};
 	return (
-		<div className="container">
-			<Modal show={isShowWaitingModal} centered>
-				<Modal.Header closeButton={false}>
-					<Modal.Title>Please wait</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<div>
-						<b className="d-block text-center">
-							We are checking your authentication
-						</b>
-					</div>
-					<div className="d-flex justify-content-center my-4">
-						<div className="spinner-border text-primary" role="status" />
-					</div>
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className="btn btn-primary px-4"
-						onClick={() => window.location.reload()}>
-						Reload this page
-					</button>
-				</Modal.Footer>
-			</Modal>
-			<Header />
-			<Outlet />
+		<div className="d-flex flex-column justify-content-between">
+			<div className="container h-full ">
+				<Modal show={isShowWaitingModal} centered>
+					<Modal.Header closeButton={false}>
+						<Modal.Title>Please wait</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<div>
+							<b className="d-block text-center">
+								We are checking your authentication
+							</b>
+						</div>
+						<div className="d-flex justify-content-center my-4">
+							<div className="spinner-border text-primary" role="status" />
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<button
+							className="btn btn-primary px-4"
+							onClick={() => window.location.reload()}>
+							Reload this page
+						</button>
+					</Modal.Footer>
+				</Modal>
+				<Header />
+				<Outlet />
+			</div>
+			<Footer />
 		</div>
 	);
 }

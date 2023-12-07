@@ -43,11 +43,7 @@ export const router = createBrowserRouter(
 						element={<NotifyForOneInstrumentByid />}
 						loader={NotifyForOneInstrumentByid.loader}
 					/>
-					<Route
-						index
-						element={<NotifyForOneInstrument />}
-						loader={NotifyForOneInstrument.loader}
-					/>
+
 					<Route path="form">
 						<Route
 							index

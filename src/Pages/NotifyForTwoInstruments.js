@@ -7,8 +7,10 @@ import Modal from "react-bootstrap/Modal";
 import { convertDateFormat, newPath } from "../helper";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
+import { useTranslation } from "react-i18next";
 
 function Components(props) {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const data = useLoaderData();
@@ -37,18 +39,21 @@ function Components(props) {
 	return (
 		<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 			<div className="mb-3">
+				<div className="d-flex flex-wrap-reverse justify-content-between mb-2">
+					<h3 className="text-muted">{t("notifyForTwoInstrumentsTitle")}</h3>
+				</div>
 				<Link
 					className="btn btn-primary btn-sm btn-lg px-3"
 					to={newPath("/notify-for-two-instruments/form")}
 					role="button">
-					Create notify
+					{t("createNotify")}
 				</Link>
 			</div>
 			{deletedItemId ? (
 				<Modal size="sm" show={true} centered>
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">
-							Are you sure ?
+							{t("title")}
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Footer>
@@ -56,13 +61,13 @@ function Components(props) {
 							variant="secondary"
 							className="px-3"
 							onClick={() => setDeletedItemId(false)}>
-							No
+							{t("no")}
 						</Button>
 						<Button
 							variant="primary"
 							className="px-3"
 							onClick={deleteTwoInstrumentsNotifier}>
-							Yes
+							{t("yes")}
 						</Button>
 					</Modal.Footer>
 				</Modal>
@@ -74,16 +79,16 @@ function Components(props) {
 							<thead>
 								<tr className="cursor-default">
 									<th className="nowrap">#</th>
-									<th className="nowrap">Company Name 1</th>
-									<th className="nowrap">Contract Id 1</th>
-									<th className="nowrap">Company Name 2</th>
-									<th className="nowrap">Contract Id 2</th>
-									<th className="nowrap">Start Date 1</th>
-									<th className="nowrap">Start Price 1</th>
-									<th className="nowrap">Start Date 2</th>
-									<th className="nowrap">Start Price 1</th>
-									<th className="nowrap">Ratio</th>
-									<th className="nowrap">Actions</th>
+									<th className="nowrap">{t("companyName")} 1</th>
+									<th className="nowrap">{t("conid")} 1</th>
+									<th className="nowrap">{t("companyName")} 2</th>
+									<th className="nowrap">{t("conid")} 2</th>
+									<th className="nowrap">{t("startDate")} 1</th>
+									<th className="nowrap">{t("startPrice")} 1</th>
+									<th className="nowrap">{t("startDate")} 2</th>
+									<th className="nowrap">{t("startPrice")} 1</th>
+									<th className="nowrap">{t("ratio")}</th>
+									<th className="nowrap">{t("actions")}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -152,13 +157,13 @@ function Components(props) {
 																),
 															)
 														}>
-														Edit
+														{t("edit")}
 													</button>
 													<button
 														type="button"
 														className="btn btn-sm btn-outline-danger me-1"
 														onClick={() => setDeletedItemId(item.id)}>
-														Delete
+														{t("delete")}
 													</button>
 												</div>
 											</td>

@@ -9,8 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { newPath, onNumberChange, onSelectOptionChange } from "../helper";
 import { IoCloseSharp } from "react-icons/io5";
+import { Arrow } from "../assets";
+import { useTranslation } from "react-i18next";
 
 function Components(props) {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(state => state.isLoading);
 	const { secTypes, fields } = useLoaderData();
@@ -101,8 +104,8 @@ function Components(props) {
 				<Row>
 					<Col lg={12}>
 						<div className="d-flex flex-wrap-reverse justify-content-between">
-							<h3>Search Instrument</h3>
-							<h3 className="text-muted">(Notify for two instruments form)</h3>
+							<h3>{t("searchInstrument")}</h3>
+							<h3 className="text-muted">{t("notifyForTwoInstrumentsForm")}</h3>
 						</div>
 						{!itemId ? (
 							<div>
@@ -110,7 +113,7 @@ function Components(props) {
 									{secTypes && secTypes.length ? (
 										<div>
 											<label className="mb-1 fw-500">
-												Choose Security Type*
+												{t("searchSecurityType")}
 											</label>
 											<ReactSelectOption
 												value={searchFormFields.secType}
@@ -147,14 +150,14 @@ function Components(props) {
 									<label
 										className="form-check-label cursor-pointer fw-500"
 										htmlFor="flexCheckDefault">
-										Search by Compamy Name
+										{t("searchByCompamyName")}
 									</label>
 								</div>
 								<div className="form-group mb-2">
 									{!searchFormFields.name ? (
 										<div className="form-group">
 											<label htmlFor="symbol" className="mb-1 fw-500">
-												Symbol*
+												{t("symbol")}*
 											</label>
 											<input
 												type="text"
@@ -172,7 +175,7 @@ function Components(props) {
 									) : (
 										<div className="form-group">
 											<label htmlFor="companyName" className="mb-1 fw-500">
-												Company Name*
+												{t("companyName")}*
 											</label>
 											<input
 												type="text"
@@ -193,17 +196,20 @@ function Components(props) {
 						) : null}
 						{firstData && (
 							<Row>
-								<h4>First instrument*</h4>
+								<h4>{t("twoInstrumentsAnalizerFirstInstrument")}*</h4>
 								<Col lg={12}>
 									<Card className="card">
 										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-											<h5>Compamy name &rarr; {firstData?.companyName}</h5>
+											<h5>
+												{t("companyName")} &rarr; {firstData?.companyName}
+											</h5>
 											<Button
 												onClick={() => {
 													setFirstdata(null);
 													setAnalizeInstrumentFormFields(prev => ({
 														...prev,
 														conId1: null,
+														name1: "",
 													}));
 												}}
 												variant="outline-dark">
@@ -212,13 +218,13 @@ function Components(props) {
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												Price &rarr; {firstData?.price}
+												{t("price")} &rarr; {firstData?.price}
 											</li>
 											<li className="list-group-item">
-												Date &rarr; {firstData?.priceDate}
+												{t("date")} &rarr; {firstData?.priceDate}
 											</li>
 											<li className="list-group-item">
-												Id &rarr; {firstData?.conId}
+												{t("conid")} &rarr; {firstData?.conId}
 											</li>
 										</ul>
 									</Card>
@@ -227,18 +233,18 @@ function Components(props) {
 						)}
 						{securities && securities.length && !firstData && !itemId ? (
 							<div className="mt-3">
-								<h4>First instrument*</h4>
+								<h4>{t("twoInstrumentsAnalizerFirstInstrument")}*</h4>
 								<Table
 									responsive
 									className="table table-striped mb-0 border rounded">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
-											<th className="nowrap">Company Name</th>
-											<th className="nowrap">Symbol</th>
-											<th className="nowrap">Market</th>
-											<th className="nowrap">Conid</th>
-											<th className="nowrap">Choose</th>
+											<th className="nowrap">{t("companyName")}</th>
+											<th className="nowrap">{t("symbol")}</th>
+											<th className="nowrap">{t("market")}</th>
+											<th className="nowrap">{t("conid")}</th>
+											<th className="nowrap">{t("choose")}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -271,10 +277,6 @@ function Components(props) {
 															...prevFields,
 															conId1: item.conId,
 															name1: item.companyName,
-														}));
-														setSearchFormFields(prevFields => ({
-															...prevFields,
-															symbol: "",
 														}));
 													}}>
 													<td className="fw-500 w-25">
@@ -322,10 +324,6 @@ function Components(props) {
 																			name1: item.companyName,
 																		}),
 																	);
-																	setSearchFormFields(prevFields => ({
-																		...prevFields,
-																		symbol: "",
-																	}));
 																}}
 															/>
 														</div>
@@ -337,19 +335,49 @@ function Components(props) {
 								</Table>
 							</div>
 						) : null}
+						{analizeInstrumentFormFields.conId1 &&
+							analizeInstrumentFormFields.conId2 &&
+							!itemId && (
+								<div className="d-flex justify-content-center w-100 my-2">
+									<Button
+										variant="light"
+										onClick={() => {
+											const cloneFirstData = firstData;
+											const cloneSecondData = secondData;
+											const cloneSecurities = securities;
+											const _cloneSecurities = _securities;
+											setSecurities(_cloneSecurities);
+											_setSecurities(cloneSecurities);
+											setFirstdata(cloneSecondData);
+											setSecondData(cloneFirstData);
+											setAnalizeInstrumentFormFields(prev => ({
+												...prev,
+												conId2: prev.conId1,
+												name2: prev.name1,
+												conId1: prev.conId2,
+												name1: prev.name2,
+											}));
+										}}>
+										<Arrow style={{ width: 40, height: 40 }} />
+									</Button>
+								</div>
+							)}
 						{secondData && (
 							<Row>
-								<h4>Second instrument*</h4>
+								<h4>{t("twoInstrumentsAnalizerSecondInstrument")}*</h4>
 								<Col lg={12}>
 									<Card className="card">
 										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-											<h5>Compamy name &rarr; {secondData?.companyName}</h5>
+											<h5>
+												{t("companyName")} &rarr; {secondData?.companyName}
+											</h5>
 											<Button
 												onClick={() => {
 													setSecondData(null);
 													setAnalizeInstrumentFormFields(prev => ({
 														...prev,
 														conId2: null,
+														name2: "",
 													}));
 												}}
 												variant="outline-dark">
@@ -358,13 +386,13 @@ function Components(props) {
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												Price &rarr; {secondData?.price}
+												{t("price")} &rarr; {firstData?.price}
 											</li>
 											<li className="list-group-item">
-												Date &rarr; {secondData?.priceDate}
+												{t("date")} &rarr; {firstData?.priceDate}
 											</li>
 											<li className="list-group-item">
-												Id &rarr; {secondData?.conId}
+												{t("conid")} &rarr; {firstData?.conId}
 											</li>
 										</ul>
 									</Card>
@@ -373,16 +401,16 @@ function Components(props) {
 						)}
 						{_securities && _securities.length && !secondData && !itemId ? (
 							<div className="mt-3">
-								<h4>Second instrument*</h4>
+								<h4>{t("twoInstrumentsAnalizerSecondInstrument")}*</h4>
 								<Table responsive className="table table-striped border mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
-											<th className="nowrap">Company Name</th>
-											<th className="nowrap">Symbol</th>
-											<th className="nowrap">Market</th>
-											<th className="nowrap">Conid</th>
-											<th className="nowrap">Choose</th>
+											<th className="nowrap">{t("companyName")}</th>
+											<th className="nowrap">{t("symbol")}</th>
+											<th className="nowrap">{t("market")}</th>
+											<th className="nowrap">{t("conid")}</th>
+											<th className="nowrap">{t("choose")}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -464,10 +492,6 @@ function Components(props) {
 																			name2: item.companyName,
 																		}),
 																	);
-																	setSearchFormFields(prevFields => ({
-																		...prevFields,
-																		symbol: "",
-																	}));
 																}}
 															/>
 														</div>
@@ -490,7 +514,7 @@ function Components(props) {
 											<Col md={6}>
 												<div className="form-group mb-2">
 													<label htmlFor="startDate" className="mb-1 fw-500">
-														Start Date
+														{t("startDate")}
 													</label>
 													<input
 														type="date"
@@ -509,7 +533,7 @@ function Components(props) {
 											<Col md={6}>
 												<div className="form-group mb-2">
 													<label htmlFor="endDate" className="mb-1 fw-500">
-														End Date
+														{t("endDate")}
 													</label>
 													<input
 														type="date"
@@ -529,7 +553,7 @@ function Components(props) {
 									) : null}
 									<div className="form-group mb-2">
 										<label htmlFor="ratio" className="mb-1 fw-500">
-											Ratio*
+											{t("ratio")}*
 										</label>
 										<input
 											type="number"
@@ -562,7 +586,7 @@ function Components(props) {
 									isLoading
 								}
 								onClick={onSubmit}>
-								{itemId ? "Update" : "Create"}
+								{itemId ? t("update") : t("create")}
 							</button>
 						</div>
 					</Col>

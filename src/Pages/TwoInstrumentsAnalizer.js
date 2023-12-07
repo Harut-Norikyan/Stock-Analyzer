@@ -9,10 +9,75 @@ import {
 	onNumberChange,
 	onSelectOptionChange,
 } from "../helper";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { IoCloseSharp } from "react-icons/io5";
+import { Arrow } from "../assets";
+import { useTranslation } from "react-i18next";
+
+const barTypesRu = [
+	{
+		id: "1 Минута",
+		name: "1min",
+	},
+	{
+		id: "2 Минутаы",
+		name: "2min",
+	},
+	{
+		id: "3 Минутаы",
+		name: "3min",
+	},
+	{
+		id: "5 Минуты",
+		name: "5min",
+	},
+	{
+		id: "10 Минут",
+		name: "10min",
+	},
+	{
+		id: "15 Минут",
+		name: "15min",
+	},
+	{
+		id: "30 Минут",
+		name: "30min",
+	},
+	{
+		id: "1 Час",
+		name: "1h",
+	},
+	{
+		id: "2 Часа",
+		name: "2h",
+	},
+	{
+		id: "3 Часа",
+		name: "3h",
+	},
+	{
+		id: "4 Чаа",
+		name: "4h",
+	},
+	{
+		id: "8 Часоов",
+		name: "8h",
+	},
+	{
+		id: "1 День",
+		name: "1d",
+	},
+	{
+		id: "1 Неделя",
+		name: "1w",
+	},
+	{
+		id: "1 Месяц",
+		name: "1m",
+	},
+];
 
 const barTypes = [
 	{
@@ -78,6 +143,8 @@ const barTypes = [
 ];
 
 function Components(props) {
+	const { t } = useTranslation();
+	const { lang } = useParams();
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(state => state.isLoading);
 	const [searchFormFields, setSearchFormFields] = useState({
@@ -173,14 +240,18 @@ function Components(props) {
 				<Row>
 					<Col lg={12}>
 						<div className="d-flex flex-wrap-reverse justify-content-between">
-							<h3>Search Instrument</h3>
-							<h3 className="text-muted">(Two Instrument Analizer)</h3>
+							<h3>{t("searchInstrument")}</h3>
+							<h3 className="text-muted">
+								{t("twoInstrumentsAnalizersubTitle")}
+							</h3>
 						</div>
 						<div>
 							<div className="form-group mb-2">
 								{secTypes && secTypes.length ? (
 									<div>
-										<label className="mb-1 fw-500">Choose Security Type*</label>
+										<label className="mb-1 fw-500">
+											{t("searchSecurityType")}*
+										</label>
 										<ReactSelectOption
 											value={searchFormFields.secType}
 											isSearchable={true}
@@ -217,7 +288,7 @@ function Components(props) {
 								<label
 									className="form-check-label cursor-pointer fw-500"
 									htmlFor="flexCheckDefault">
-									Search by Compamy Name
+									{t("searchByCompamyName")}
 								</label>
 							</div>
 
@@ -225,7 +296,7 @@ function Components(props) {
 								{!searchFormFields.name ? (
 									<div className="form-group">
 										<label htmlFor="symbol" className="mb-1 fw-500">
-											Symbol*
+											{t("symbol")}*
 										</label>
 										<input
 											type="text"
@@ -243,7 +314,7 @@ function Components(props) {
 								) : (
 									<div className="form-group">
 										<label htmlFor="companyName" className="mb-1 fw-500">
-											Company Name*
+											{t("companyName")}*
 										</label>
 										<input
 											type="text"
@@ -262,12 +333,14 @@ function Components(props) {
 							</div>
 						</div>
 						{firstData && (
-							<Row>
-								<h4>First instrument*</h4>
+							<Row className="mt-4">
+								<h4>{t("twoInstrumentsAnalizerFirstInstrument")}*</h4>
 								<Col lg={12}>
 									<Card className="card">
 										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-											<h5>Compamy name &rarr; {firstData?.companyName}</h5>
+											<h5>
+												{t("companyName")} &rarr; {firstData?.companyName}
+											</h5>
 											<Button
 												onClick={() => {
 													setFirstdata(null);
@@ -282,13 +355,13 @@ function Components(props) {
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												Price &rarr; {firstData?.price}
+												{t("price")} &rarr; {firstData?.price}
 											</li>
 											<li className="list-group-item">
-												Date &rarr; {firstData?.priceDate}
+												{t("date")} &rarr; {firstData?.priceDate}
 											</li>
 											<li className="list-group-item">
-												Id &rarr; {firstData?.conId}
+												{t("conid")} &rarr; {firstData?.conId}
 											</li>
 										</ul>
 									</Card>
@@ -296,19 +369,19 @@ function Components(props) {
 							</Row>
 						)}
 						{securities && securities.length && !firstData ? (
-							<div className="mt-3">
-								<h4>First instrument*</h4>
+							<div className="mt-4">
+								<h4>{t("twoInstrumentsAnalizerFirstInstrument")}*</h4>
 								<Table
 									responsive
 									className="table table-striped mb-0 border rounded">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
-											<th className="nowrap">Company Name</th>
-											<th className="nowrap">Symbol</th>
-											<th className="nowrap">Market</th>
-											<th className="nowrap">Conid</th>
-											<th className="nowrap">Choose</th>
+											<th className="nowrap">{t("companyName")}</th>
+											<th className="nowrap">{t("symbol")}</th>
+											<th className="nowrap">{t("market")}</th>
+											<th className="nowrap">{t("conid")}</th>
+											<th className="nowrap">{t("choose")}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -337,13 +410,13 @@ function Components(props) {
 															.finally(() => {
 																dispatch(setIsLoading(false));
 															});
+														setSearchFormFields(prevFields => ({
+															...prevFields,
+															// symbol: "",
+														}));
 														setAnalizeInstrumentFormFields(prevFields => ({
 															...prevFields,
 															conId1: item.conId,
-														}));
-														setSearchFormFields(prevFields => ({
-															...prevFields,
-															symbol: "",
 														}));
 													}}>
 													<td className="fw-500 w-25">
@@ -390,10 +463,6 @@ function Components(props) {
 																			conId1: item.conId,
 																		}),
 																	);
-																	setSearchFormFields(prevFields => ({
-																		...prevFields,
-																		symbol: "",
-																	}));
 																}}
 															/>
 														</div>
@@ -405,13 +474,40 @@ function Components(props) {
 								</Table>
 							</div>
 						) : null}
+
+						{analizeInstrumentFormFields.conId1 &&
+							analizeInstrumentFormFields.conId2 && (
+								<div className="d-flex justify-content-center w-100 my-2">
+									<Button
+										variant="light"
+										onClick={() => {
+											const cloneFirstData = firstData;
+											const cloneSecondData = secondData;
+											const cloneSecurities = securities;
+											const _cloneSecurities = _securities;
+											setSecurities(_cloneSecurities);
+											_setSecurities(cloneSecurities);
+											setFirstdata(cloneSecondData);
+											setSecondData(cloneFirstData);
+											setAnalizeInstrumentFormFields(prev => ({
+												...prev,
+												conId2: prev.conId1,
+												conId1: prev.conId2,
+											}));
+										}}>
+										<Arrow style={{ width: 40, height: 40 }} />
+									</Button>
+								</div>
+							)}
 						{secondData && (
 							<Row>
-								<h4>Second instrument*</h4>
+								<h4>{t("twoInstrumentsAnalizerSecondInstrument")}*</h4>
 								<Col lg={12}>
 									<Card className="card">
 										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-											<h5>Compamy name &rarr; {secondData?.companyName}</h5>
+											<h5>
+												{t("companyName")} &rarr; {secondData?.companyName}
+											</h5>
 											<Button
 												onClick={() => {
 													setSecondData(null);
@@ -426,13 +522,13 @@ function Components(props) {
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												Price &rarr; {secondData?.price}
+												{t("price")} &rarr; {firstData?.price}
 											</li>
 											<li className="list-group-item">
-												Date &rarr; {secondData?.priceDate}
+												{t("date")} &rarr; {firstData?.priceDate}
 											</li>
 											<li className="list-group-item">
-												Id &rarr; {secondData?.conId}
+												{t("conid")} &rarr; {firstData?.conId}
 											</li>
 										</ul>
 									</Card>
@@ -441,16 +537,16 @@ function Components(props) {
 						)}
 						{_securities && _securities.length && !secondData ? (
 							<div className="mt-3">
-								<h4>Second instrument*</h4>
+								<h4>{t("twoInstrumentsAnalizerSecondInstrument")}*</h4>
 								<Table responsive className="table table-striped border mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
-											<th className="nowrap">Company Name</th>
-											<th className="nowrap">Symbol</th>
-											<th className="nowrap">Market</th>
-											<th className="nowrap">Conid</th>
-											<th className="nowrap">Choose</th>
+											<th className="nowrap">{t("companyName")}</th>
+											<th className="nowrap">{t("symbol")}</th>
+											<th className="nowrap">{t("market")}</th>
+											<th className="nowrap">{t("conid")}</th>
+											<th className="nowrap">{t("choose")}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -480,10 +576,6 @@ function Components(props) {
 														setAnalizeInstrumentFormFields(prevFields => ({
 															...prevFields,
 															conId2: item.conId,
-														}));
-														setSearchFormFields(prevFields => ({
-															...prevFields,
-															symbol: "",
 														}));
 													}}>
 													<td className="fw-500 w-25">
@@ -523,18 +615,7 @@ function Components(props) {
 																		? true
 																		: false
 																}
-																onChange={() => {
-																	setAnalizeInstrumentFormFields(
-																		prevFields => ({
-																			...prevFields,
-																			conId2: item.conId,
-																		}),
-																	);
-																	setSearchFormFields(prevFields => ({
-																		...prevFields,
-																		symbol: "",
-																	}));
-																}}
+																onChange={() => {}}
 															/>
 														</div>
 													</td>
@@ -555,7 +636,7 @@ function Components(props) {
 										<Col md={6}>
 											<div className="form-group mb-2">
 												<label htmlFor="startDate" className="mb-1 fw-500">
-													Start Date
+													{t("startDate")}
 												</label>
 												<input
 													type="date"
@@ -574,7 +655,7 @@ function Components(props) {
 										<Col md={6}>
 											<div className="form-group mb-2">
 												<label htmlFor="endDate" className="mb-1 fw-500">
-													End Date
+													{t("endDate")}
 												</label>
 												<input
 													type="date"
@@ -594,7 +675,7 @@ function Components(props) {
 									<div className="form-group mb-2">
 										{barTypes && barTypes.length ? (
 											<div>
-												<label className="mb-1 fw-500">Choose Bar*</label>
+												<label className="mb-1 fw-500">{t("chooseBar")}*</label>
 												<ReactSelectOption
 													value={analizeInstrumentFormFields.bar}
 													isSearchable={true}
@@ -610,14 +691,22 @@ function Components(props) {
 															selectedItem.value = selectedItem.name;
 															return selectedItem;
 														} else {
-															return { value: null, label: "Choose" };
+															return { value: null, label: t("choose") };
 														}
 													})()}
-													items={barTypes.map(data => ({
-														...data,
-														label: data.id,
-														value: data.name,
-													}))}
+													items={
+														lang === "ru"
+															? barTypesRu.map(data => ({
+																	...data,
+																	label: data.id,
+																	value: data.name,
+															  }))
+															: barTypes.map(data => ({
+																	...data,
+																	label: data.id,
+																	value: data.name,
+															  }))
+													}
 													onChange={item =>
 														onSelectOptionChange(
 															item,
@@ -631,7 +720,7 @@ function Components(props) {
 									</div>
 									<div className="form-group mb-2">
 										<label htmlFor="ratio" className="mb-1 fw-500">
-											Ratio*
+											{t("ratio")}*
 										</label>
 										<input
 											type="number"
@@ -656,10 +745,10 @@ function Components(props) {
 								<thead>
 									<tr className="cursor-default">
 										<th className="nowrap">#</th>
-										<th className="nowrap">Date</th>
-										<th className="nowrap">Price 1</th>
-										<th className="nowrap">Price 2</th>
-										<th className="nowrap">Computed Ratio</th>
+										<th className="nowrap">{t("date")}</th>
+										<th className="nowrap">{t("price")} 1</th>
+										<th className="nowrap">{t("price")} 2</th>
+										<th className="nowrap">{t("computedRatio")}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -710,7 +799,7 @@ function Components(props) {
 									isLoading
 								}
 								onClick={analizeData}>
-								Analize
+								{t("analize")}
 							</button>
 						</div>
 					</Col>

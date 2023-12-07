@@ -1,6 +1,5 @@
 import React from "react";
-import { Col, Row, Card } from "react-bootstrap";
-import CardHeader from "react-bootstrap/esm/CardHeader";
+import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import OneInstrumentAnalyze from "../assets/OneInstrumentAnalyze.png";
 import OneInstrumentNotification from "../assets/OneInstrumentNotification.png";
@@ -8,11 +7,13 @@ import PriceChangeNotification from "../assets/PriceChangeNotification.png";
 import TwoInstrumentAnalyzes from "../assets/TwoInstrumentAnalyzes.png";
 import TwoInstrumentNotification from "../assets/TwoInstrumentNotification.png";
 import { newPath } from "../helper";
+import { useTranslation } from "react-i18next";
 
 export default function Home(props) {
+	const { t } = useTranslation();
 	return (
 		<div>
-			<main role="main">
+			<main role="main pb-4">
 				<Row style={{ paddingTop: 80 }}>
 					<Col lg={6} className="h-100 my-2">
 						<div
@@ -33,14 +34,8 @@ export default function Home(props) {
 									className="btn btn-outline-dark btn-lg m-1"
 									to={newPath("/one-instrument-analizer")}
 									role="button">
-									One Instrument Analizer
+									{t("oneInstrumentAnalizerLink")}
 								</Link>
-								{/* <Link
-										className="btn btn-primary btn-lg m-1"
-										to="/two-instruments-analizer"
-										role="button">
-										Two Instruments Analizer »
-									</Link> */}
 							</div>
 						</div>
 					</Col>
@@ -62,14 +57,8 @@ export default function Home(props) {
 									className="btn btn-outline-dark btn-lg m-1"
 									to={newPath("/two-instruments-analizer")}
 									role="button">
-									Two Instruments Analizer
+									{t("twoInstrumentsAnalizerLink")}
 								</Link>
-								{/* <Link
-										className="btn btn-primary btn-lg m-1"
-										to="/two-instruments-analizer"
-										role="button">
-										Two Instruments Analizer »
-									</Link> */}
 							</div>
 						</div>
 					</Col>
@@ -91,14 +80,8 @@ export default function Home(props) {
 									className="btn btn-outline-dark btn-lg m-1"
 									to={newPath("/notify-for-one-instrument")}
 									role="button">
-									Notify for one instrument
+									{t("notifyForOneInstrumentLink")}
 								</Link>
-								{/* <Link
-										className="btn btn-primary btn-lg m-1"
-										to="/two-instruments-analizer"
-										role="button">
-										Two Instruments Analizer »
-									</Link> */}
 							</div>
 						</div>
 					</Col>
@@ -120,14 +103,8 @@ export default function Home(props) {
 									className="btn btn-outline-dark btn-lg m-1"
 									to={newPath("/notify-for-two-instruments")}
 									role="button">
-									Notify for two instruments
+									{t("notifyForTwoInstrumentsLink")}
 								</Link>
-								{/* <Link
-										className="btn btn-primary btn-lg m-1"
-										to="/two-instruments-analizer"
-										role="button">
-										Two Instruments Analizer »
-									</Link> */}
 							</div>
 						</div>
 					</Col>

@@ -9,19 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { newPath, onNumberChange, onSelectOptionChange } from "../helper";
 import { IoCloseSharp } from "react-icons/io5";
-
-const directions = [
-	{
-		id: "Positive",
-		name: true,
-	},
-	{
-		id: "Negative",
-		name: false,
-	},
-];
+import { useTranslation } from "react-i18next";
+import Switch from "../Components/Switch";
 
 export default function Components(props) {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(state => state.isLoading);
 
@@ -98,12 +90,12 @@ export default function Components(props) {
 	};
 	return (
 		<>
-			<section style={{ marginTop: "80px", marginBottom: "80px" }}>
+			<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 				<Row>
 					<Col lg={12}>
-						<div className="d-flex flex-wrap-reverse justify-content-between">
-							<h3>Search Instrument</h3>
-							<h3 className="text-muted">(Notify for one price form)</h3>
+						<div className="d-flex flex-wrap-reverse justify-content-between mb-3">
+							<h3>{t("searchInstrument")}</h3>
+							<h3 className="text-muted">{t("priceChangeNotifier")}</h3>
 						</div>
 						{!itemId ? (
 							<div>
@@ -111,7 +103,7 @@ export default function Components(props) {
 									{secTypes && secTypes.length && (
 										<div>
 											<label className="mb-1 fw-500">
-												Choose Security Type*
+												{t("searchSecurityType")}
 											</label>
 											<ReactSelectOption
 												value={searchFormFields.secType}
@@ -150,7 +142,7 @@ export default function Components(props) {
 									<label
 										className="form-check-label cursor-pointer fw-500"
 										htmlFor="flexCheckDefault">
-										Search by Compamy Name
+										{t("searchByCompamyName")}
 									</label>
 								</div>
 
@@ -158,7 +150,7 @@ export default function Components(props) {
 									{!searchFormFields.name ? (
 										<div className="form-group">
 											<label htmlFor="symbol" className="mb-1 fw-500">
-												Symbol*
+												{t("symbol")}*
 											</label>
 											<input
 												type="text"
@@ -176,7 +168,7 @@ export default function Components(props) {
 									) : (
 										<div className="form-group">
 											<label htmlFor="companyName" className="mb-1 fw-500">
-												Company Name*
+												{t("companyName")}*
 											</label>
 											<input
 												type="text"
@@ -200,29 +192,32 @@ export default function Components(props) {
 								<Col lg={12}>
 									<Card className="card">
 										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-											<h5>Compamy name &rarr; {fields?.name}</h5>
+											<h5>
+												{t("companyName")} &rarr; {fields?.name}
+											</h5>
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												Price &rarr; {fields?.price}
+												{t("price")} &rarr; {fields?.price}
 											</li>
 											<li className="list-group-item">
-												Desired price &rarr; {fields?.desiredPrice}
+												{t("desiredPrice")} &rarr; {fields?.desiredPrice}
 											</li>
 											<li className="list-group-item">
-												Desired percent &rarr; {fields?.desiredPercent}
+												{t("desiredPercentage")} &rarr; {fields?.desiredPercent}
 											</li>
 											<li className="list-group-item">
-												Undesired price &rarr; {fields?.undesiredPrice}
+												{t("undesiredPrice")} &rarr; {fields?.undesiredPrice}
 											</li>
 											<li className="list-group-item">
-												Undesired percent &rarr; {fields?.undesiredPercent}
+												{t("undesiredPercentage")} &rarr;{" "}
+												{fields?.undesiredPercent}
 											</li>
 											<li className="list-group-item">
-												Date &rarr; {fields?.priceDate}
+												{t("date")} &rarr; {fields?.priceDate}
 											</li>
 											<li className="list-group-item">
-												Id &rarr; {fields?.conId}
+												{t("conid")} &rarr; {fields?.conId}
 											</li>
 										</ul>
 									</Card>
@@ -235,7 +230,9 @@ export default function Components(props) {
 								<Col lg={12}>
 									<Card className="card">
 										<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-											<h5>Compamy name &rarr; {data?.companyName}</h5>
+											<h5>
+												{t("companyName")} &rarr; {data?.companyName}
+											</h5>
 											<Button
 												onClick={() => {
 													setData(null);
@@ -253,13 +250,13 @@ export default function Components(props) {
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												Price &rarr; {data?.price}
+												{t("price")} &rarr; {data?.price}
 											</li>
 											<li className="list-group-item">
-												Date &rarr; {data?.priceDate}
+												{t("date")} &rarr; {data?.priceDate}
 											</li>
 											<li className="list-group-item">
-												Id &rarr; {data?.conId}
+												{t("conid")} &rarr; {data?.conId}
 											</li>
 										</ul>
 									</Card>
@@ -272,11 +269,11 @@ export default function Components(props) {
 								<thead>
 									<tr className="cursor-default">
 										<th className="nowrap">#</th>
-										<th className="nowrap">Company Name</th>
-										<th className="nowrap">Symbol</th>
-										<th className="nowrap">Market</th>
-										<th className="nowrap">Conid</th>
-										<th className="nowrap">Choose</th>
+										<th className="nowrap">{t("companyName")}</th>
+										<th className="nowrap">{t("symbol")}</th>
+										<th className="nowrap">{t("market")}</th>
+										<th className="nowrap">{t("conid")}</th>
+										<th className="nowrap">{t("choose")}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -367,7 +364,7 @@ export default function Components(props) {
 								<div className="mb-4">
 									<div className="form-group mb-2">
 										<label htmlFor="changePercentage" className="mb-1 fw-500">
-											Desired Percentage*
+											{t("desiredPercentage")}*
 										</label>
 										<input
 											type="number"
@@ -388,7 +385,7 @@ export default function Components(props) {
 										<label
 											htmlFor="deviationPercentage"
 											className="mb-1 fw-500">
-											Undesired Percentage*
+											{t("undesiredPercentage")}*
 										</label>
 										<input
 											type="number"
@@ -409,7 +406,7 @@ export default function Components(props) {
 										<label
 											htmlFor="deviationPercentage"
 											className="mb-1 fw-500">
-											Price
+											{t("price")}
 										</label>
 										<input
 											type="number"
@@ -429,28 +426,18 @@ export default function Components(props) {
 										<label
 											htmlFor="deviationPercentage"
 											className="mb-1 fw-500">
-											Direction
+											{t("direction")}
 										</label>
 										<div className="custom-control custom-checkbox">
-											<input
-												type="checkbox"
-												className="custom-control-input mr-2"
-												id="customCheck1"
-												checked={
-													analizeInstrumentFormFields.direction ? true : false
-												}
-												onChange={e => {
+											<Switch
+												isOn={analizeInstrumentFormFields?.direction}
+												handleToggle={() => {
 													setAnalizeInstrumentFormFields(prev => ({
 														...prev,
-														direction: e.target.checked,
+														direction: !prev.direction,
 													}));
 												}}
 											/>
-											<label
-												className="custom-control-label"
-												htmlFor="customCheck1">
-												Positive
-											</label>
 										</div>
 									</div>
 								</div>

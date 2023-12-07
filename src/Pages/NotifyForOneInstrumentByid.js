@@ -4,8 +4,11 @@ import { Row, Col, Table, Card } from "react-bootstrap";
 import Api from "../Api";
 import { useLoaderData, Link } from "react-router-dom";
 import { convertDateFormat, newPath } from "../helper";
+import { useTranslation } from "react-i18next";
+import { DowenTable, UpTable } from "../assets";
 
 export default function Components(props) {
+	const { t } = useTranslation();
 	const data = useLoaderData();
 	return (
 		<>
@@ -13,56 +16,70 @@ export default function Components(props) {
 				<Row>
 					<Col lg={12}>
 						<div className="mb-3">
+							<div className="d-flex flex-wrap-reverse justify-content-between mb-2">
+								<h3 className="text-muted">
+									{t("notifyForOneInstrumentItem")}
+								</h3>
+							</div>
 							<Link
 								className="btn btn-primary btn-sm btn-lg px-3"
 								to={newPath("/notify-for-one-instrument")}
 								role="button">
-								Back
+								{t("back")}
 							</Link>
 						</div>
 						<Card className="card">
 							<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-								<h5>Compamy name &rarr; {data.name}</h5>
+								<h5>
+									{t("companyName")} &rarr; {data.name}
+								</h5>
 							</Card.Header>
 							<ul className="list-group not_rounded">
 								<li className="list-group-item">
-									Contract Id &rarr; {data.conId}
+									{t("conid")} &rarr; {data.conId}
 								</li>
 								<li className="list-group-item">
-									Deviation Percentage &rarr; {data.deviationPercentage}
+									{t("deviationPercentage")} &rarr; {data.deviationPercentage}
 								</li>
 								<li className="list-group-item">
-									Change Percentage &rarr; {data.changePercentage}
+									{t("changePercentage")} &rarr; {data.changePercentage}
 								</li>
 								<li className="list-group-item">
-									Direction &rarr; {data.direction ? "Positive" : "Negative"}
+									{t("direction")} &rarr;
+									{data.direction ? (
+										<UpTable style={{ width: 20, height: 20 }} />
+									) : (
+										<DowenTable style={{ width: 20, height: 20 }} />
+									)}
 								</li>
 								<li className="list-group-item">
-									Start price &rarr; {data.startPrice}
+									{t("startPrice")} &rarr; {data.startPrice}
 								</li>
 								<li className="list-group-item">
-									Start Price Date &rarr;{" "}
+									{t("startDate")} &rarr;{" "}
 									{convertDateFormat(data.startPriceDate)}
 								</li>
 							</ul>
 						</Card>
 						<div className="mt-2">
-							<b>One Instrument Notifications</b>
+							<b>{t("notifyForOneInstrumentItem")}</b>
 							{data.oneInstrumentNotifications &&
 							data.oneInstrumentNotifications.length ? (
 								<Table responsive className="table table-striped mt-2 mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
-											<th className="nowrap">Start Price</th>
-											<th className="nowrap">DesiredC hange Price</th>
-											<th className="nowrap">Desired Deviation Price</th>
-											<th className="nowrap">Actual Change Price </th>
-											<th className="nowrap">Actual Change Percentage</th>
-											<th className="nowrap">Actual Deviation Price</th>
-											<th className="nowrap">Actual Deviation Percentage </th>
-											<th className="nowrap">Change Date </th>
-											<th className="nowrap">Deviation Date</th>
+											<th className="nowrap">{t("startPrice")}</th>
+											<th className="nowrap">{t("desiredChangePrice")}</th>
+											<th className="nowrap">{t("desiredDeviationPrice")}</th>
+											<th className="nowrap">{t("actualChangePrice")}</th>
+											<th className="nowrap">{t("actualChangePercentage")}</th>
+											<th className="nowrap">{t("actualDeviationPrice")}</th>
+											<th className="nowrap">
+												{t("actualDeviationPercentage")}
+											</th>
+											<th className="nowrap">{t("changeDate")}</th>
+											<th className="nowrap">{t("deviationDate")}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -124,7 +141,7 @@ export default function Components(props) {
 							) : (
 								<div className="text-center mt-3">
 									<p>
-										<b>There is no notifiers yet</b>
+										<b>{t("notNotIfy")}</b>
 									</p>
 								</div>
 							)}

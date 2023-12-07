@@ -5,57 +5,66 @@ import Api from "../Api";
 import { useLoaderData, Link } from "react-router-dom";
 
 import { convertDateFormat, newPath } from "../helper";
+import { useTranslation } from "react-i18next";
 
 export default function Components(props) {
 	const data = useLoaderData();
+	const { t } = useTranslation();
 	return (
 		<>
 			<section style={{ marginTop: "80px", marginBottom: "80px" }}>
 				<Row>
 					<Col lg={12}>
 						<div className="mb-3">
+							<div className="d-flex flex-wrap-reverse justify-content-between mb-2">
+								<h3 className="text-muted">{t("priceChangeNotifier")}</h3>
+							</div>
 							<Link
 								className="btn btn-primary btn-sm btn-lg px-3"
 								to={newPath("/notify-for-price")}
 								role="button">
-								Back
+								{t("back")}
 							</Link>
 						</div>
 						<Card className="card">
 							<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-								<h5>Compamy name &rarr; {data.name}</h5>
+								<h5>
+									{t("companyName")} &rarr; {data.name}
+								</h5>
 							</Card.Header>
 							<ul className="list-group not_rounded">
 								<li className="list-group-item">Price &rarr; {data.price}</li>
 								<li className="list-group-item">
-									Desired price &rarr; {data.desiredPrice}
+									{t("desiredPrice")} &rarr; {data.desiredPrice}
 								</li>
 								<li className="list-group-item">
-									Desired percent &rarr; {data.desiredPercent}
+									{t("desiredPercentage")} &rarr; {data.desiredPercent}
 								</li>
 								<li className="list-group-item">
-									Undesired price &rarr; {data.undesiredPrice}
+									{t("undesiredPrice")} &rarr; {data.undesiredPrice}
 								</li>
 								<li className="list-group-item">
-									Undesired percent &rarr; {data.undesiredPercent}
+									{t("undesiredPercentage")} &rarr; {data.undesiredPercent}
 								</li>
 								<li className="list-group-item">
-									Date &rarr; {data.priceDate}
+									{t("date")} &rarr; {data.priceDate}
 								</li>
-								<li className="list-group-item">Id &rarr; {data.conId}</li>
+								<li className="list-group-item">
+									{t("conid")} &rarr; {data.conId}
+								</li>
 							</ul>
 						</Card>
 						<div className="mt-2">
-							<b>Price Change Notifications</b>
+							<b>{t("priceChangeNotifications")}</b>
 							{data.priceChangeNotifications &&
 							data.priceChangeNotifications.length ? (
 								<Table responsive className="table table-striped mt-2 mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
-											<th className="nowrap">Actual Change Price</th>
-											<th className="nowrap">Actual Change Percent</th>
-											<th className="nowrap">Change Date</th>
+											<th className="nowrap">{t("actualChangePrice")}</th>
+											<th className="nowrap">{t("actualChangePercentage")}</th>
+											<th className="nowrap">{t("changeDate")}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -92,7 +101,7 @@ export default function Components(props) {
 							) : (
 								<div className="text-center mt-3">
 									<p>
-										<b>There is no notifiers yet</b>
+										<b>{t("notNotIfy")}</b>
 									</p>
 								</div>
 							)}

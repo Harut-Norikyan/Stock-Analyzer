@@ -5,8 +5,10 @@ import logo from "../assets/Logo.png";
 import { Dropdown } from "react-bootstrap";
 import { Ru, Uk } from "../assets";
 import { newPath } from "../helper";
+import { useTranslation } from "react-i18next";
 
-export default function (props) {
+export default function Header(props) {
+	const { i18n } = useTranslation();
 	const navigation = useNavigation();
 	const { isLoading } = useSelector(state => state.isLoading);
 	const elementRef = useRef(null);
@@ -32,6 +34,9 @@ export default function (props) {
 		<>
 			<nav
 				className="navbar navbar-expand-md navbar-dark fixed-top bg-dark px-3"
+				style={{
+					height: "55px",
+				}}
 				ref={elementRef}>
 				<div className="container d-flex justify-content-between align-items-center text-white py-1 flex-wrap">
 					<Link className="navbar-brand" to={`/${lang}`}>
@@ -56,33 +61,27 @@ export default function (props) {
 							)}
 						</Dropdown.Toggle>
 
-						{/* <Dropdown.Menu style={{ minWidth: "100%" }}>
+						<Dropdown.Menu style={{ minWidth: "100%" }}>
 							{lang === "ru" ? (
 								<Dropdown.Item
 									onClick={() => {
-										navigate(newPath("", "uk"));
+										i18n.changeLanguage("en");
+										navigate(newPath("", "en"));
 									}}>
 									<Uk style={{ height: 20, width: 20 }} />
 								</Dropdown.Item>
 							) : (
 								<Dropdown.Item
 									onClick={() => {
+										i18n.changeLanguage("ru");
 										navigate(newPath("", "ru"));
 									}}>
 									<Ru style={{ height: 20, width: 20 }} />
 								</Dropdown.Item>
 							)}
-						</Dropdown.Menu> */}
+						</Dropdown.Menu>
 					</Dropdown>
 				</div>
-
-				{/* <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item active">
-              <Link className="nav-link" to="/stock-analize">Stock Analize</Link>
-            </li>
-          </ul>
-        </div> */}
 			</nav>
 			{(navigation.state !== "idle" || isLoading) && (
 				<div className="loader-line" style={{ top: elementHeight }}></div>
