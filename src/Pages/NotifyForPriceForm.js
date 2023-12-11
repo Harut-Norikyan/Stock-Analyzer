@@ -4,7 +4,7 @@ import { useDebounce } from "use-debounce";
 import { useEffect } from "react";
 import { Row, Col, Table, Button, Card } from "react-bootstrap";
 import Api from "../Api";
-import { useParams, useNavigate, useLoaderData } from "react-router-dom";
+import { useParams, useNavigate, useLoaderData, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { newPath, onNumberChange, onSelectOptionChange } from "../helper";
@@ -97,6 +97,12 @@ export default function Components(props) {
 							<h3>{t("searchInstrument")}</h3>
 							<h3 className="text-muted">{t("priceChangeNotifier")}</h3>
 						</div>
+						<Link
+							className="btn btn-primary btn-sm btn-lg px-3 mb-3"
+							to={newPath("/notify-for-price")}
+							role="button">
+							{t("back")}
+						</Link>
 						{!itemId ? (
 							<div>
 								<div className="form-group mb-2">
@@ -135,7 +141,6 @@ export default function Components(props) {
 											setSearchFormFields(values => ({
 												...values,
 												name: event.target.checked,
-												symbol: "",
 											}));
 										}}
 									/>
@@ -147,43 +152,23 @@ export default function Components(props) {
 								</div>
 
 								<div className="form-group mb-2">
-									{!searchFormFields.name ? (
-										<div className="form-group">
-											<label htmlFor="symbol" className="mb-1 fw-500">
-												{t("symbol")}*
-											</label>
-											<input
-												type="text"
-												className="form-control"
-												id="symbol"
-												value={searchFormFields.symbol}
-												onChange={event => {
-													setSearchFormFields(values => ({
-														...values,
-														symbol: event.target.value,
-													}));
-												}}
-											/>
-										</div>
-									) : (
-										<div className="form-group">
-											<label htmlFor="companyName" className="mb-1 fw-500">
-												{t("companyName")}*
-											</label>
-											<input
-												type="text"
-												className="form-control"
-												id="companyName"
-												value={searchFormFields.symbol}
-												onChange={event => {
-													setSearchFormFields(values => ({
-														...values,
-														symbol: event.target.value,
-													}));
-												}}
-											/>
-										</div>
-									)}
+									<div className="form-group">
+										<label htmlFor="symbol" className="mb-1 fw-500">
+											{!searchFormFields.name ? t("symbol") : t("companyName")}*
+										</label>
+										<input
+											type="text"
+											className="form-control"
+											id="symbol"
+											value={searchFormFields.symbol}
+											onChange={event => {
+												setSearchFormFields(values => ({
+													...values,
+													symbol: event.target.value,
+												}));
+											}}
+										/>
+									</div>
 								</div>
 							</div>
 						) : null}
@@ -265,7 +250,7 @@ export default function Components(props) {
 						)}
 
 						{securities && securities.length && !itemId && !data ? (
-							<Table responsive className="table table-striped mb-0">
+							<Table responsive striped bordered className=" mb-0">
 								<thead>
 									<tr className="cursor-default">
 										<th className="nowrap">#</th>

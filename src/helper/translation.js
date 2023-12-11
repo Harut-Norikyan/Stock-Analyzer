@@ -16,6 +16,8 @@ const en = {
 	twoInstrumentsAnalizerFirstInstrument: "First instrument",
 	twoInstrumentsAnalizerSecondInstrument: "Second instrument",
 	companyName: "Company Name",
+	firstCompanyName: "First Company Name",
+	secondSompanyName: "Second Company Name",
 	date: "Date",
 	contractId: "Contract Id",
 	title: "Are you sure ?",
@@ -79,8 +81,12 @@ const en = {
 	oneInstrumentNotifications: "One Instrument Notifications",
 	priceChangeNotifier: "Price Change Notifier",
 	priceChangeNotifications: "Price Change Notifications",
+	notifyForTwoPriceLinkTwo: "Notify for two price",
 };
 const ru = {
+	firstCompanyName: "Первое название компании",
+	secondSompanyName: "Второе название компании",
+	notifyForTwoPriceLinkTwo: "Уведомление об изменении двух цен",
 	deviationDate: "Дата отклонения",
 	notifyForTwoInstrumentsForm: "Уведомление для двух инструментов",
 	oneInstrumentAnalizerLink: "Анализатор Одного Инструмента",
@@ -107,7 +113,7 @@ const ru = {
 	deviationPercentage: "Процент отклонения",
 	changePercentage: "Процент изменения",
 	direction: "Направление",
-	startPrice: "Начальная цена",
+	startPrice: "Стартовая цена",
 	startDatePrice: "Start Price Date",
 	price: "Цена",
 	ratio: "Коэффициент",
@@ -128,7 +134,7 @@ const ru = {
 	undesiredPercentage: "Нежелательный процент",
 	undesiredPrice: "Нежелательная цена",
 	priceDate: "Дата цены",
-	computedRatio: "Вычисленное соотношение",
+	computedRatio: "Соотношение",
 	analize: "Анализировать",
 	createNotify: "Создать уведомление",
 	back: "Назад",
@@ -138,23 +144,22 @@ const ru = {
 	notifyForOneInstrumentTitle: "Уведомления для одного инструмента",
 	notifyForOneInstrumentItem: "Уведомление для одного инструмента",
 	searchInstrument: "Поиск Инструмента",
-	notifyForOneInstrumentFormSubTitle:
-		"Форма Уведомление для одного инструмента",
+	notifyForOneInstrumentFormSubTitle: "Уведомление для одного инструмента",
 	notifyForTwoInstrumentsTitle: "Уведомление для двух инструментов",
 	market: "Рынок",
 	conid: "Контракт Id",
 	choose: "Выбрать",
-	startingPrice: "Начальная цена",
-	startingDateTime: "Дата начала времени",
-	changedPrice: "Изменения цены",
-	changedDateTime: "Изменения даты времени",
+	startingPrice: "Стартовая цена",
+	startingDateTime: "Дата старта",
+	changedPrice: "Измененая цена",
+	changedDateTime: "Дата измененной цены",
 	сhangedPercent: "Изменения процентов",
 	deviationedPrice: "Отклоненная цена",
-	deviationedDateTime: "Отклонение даты и времени",
+	deviationedDateTime: "Дата отклоненой цены",
 	deviationedPercent: "Отклонение процентов",
 	edit: "Редактировать",
-	delete: "Удалите",
-	notNotIfy: "Уведомителей пока нет",
+	delete: "Удалить",
+	notNotIfy: "Уведомленей пока нет",
 	update: "Обновить",
 	create: "Создать",
 	oneInstrumentNotifications: "One Instrument Notifications",
@@ -163,15 +168,9 @@ const ru = {
 };
 
 i18n
-	// detect user language
-	// learn more: https://github.com/i18next/i18next-browser-languageDetector
 	.use(LanguageDetector)
-	// pass the i18n instance to react-i18next.
 	.use(initReactI18next)
-	// init i18next
-	// for all options read: https://www.i18next.com/overview/configuration-options
 	.init({
-		debug: true,
 		fallbackLng: "ru",
 		interpolation: {
 			escapeValue: false, // not needed for react as it escapes by default

@@ -42,15 +42,29 @@ export default function Components(props) {
 				<div className="d-flex flex-wrap-reverse justify-content-between mb-2">
 					<h3 className="text-muted">{t("priceChangeNotifier")}</h3>
 				</div>
-				<Link
-					className="btn btn-primary btn-sm btn-lg px-3"
-					to={newPath("/notify-for-price/form")}
-					role="button">
-					{t("createNotify")}
-				</Link>
+				<div className="d-flex gap-3 mb-3">
+					<Link
+						className="btn btn-primary btn-sm btn-lg px-3"
+						to={newPath(" ")}
+						role="button">
+						{t("back")}
+					</Link>
+					<Link
+						className="btn btn-primary btn-sm btn-lg px-3"
+						to={newPath("/notify-for-price/form")}
+						role="button">
+						{t("createNotify")}
+					</Link>
+				</div>
 			</div>
 			{deletedItemId ? (
-				<Modal size="sm" show={true} centered>
+				<Modal
+					size="sm"
+					show={true}
+					onHide={() => {
+						setDeletedItemId(false);
+					}}
+					centered>
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">
 							{t("title")}
@@ -75,7 +89,7 @@ export default function Components(props) {
 			<Row>
 				<Col lg={12}>
 					{allOneInstrumentNotifiers && allOneInstrumentNotifiers.length ? (
-						<Table responsive className="table table-striped mb-0">
+						<Table responsive striped bordered className=" mb-0">
 							<thead>
 								<tr className="cursor-default">
 									<th className="nowrap">#</th>

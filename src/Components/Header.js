@@ -38,7 +38,7 @@ export default function Header(props) {
 					height: "55px",
 				}}
 				ref={elementRef}>
-				<div className="container d-flex justify-content-between align-items-center text-white py-1 flex-wrap">
+				<div className="container-xxl d-flex justify-content-between align-items-center text-white py-1 flex-wrap">
 					<Link className="navbar-brand" to={`/${lang}`}>
 						<img alt="/" style={{ height: 40 }} src={logo} />
 					</Link>

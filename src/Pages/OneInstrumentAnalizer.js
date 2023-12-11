@@ -6,15 +6,78 @@ import { Row, Col, Table, Card, Button } from "react-bootstrap";
 import Api from "../Api";
 import {
 	convertDateFormat,
+	newPath,
 	onNumberChange,
 	onSelectOptionChange,
 } from "../helper";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { IoCloseSharp } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import Switch from "../Components/Switch";
+const barTypesRu = [
+	{
+		id: "1 Минута",
+		name: "1min",
+	},
+	{
+		id: "2 Минутаы",
+		name: "2min",
+	},
+	{
+		id: "3 Минутаы",
+		name: "3min",
+	},
+	{
+		id: "5 Минуты",
+		name: "5min",
+	},
+	{
+		id: "10 Минут",
+		name: "10min",
+	},
+	{
+		id: "15 Минут",
+		name: "15min",
+	},
+	{
+		id: "30 Минут",
+		name: "30min",
+	},
+	{
+		id: "1 Час",
+		name: "1h",
+	},
+	{
+		id: "2 Часа",
+		name: "2h",
+	},
+	{
+		id: "3 Часа",
+		name: "3h",
+	},
+	{
+		id: "4 Часа",
+		name: "4h",
+	},
+	{
+		id: "8 Часоов",
+		name: "8h",
+	},
+	{
+		id: "1 День",
+		name: "1d",
+	},
+	{
+		id: "1 Неделя",
+		name: "1w",
+	},
+	{
+		id: "1 Месяц",
+		name: "1m",
+	},
+];
 
 const barTypes = [
 	{
@@ -95,6 +158,7 @@ const getToday = () => {
 
 function Components(props) {
 	const { t } = useTranslation();
+	const { lang } = useParams();
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(state => state.isLoading);
 	const [searchFormFields, setSearchFormFields] = useState({
@@ -173,7 +237,6 @@ function Components(props) {
 			}
 		}
 	};
-
 	return (
 		<>
 			<section style={{ marginTop: "80px", marginBottom: "80px" }}>
@@ -185,6 +248,12 @@ function Components(props) {
 								{t("oneInstrumentAnalizerSubTitle")}
 							</h3>
 						</div>
+						<Link
+							className="btn btn-primary btn-sm btn-lg px-3"
+							to={newPath(" ")}
+							role="button">
+							{t("back")}
+						</Link>
 						<div>
 							<div className="form-group mb-2">
 								{secTypes && secTypes.length ? (
@@ -218,10 +287,12 @@ function Components(props) {
 									id="flexCheckDefault"
 									checked={searchFormFields.name}
 									onChange={event => {
-										setSearchFormFields(values => ({
-											...values,
+										if (event.target.checked) {
+										}
+										setSearchFormFields({
+											...searchFormFields,
 											name: event.target.checked,
-										}));
+										});
 									}}
 								/>
 								<label
@@ -232,43 +303,23 @@ function Components(props) {
 							</div>
 
 							<div className="form-group mb-2">
-								{!searchFormFields.name ? (
-									<div className="form-group">
-										<label htmlFor="symbol" className="mb-1 fw-500">
-											{t("symbol")}*
-										</label>
-										<input
-											type="text"
-											className="form-control"
-											id="symbol"
-											value={searchFormFields.symbol}
-											onChange={event => {
-												setSearchFormFields(values => ({
-													...values,
-													symbol: event.target.value,
-												}));
-											}}
-										/>
-									</div>
-								) : (
-									<div className="form-group">
-										<label htmlFor="companyName" className="mb-1 fw-500">
-											{t("companyName")}*
-										</label>
-										<input
-											type="text"
-											className="form-control"
-											id="companyName"
-											value={searchFormFields.symbol}
-											onChange={event => {
-												setSearchFormFields(values => ({
-													...values,
-													symbol: event.target.value,
-												}));
-											}}
-										/>
-									</div>
-								)}
+								<div className="form-group">
+									<label htmlFor="symbol" className="mb-1 fw-500">
+										{!searchFormFields.name ? t("symbol") : t("companyName")}*
+									</label>
+									<input
+										type="text"
+										className="form-control"
+										id="symbol"
+										value={searchFormFields.symbol}
+										onChange={event => {
+											setSearchFormFields(values => ({
+												...values,
+												symbol: event.target.value,
+											}));
+										}}
+									/>
+								</div>
 							</div>
 						</div>
 
@@ -314,7 +365,7 @@ function Components(props) {
 						)}
 
 						{securities && securities.length && !data ? (
-							<Table responsive className="table table-striped mt-4 mb-0">
+							<Table responsive striped bordered className=" mt-4 mb-0">
 								<thead>
 									<tr className="cursor-default">
 										<th className="nowrap">#</th>
@@ -419,6 +470,7 @@ function Components(props) {
 												</label>
 												<input
 													type="date"
+													pattern="\d{2}\.\d{2}\.\d{4}"
 													className="form-control"
 													id="startDate"
 													value={analizeInstrumentFormFields.startDate}
@@ -438,6 +490,7 @@ function Components(props) {
 												</label>
 												<input
 													type="date"
+													pattern="\d{2}\.\d{2}\.\d{4}"
 													className="form-control"
 													id="endDate"
 													value={analizeInstrumentFormFields.endDate}
@@ -459,25 +512,45 @@ function Components(props) {
 													value={analizeInstrumentFormFields.bar}
 													isSearchable={true}
 													selectedValue={(() => {
-														const selectedItem = {
-															...barTypes.find(
-																data =>
-																	data.name === analizeInstrumentFormFields.bar,
-															),
-														};
+														let selectedItem;
+														if (lang === "ru") {
+															selectedItem = {
+																...barTypesRu.find(
+																	data =>
+																		data.name ===
+																		analizeInstrumentFormFields.bar,
+																),
+															};
+														} else {
+															selectedItem = {
+																...barTypes.find(
+																	data =>
+																		data.name ===
+																		analizeInstrumentFormFields.bar,
+																),
+															};
+														}
 														if (Object.keys(selectedItem).length) {
 															selectedItem.label = selectedItem.id;
 															selectedItem.value = selectedItem.name;
 															return selectedItem;
 														} else {
-															return { value: null, label: "Choose" };
+															return { value: null, label: t("choose") };
 														}
 													})()}
-													items={barTypes.map(data => ({
-														...data,
-														label: data.id,
-														value: data.name,
-													}))}
+													items={
+														lang === "ru"
+															? barTypesRu.map(data => ({
+																	...data,
+																	label: data.id,
+																	value: data.name,
+															  }))
+															: barTypes.map(data => ({
+																	...data,
+																	label: data.id,
+																	value: data.name,
+															  }))
+													}
 													onChange={item =>
 														onSelectOptionChange(
 															item,
@@ -545,7 +618,7 @@ function Components(props) {
 							</>
 						) : null}
 						{analysisResult && analysisResult.length ? (
-							<Table responsive className="table table-striped mb-0">
+							<Table responsive striped bordered className=" mb-0">
 								<thead>
 									<tr className="cursor-default">
 										<th className="nowrap">{t("startingPrice")}</th>

@@ -25,7 +25,7 @@ export default function Home(props) {
 								backgroundPosition: "center",
 								height: "400px",
 							}}>
-							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+							<div className="container-xxl d-flex flex-column justify-content-end align-items-center h-100">
 								<Link
 									style={{
 										backgroundColor: " rgba(203, 202, 203, 0.50)",
@@ -48,7 +48,7 @@ export default function Home(props) {
 								backgroundRepeat: "no-repeat",
 								height: "400px",
 							}}>
-							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+							<div className="container-xxl d-flex flex-column justify-content-end align-items-center h-100">
 								<Link
 									style={{
 										backgroundColor: " rgba(203, 202, 203, 0.50)",
@@ -71,7 +71,7 @@ export default function Home(props) {
 								backgroundRepeat: "no-repeat",
 								height: "400px",
 							}}>
-							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+							<div className="container-xxl d-flex flex-column justify-content-end align-items-center h-100">
 								<Link
 									style={{
 										backgroundColor: " rgba(203, 202, 203, 0.50)",
@@ -94,7 +94,7 @@ export default function Home(props) {
 								backgroundRepeat: "no-repeat",
 								height: "400px",
 							}}>
-							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+							<div className="container-xxl d-flex flex-column justify-content-end align-items-center h-100">
 								<Link
 									style={{
 										backgroundColor: " rgba(203, 202, 203, 0.50)",
@@ -117,7 +117,7 @@ export default function Home(props) {
 								backgroundRepeat: "no-repeat",
 								height: "400px",
 							}}>
-							<div className="container d-flex flex-column justify-content-end align-items-center h-100">
+							<div className="container-xxl d-flex flex-column justify-content-end align-items-center h-100">
 								<Link
 									style={{
 										backgroundColor: " rgba(203, 202, 203, 0.50)",
@@ -126,7 +126,7 @@ export default function Home(props) {
 									className="btn btn-outline-dark bgcolor btn-lg m-1"
 									to={newPath("/notify-for-price")}
 									role="button">
-									Notify for price
+									{t("notifyForPriceLink")}
 								</Link>
 								{/* <Link
 										className="btn btn-primary btn-lg m-1"

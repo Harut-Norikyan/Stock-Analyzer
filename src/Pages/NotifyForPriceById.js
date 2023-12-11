@@ -58,7 +58,7 @@ export default function Components(props) {
 							<b>{t("priceChangeNotifications")}</b>
 							{data.priceChangeNotifications &&
 							data.priceChangeNotifications.length ? (
-								<Table responsive className="table table-striped mt-2 mb-0">
+								<Table responsive striped bordered className=" mt-2 mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>

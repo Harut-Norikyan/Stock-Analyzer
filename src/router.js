@@ -16,6 +16,7 @@ import { NotifyForPrice } from "./Pages/NotifyForPrice";
 import { NotifyForPriceForm } from "./Pages/NotifyForPriceForm";
 import { NotifyForPriceById } from "./Pages/NotifyForPriceById";
 import { NotifyForOneInstrumentByid } from "./Pages/NotifyForOneInstrumentByid";
+import { NotifyForTwoInstrumentById } from "./Pages/NotifyForTwoInstrumentById";
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -86,6 +87,11 @@ export const router = createBrowserRouter(
 						index
 						element={<NotifyForTwoInstruments />}
 						loader={NotifyForTwoInstruments.loader}
+					/>
+					<Route
+						path=":id"
+						element={<NotifyForTwoInstrumentById />}
+						loader={NotifyForTwoInstrumentById.loader}
 					/>
 					<Route path="form">
 						<Route

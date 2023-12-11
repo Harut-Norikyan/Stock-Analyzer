@@ -58,8 +58,8 @@ export default function App() {
 		}
 	};
 	return (
-		<div className="d-flex flex-column justify-content-between">
-			<div className="container h-full ">
+		<div className="d-flex flex-column justify-content-between gap-4">
+			<div className="container-xxl h-full ">
 				<Modal show={isShowWaitingModal} centered>
 					<Modal.Header closeButton={false}>
 						<Modal.Title>Please wait</Modal.Title>

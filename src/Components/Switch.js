@@ -4,7 +4,7 @@ const Switch = ({
 	isOn = true,
 	handleToggle = () => {},
 	colorOne = "rgb(12 131 34 / 71%)",
-	colorTwo = "rgb(255 152 0 / 71%)",
+	colorTwo = "rgb(219 54 54 / 71%)",
 }) => {
 	return (
 		<>

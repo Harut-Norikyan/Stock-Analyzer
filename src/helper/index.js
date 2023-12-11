@@ -1,9 +1,20 @@
 import moment from "moment";
 
-export const convertDateFormat = dateStr => {
+export const convertDateFormat = (dateStr, divisionOfWords = false) => {
+	if (!dateStr) return "";
 	const inputMoment = moment(dateStr);
 	if (!inputMoment.isValid()) {
 		return "Invalid Date";
+	}
+	if (divisionOfWords) {
+		const deyFormat = inputMoment.format("DD.MM.YYYY");
+		const hourFormat = inputMoment.format("HH:mm");
+		return (
+			<>
+				<span style={{ display: "block" }}>{deyFormat}</span>
+				<span>{hourFormat}</span>
+			</>
+		);
 	}
 	const formattedDate = inputMoment.format("DD.MM.YYYY HH:mm");
 	return formattedDate;

@@ -42,15 +42,29 @@ function Components(props) {
 				<div className="d-flex flex-wrap-reverse justify-content-between mb-2">
 					<h3 className="text-muted">{t("notifyForTwoInstrumentsTitle")}</h3>
 				</div>
-				<Link
-					className="btn btn-primary btn-sm btn-lg px-3"
-					to={newPath("/notify-for-two-instruments/form")}
-					role="button">
-					{t("createNotify")}
-				</Link>
+				<div className="d-flex gap-3">
+					<Link
+						className="btn btn-primary btn-sm btn-lg px-3"
+						to={newPath(" ")}
+						role="button">
+						{t("back")}
+					</Link>
+					<Link
+						className="btn btn-primary btn-sm btn-lg px-3"
+						to={newPath("/notify-for-two-instruments/form")}
+						role="button">
+						{t("createNotify")}
+					</Link>
+				</div>
 			</div>
 			{deletedItemId ? (
-				<Modal size="sm" show={true} centered>
+				<Modal
+					size="sm"
+					show={true}
+					onHide={() => {
+						setDeletedItemId(false);
+					}}
+					centered>
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">
 							{t("title")}
@@ -75,7 +89,7 @@ function Components(props) {
 			<Row>
 				<Col lg={12}>
 					{allTwoInstrumentsNotifier && allTwoInstrumentsNotifier.length ? (
-						<Table responsive className="table table-striped mb-0">
+						<Table responsive striped bordered className=" mb-0">
 							<thead>
 								<tr className="cursor-default">
 									<th className="nowrap">#</th>
@@ -94,7 +108,14 @@ function Components(props) {
 							<tbody>
 								{allTwoInstrumentsNotifier.map((item, index) => {
 									return (
-										<tr key={index} className="cursor-pointer">
+										<tr
+											key={index}
+											className="cursor-pointer"
+											onClick={() => {
+												navigate(
+													newPath(`/notify-for-two-instruments/${item.id}`),
+												);
+											}}>
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
 													{index + 1}
@@ -150,19 +171,23 @@ function Components(props) {
 													<button
 														type="button"
 														className="btn btn-sm btn-outline-success me-1"
-														onClick={() =>
+														onClick={e => {
+															e.stopPropagation();
 															navigate(
 																newPath(
 																	`/notify-for-two-instruments/form/${item.id}`,
 																),
-															)
-														}>
+															);
+														}}>
 														{t("edit")}
 													</button>
 													<button
 														type="button"
 														className="btn btn-sm btn-outline-danger me-1"
-														onClick={() => setDeletedItemId(item.id)}>
+														onClick={e => {
+															e.stopPropagation();
+															setDeletedItemId(item.id);
+														}}>
 														{t("delete")}
 													</button>
 												</div>

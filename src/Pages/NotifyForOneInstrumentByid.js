@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { Row, Col, Table, Card } from "react-bootstrap";
 import Api from "../Api";
@@ -10,6 +10,31 @@ import { DowenTable, UpTable } from "../assets";
 export default function Components(props) {
 	const { t } = useTranslation();
 	const data = useLoaderData();
+	const tableData = useMemo(() => {
+		if (
+			data.oneInstrumentNotifications &&
+			data.oneInstrumentNotifications.length
+		) {
+			const a = data.oneInstrumentNotifications.reduce((acum, el) => {
+				Object.keys(el).forEach(item => {
+					if (acum.hasOwnProperty(item)) {
+						acum = {
+							...acum,
+							[item]: [...acum[item], el[item]],
+						};
+					} else {
+						acum = {
+							...acum,
+							[item]: [el[item]],
+						};
+					}
+				});
+				return acum;
+			}, {});
+			return a;
+		}
+		return {};
+	});
 	return (
 		<>
 			<section style={{ marginTop: "80px", marginBottom: "80px" }}>
@@ -64,74 +89,40 @@ export default function Components(props) {
 						<div className="mt-2">
 							<b>{t("notifyForOneInstrumentItem")}</b>
 							{data.oneInstrumentNotifications &&
-							data.oneInstrumentNotifications.length ? (
-								<Table responsive className="table table-striped mt-2 mb-0">
+							Object.keys(tableData).length ? (
+								<Table responsive striped bordered className="mt-2 mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
-											<th className="nowrap">{t("startPrice")}</th>
-											<th className="nowrap">{t("desiredChangePrice")}</th>
-											<th className="nowrap">{t("desiredDeviationPrice")}</th>
-											<th className="nowrap">{t("actualChangePrice")}</th>
-											<th className="nowrap">{t("actualChangePercentage")}</th>
-											<th className="nowrap">{t("actualDeviationPrice")}</th>
-											<th className="nowrap">
-												{t("actualDeviationPercentage")}
-											</th>
-											<th className="nowrap">{t("changeDate")}</th>
-											<th className="nowrap">{t("deviationDate")}</th>
+											{tableData["changeDate"].map((_, i) => (
+												<th key={i} className="nowrap">
+													{i + 1}
+												</th>
+											))}
 										</tr>
 									</thead>
 									<tbody>
-										{data.oneInstrumentNotifications.map((item, index) => {
+										{Object.keys(tableData).map((item, index) => {
 											return (
 												<React.Fragment key={index}>
 													<tr key={index}>
 														<td className="fw-500">
 															<p className="word-break-break-word max-line-3 m-0">
-																{index + 1}
+																<b>{t(item)}</b>
 															</p>
 														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{item.startPrice}
-															</p>
-														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{item.desiredChangePrice}
-															</p>
-														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{item.desiredDeviationPrice}
-															</p>
-														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{item.actualChangePrice}
-															</p>
-														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{item.actualChangePercentage}
-															</p>
-														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{item.actualDeviationPrice}
-															</p>
-														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{convertDateFormat(item.changeDate)}
-															</p>
-														</td>
-														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{convertDateFormat(item.DeviationDate)}
-															</p>
-														</td>
+														{tableData[item].map((element, i) => {
+															return (
+																<td key={i} className="fw-500">
+																	<p className="word-break-break-word max-line-3 m-0">
+																		{item === "deviationDate" ||
+																		item === "changeDate"
+																			? convertDateFormat(element, true)
+																			: element}
+																	</p>
+																</td>
+															);
+														})}
 													</tr>
 												</React.Fragment>
 											);
@@ -162,3 +153,79 @@ const loader = async ({ params: { id } }) => {
 	}
 };
 export const NotifyForOneInstrumentByid = Object.assign(Components, { loader });
+
+// <div className="mt-2">
+// 	<b>{t("notifyForOneInstrumentItem")}</b>
+// 	{data.oneInstrumentNotifications && data.oneInstrumentNotifications.length ? (
+// 		data.oneInstrumentNotifications.map((item, index) => {
+// 			return (
+// 				<React.Fragment key={index}>
+// 					<h5>
+// 						<b># {index + 1}</b>
+// 					</h5>
+// 					<Card className="card ">
+// 						<ul className="list-group not_rounded">
+// 							<li className="list-group-item">
+// 								<div className="d-flex gap-2">
+// 									<span style={{ flex: 1 }} className="border-end">
+// 										{t("startPrice")} &rarr; {item.startPrice}
+// 									</span>
+// 									<span style={{ flex: 1 }}>
+// 										{t("desiredChangePrice")} &rarr;
+// 										{item.desiredChangePrice}
+// 									</span>
+// 								</div>
+// 							</li>
+// 							<li className="list-group-item">
+// 								<div className="d-flex gap-2">
+// 									<span style={{ flex: 1 }} className="border-end">
+// 										{t("desiredDeviationPrice")} &rarr;
+// 										{item.desiredDeviationPrice}
+// 									</span>
+// 									<span style={{ flex: 1 }}>
+// 										{t("actualChangePrice")} &rarr;
+// 										{item.actualChangePrice}
+// 									</span>
+// 								</div>
+// 							</li>
+// 							<li className="list-group-item">
+// 								<div className="d-flex gap-2">
+// 									<span style={{ flex: 1 }} className="border-end">
+// 										{t("actualChangePercentage")} &rarr;{" "}
+// 										{item.actualChangePercentage}
+// 									</span>
+// 									<span style={{ flex: 1 }}>
+// 										{t("actualDeviationPrice")} &rarr;{" "}
+// 										{item.actualDeviationPrice}
+// 									</span>
+// 								</div>
+// 							</li>
+// 							<li className="list-group-item">
+// 								<div className="d-flex gap-2">
+// 									<span style={{ flex: 1 }} className="border-end">
+// 										{t("actualDeviationPercentage")} &rarr;
+// 										{item.actualDeviationPercentage}
+// 									</span>
+// 									<span style={{ flex: 1 }}>
+// 										{t("changeDate")} &rarr;{" "}
+// 										{convertDateFormat(item.changeDate)}
+// 									</span>
+// 								</div>
+// 							</li>
+// 							<li className="list-group-item">
+// 								{t("deviationDate")} &rarr;{" "}
+// 								{convertDateFormat(item.deviationDate)}
+// 							</li>
+// 						</ul>
+// 					</Card>
+// 				</React.Fragment>
+// 			);
+// 		})
+// 	) : (
+// 		<div className="text-center mt-3">
+// 			<p>
+// 				<b>{t("notNotIfy")}</b>
+// 			</p>
+// 		</div>
+// 	)}
+// </div>;

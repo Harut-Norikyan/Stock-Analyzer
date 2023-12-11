@@ -6,10 +6,11 @@ import { Row, Col, Table, Card, Button } from "react-bootstrap";
 import Api from "../Api";
 import {
 	convertDateFormat,
+	newPath,
 	onNumberChange,
 	onSelectOptionChange,
 } from "../helper";
-import { useLoaderData, useParams } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { IoCloseSharp } from "react-icons/io5";
@@ -58,7 +59,7 @@ const barTypesRu = [
 		name: "3h",
 	},
 	{
-		id: "4 Чаа",
+		id: "4 Часа",
 		name: "4h",
 	},
 	{
@@ -245,6 +246,12 @@ function Components(props) {
 								{t("twoInstrumentsAnalizersubTitle")}
 							</h3>
 						</div>
+						<Link
+							className="btn btn-primary btn-sm btn-lg mb-3 px-3"
+							to={newPath(" ")}
+							role="button">
+							{t("back")}
+						</Link>
 						<div>
 							<div className="form-group mb-2">
 								{secTypes && secTypes.length ? (
@@ -281,7 +288,6 @@ function Components(props) {
 										setSearchFormFields(values => ({
 											...values,
 											name: event.target.checked,
-											symbol: "",
 										}));
 									}}
 								/>
@@ -293,43 +299,23 @@ function Components(props) {
 							</div>
 
 							<div className="form-group mb-2">
-								{!searchFormFields.name ? (
-									<div className="form-group">
-										<label htmlFor="symbol" className="mb-1 fw-500">
-											{t("symbol")}*
-										</label>
-										<input
-											type="text"
-											className="form-control"
-											id="symbol"
-											value={searchFormFields.symbol}
-											onChange={event => {
-												setSearchFormFields(values => ({
-													...values,
-													symbol: event.target.value,
-												}));
-											}}
-										/>
-									</div>
-								) : (
-									<div className="form-group">
-										<label htmlFor="companyName" className="mb-1 fw-500">
-											{t("companyName")}*
-										</label>
-										<input
-											type="text"
-											className="form-control"
-											id="companyName"
-											value={searchFormFields.symbol}
-											onChange={event => {
-												setSearchFormFields(values => ({
-													...values,
-													symbol: event.target.value,
-												}));
-											}}
-										/>
-									</div>
-								)}
+								<div className="form-group">
+									<label htmlFor="symbol" className="mb-1 fw-500">
+										{!searchFormFields.name ? t("symbol") : t("companyName")}*
+									</label>
+									<input
+										type="text"
+										className="form-control"
+										id="symbol"
+										value={searchFormFields.symbol}
+										onChange={event => {
+											setSearchFormFields(values => ({
+												...values,
+												symbol: event.target.value,
+											}));
+										}}
+									/>
+								</div>
 							</div>
 						</div>
 						{firstData && (
@@ -373,7 +359,9 @@ function Components(props) {
 								<h4>{t("twoInstrumentsAnalizerFirstInstrument")}*</h4>
 								<Table
 									responsive
-									className="table table-striped mb-0 border rounded">
+									striped
+									bordered
+									className=" mb-0 border rounded">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
@@ -538,7 +526,7 @@ function Components(props) {
 						{_securities && _securities.length && !secondData ? (
 							<div className="mt-3">
 								<h4>{t("twoInstrumentsAnalizerSecondInstrument")}*</h4>
-								<Table responsive className="table table-striped border mb-0">
+								<Table responsive bordered striped className="border mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
@@ -640,6 +628,7 @@ function Components(props) {
 												</label>
 												<input
 													type="date"
+													pattern="\d{2}\.\d{2}\.\d{4}"
 													className="form-control"
 													id="startDate"
 													value={analizeInstrumentFormFields.startDate}
@@ -659,6 +648,7 @@ function Components(props) {
 												</label>
 												<input
 													type="date"
+													pattern="\d{2}\.\d{2}\.\d{4}"
 													className="form-control"
 													id="endDate"
 													value={analizeInstrumentFormFields.endDate}
@@ -680,12 +670,24 @@ function Components(props) {
 													value={analizeInstrumentFormFields.bar}
 													isSearchable={true}
 													selectedValue={(() => {
-														const selectedItem = {
-															...barTypes.find(
-																data =>
-																	data.name === analizeInstrumentFormFields.bar,
-															),
-														};
+														let selectedItem;
+														if (lang === "ru") {
+															selectedItem = {
+																...barTypesRu.find(
+																	data =>
+																		data.name ===
+																		analizeInstrumentFormFields.bar,
+																),
+															};
+														} else {
+															selectedItem = {
+																...barTypes.find(
+																	data =>
+																		data.name ===
+																		analizeInstrumentFormFields.bar,
+																),
+															};
+														}
 														if (Object.keys(selectedItem).length) {
 															selectedItem.label = selectedItem.id;
 															selectedItem.value = selectedItem.name;
@@ -741,7 +743,7 @@ function Components(props) {
 						) : null}
 
 						{analysisResult && analysisResult.length ? (
-							<Table responsive className="table table-striped mb-0">
+							<Table responsive striped bordered className="mb-0">
 								<thead>
 									<tr className="cursor-default">
 										<th className="nowrap">#</th>

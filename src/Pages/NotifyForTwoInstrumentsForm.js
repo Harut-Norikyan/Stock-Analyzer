@@ -4,7 +4,7 @@ import { useDebounce } from "use-debounce";
 import { useEffect } from "react";
 import { Row, Col, Table, Card, Button } from "react-bootstrap";
 import Api from "../Api";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../redux/actions/itemActions";
 import { newPath, onNumberChange, onSelectOptionChange } from "../helper";
@@ -107,6 +107,12 @@ function Components(props) {
 							<h3>{t("searchInstrument")}</h3>
 							<h3 className="text-muted">{t("notifyForTwoInstrumentsForm")}</h3>
 						</div>
+						<Link
+							className="btn btn-primary btn-sm btn-lg px-3 mb-3"
+							to={newPath("/notify-for-two-instruments")}
+							role="button">
+							{t("back")}
+						</Link>
 						{!itemId ? (
 							<div>
 								<div className="form-group mb-2">
@@ -154,43 +160,23 @@ function Components(props) {
 									</label>
 								</div>
 								<div className="form-group mb-2">
-									{!searchFormFields.name ? (
-										<div className="form-group">
-											<label htmlFor="symbol" className="mb-1 fw-500">
-												{t("symbol")}*
-											</label>
-											<input
-												type="text"
-												className="form-control"
-												id="symbol"
-												value={searchFormFields.symbol}
-												onChange={event => {
-													setSearchFormFields(values => ({
-														...values,
-														symbol: event.target.value,
-													}));
-												}}
-											/>
-										</div>
-									) : (
-										<div className="form-group">
-											<label htmlFor="companyName" className="mb-1 fw-500">
-												{t("companyName")}*
-											</label>
-											<input
-												type="text"
-												className="form-control"
-												id="companyName"
-												value={searchFormFields.symbol}
-												onChange={event => {
-													setSearchFormFields(values => ({
-														...values,
-														symbol: event.target.value,
-													}));
-												}}
-											/>
-										</div>
-									)}
+									<div className="form-group">
+										<label htmlFor="symbol" className="mb-1 fw-500">
+											{!searchFormFields.name ? t("symbol") : t("companyName")}*
+										</label>
+										<input
+											type="text"
+											className="form-control"
+											id="symbol"
+											value={searchFormFields.symbol}
+											onChange={event => {
+												setSearchFormFields(values => ({
+													...values,
+													symbol: event.target.value,
+												}));
+											}}
+										/>
+									</div>
 								</div>
 							</div>
 						) : null}
@@ -236,7 +222,9 @@ function Components(props) {
 								<h4>{t("twoInstrumentsAnalizerFirstInstrument")}*</h4>
 								<Table
 									responsive
-									className="table table-striped mb-0 border rounded">
+									striped
+									bordered
+									className=" mb-0 border rounded">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
@@ -402,7 +390,7 @@ function Components(props) {
 						{_securities && _securities.length && !secondData && !itemId ? (
 							<div className="mt-3">
 								<h4>{t("twoInstrumentsAnalizerSecondInstrument")}*</h4>
-								<Table responsive className="table table-striped border mb-0">
+								<Table responsive striped bordered className=" border mb-0">
 									<thead>
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
@@ -518,6 +506,7 @@ function Components(props) {
 													</label>
 													<input
 														type="date"
+														pattern="\d{2}\.\d{2}\.\d{4}"
 														className="form-control"
 														id="startDate"
 														value={analizeInstrumentFormFields.startDate}
@@ -537,6 +526,7 @@ function Components(props) {
 													</label>
 													<input
 														type="date"
+														pattern="\d{2}\.\d{2}\.\d{4}"
 														className="form-control"
 														id="endDate"
 														value={analizeInstrumentFormFields.endDate}

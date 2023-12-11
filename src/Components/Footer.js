@@ -9,7 +9,7 @@ function Footer() {
 	const { lang } = useParams();
 	return (
 		<footer className="footer d-flex justify-content-between align-items-center">
-			<div className="container d-flex justify-content-between align-items-center text-white py-1 flex-wrap">
+			<div className="container-xxl d-flex justify-content-between align-items-center text-white py-1 flex-wrap">
 				<Clock />
 			</div>
 		</footer>

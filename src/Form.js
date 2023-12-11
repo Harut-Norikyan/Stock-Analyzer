@@ -99,7 +99,7 @@ export default function Form() {
 	};
 
 	return (
-		<div className="container my-5 p-2 border border-radius-5">
+		<div className="container-xxl my-5 p-2 border border-radius-5">
 			<div className="row">
 				<div className="col-12">
 					<h2>Form</h2>
