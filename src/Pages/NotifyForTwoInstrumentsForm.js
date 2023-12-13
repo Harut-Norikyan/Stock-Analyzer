@@ -100,7 +100,7 @@ function Components(props) {
 
 	return (
 		<>
-			<section style={{ marginTop: "80px", marginBottom: "80px" }}>
+			<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 				<Row>
 					<Col lg={12}>
 						<div className="d-flex flex-wrap-reverse justify-content-between">
@@ -374,13 +374,13 @@ function Components(props) {
 										</Card.Header>
 										<ul className="list-group not_rounded">
 											<li className="list-group-item">
-												{t("price")} &rarr; {firstData?.price}
+												{t("price")} &rarr; {secondData?.price}
 											</li>
 											<li className="list-group-item">
-												{t("date")} &rarr; {firstData?.priceDate}
+												{t("date")} &rarr; {secondData?.priceDate}
 											</li>
 											<li className="list-group-item">
-												{t("conid")} &rarr; {firstData?.conId}
+												{t("conid")} &rarr; {secondData?.conId}
 											</li>
 										</ul>
 									</Card>

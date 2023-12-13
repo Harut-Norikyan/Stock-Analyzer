@@ -8,6 +8,8 @@ import { router } from "./router";
 import { RouterProvider } from "react-router-dom";
 import store from "./redux/store";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./helper/translation";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

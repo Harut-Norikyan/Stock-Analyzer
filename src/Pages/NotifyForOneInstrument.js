@@ -37,7 +37,7 @@ export default function Components(props) {
 	};
 
 	return (
-		<section style={{ marginTop: "80px", marginBottom: "80px" }}>
+		<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 			<div className="mb-3">
 				<div className="d-flex flex-wrap-reverse justify-content-between mb-2">
 					<h3 className="text-muted">{t("notifyForOneInstrumentTitle")}</h3>

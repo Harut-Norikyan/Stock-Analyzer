@@ -37,7 +37,7 @@ export default function Components(props) {
 	});
 	return (
 		<>
-			<section style={{ marginTop: "80px", marginBottom: "80px" }}>
+			<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 				<Row>
 					<Col lg={12}>
 						<div className="mb-3">

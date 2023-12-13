@@ -10,7 +10,7 @@ function Components(props) {
 	const data = useLoaderData();
 
 	return (
-		<section style={{ marginTop: "80px", marginBottom: "80px" }}>
+		<section style={{ marginTop: "90px", marginBottom: "80px" }}>
 			<Row>
 				<Col lg={12}>
 					<div className="mb-3">
@@ -24,81 +24,58 @@ function Components(props) {
 							{t("back")}
 						</Link>
 					</div>
-					<Card className="card">
-						<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-							<h5 className="">
-								{t("firstCompanyName")} &rarr; {data.name1}
-							</h5>
-							{/* <h5>
-								{" "}
-								{t("companyName")} &rarr; {data.name2}
-							</h5> */}
-						</Card.Header>
-						<ul className="list-group not_rounded">
-							<li className="list-group-item">
-								{t("price")} &rarr; {data.startPrice1}
-							</li>
-							{/* <li className="list-group-item">
-								{t("desiredPrice")} &rarr; {data.desiredPrice}
-							</li>
-							<li className="list-group-item">
-								{t("desiredPercentage")} &rarr; {data.desiredPercent}
-							</li>
-							<li className="list-group-item">
-								{t("undesiredPrice")} &rarr; {data.undesiredPrice}
-							</li> */}
-							{/* <li className="list-group-item">
-								{t("undesiredPercentage")} &rarr; {data.undesiredPercent}
-							</li> */}
-							<li className="list-group-item">
-								{t("startDate")} &rarr; {data.startPriceDate1}
-							</li>
-							<li className="list-group-item">
-								{t("conid")} &rarr; {data.conId1}
-							</li>
-						</ul>
-						<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
-							<h5 className="">
-								{t("secondSompanyName")} &rarr; {data.name2}
-							</h5>
-						</Card.Header>
-						<ul className="list-group not_rounded">
-							<li className="list-group-item">
-								{t("price")} &rarr; {data.startPrice2}
-							</li>
-							{/* <li className="list-group-item">
-								{t("desiredPrice")} &rarr; {data.desiredPrice}
-							</li>
-							<li className="list-group-item">
-								{t("desiredPercentage")} &rarr; {data.desiredPercent}
-							</li>
-							<li className="list-group-item">
-								{t("undesiredPrice")} &rarr; {data.undesiredPrice}
-							</li> */}
-							{/* <li className="list-group-item">
-								{t("undesiredPercentage")} &rarr; {data.undesiredPercent}
-							</li> */}
-							<li className="list-group-item">
-								{t("startDate")} &rarr; {data.startPriceDate2}
-							</li>
-							<li className="list-group-item">
-								{t("conid")} &rarr; {data.conId2}
-							</li>
-							<li className="list-group-item">
-								<b>
+					<div className="d-flex flex-column gap-2">
+						<h4>{t("twoInstrumentsAnalizerFirstInstrument")}</h4>
+						<Card className="card">
+							<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
+								<h5 className="">
+									{t("companyName")} &rarr; {data.name1}
+								</h5>
+							</Card.Header>
+							<ul className="list-group not_rounded">
+								<li className="list-group-item">
+									{t("price")} &rarr; {data.startPrice1}
+								</li>
+								<li className="list-group-item">
+									{t("startDate")} &rarr; {data.startPriceDate1}
+								</li>
+								<li className="list-group-item">
+									{t("conid")} &rarr; {data.conId1}
+								</li>
+								<li className="list-group-item">
 									{t("ratio")} &rarr; {data.ratio}
-								</b>
-							</li>
-						</ul>
-						<ul className="list-group not_rounded"></ul>
-					</Card>
+								</li>
+							</ul>
+						</Card>
+						<h4>{t("twoInstrumentsAnalizerSecondInstrument")}</h4>
+						<Card>
+							<Card.Header className="d-flex justify-content-between gap-1 align-items-center">
+								<h5 className="">
+									{t("companyName")} &rarr; {data.name2}
+								</h5>
+							</Card.Header>
+							<ul className="list-group not_rounded">
+								<li className="list-group-item">
+									{t("price")} &rarr; {data.startPrice2}
+								</li>
+								<li className="list-group-item">
+									{t("startDate")} &rarr; {data.startPriceDate2}
+								</li>
+								<li className="list-group-item">
+									{t("conid")} &rarr; {data.conId2}
+								</li>
+								<li className="list-group-item">
+									{t("ratio")} &rarr; {data.ratio}
+								</li>
+							</ul>
+						</Card>
+					</div>
 				</Col>
 			</Row>
 		</section>
 	);
 }
 const loader = async ({ params: { id } }) => {
-	debugger;
 	try {
 		const data = await Api.getTwoInstrumentNotifierById(+id);
 		return data.data;

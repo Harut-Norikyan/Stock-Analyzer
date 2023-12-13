@@ -19,42 +19,21 @@ api.interceptors.request.use(async config => {
 
 api.interceptors.response.use(
 	response => {
-		if (response && response.data && response.data.status === 200) {
-			return response.data;
+		if (
+			(response && response.data && response.data?.status === 500) ||
+			response.data.respcode ||
+			response.data.respmess
+		) {
+			if (response.data.respmess) {
+				AlertService.alert("error", response.data.respmess);
+			} else {
+				AlertService.alert("error", "Sorry, something went wrong!");
+			}
 		}
-		if (response && response.data && response.data?.status === 500) {
-			AlertService.alert("error", response.data.message);
-		}
-		if (response && response.data && response.data.status !== 200) {
-			const currentError = response.data;
-			//if typeof error === string
-			if (
-				currentError &&
-				currentError.message &&
-				(!currentError.errors ||
-					(currentError.errors && !currentError.errors.length))
-			) {
-				AlertService.alert("error", currentError.message);
-				return Promise.reject(currentError);
-			}
-			//if typeof error === Array
-			if (
-				currentError.errors &&
-				currentError.errors.length &&
-				!Object.keys(currentError.errors).length
-			) {
-				currentError.errors.forEach(err => {
-					if (err.length && err[0] && err[0].key) {
-						return Promise.reject(err[0].key);
-					}
-				});
-			}
-			//if typeof error === Object
-			if (currentError.errors && Object.keys(currentError.errors).length) {
-				return Promise.reject(
-					currentError.errors[Object.keys(currentError.errors)[0]][0]?.key,
-				);
-			}
+		if (response && response.data) {
+			return !response.data.respcode
+				? response.data
+				: new Error("Bad response from server");
 		}
 	},
 	error => {
