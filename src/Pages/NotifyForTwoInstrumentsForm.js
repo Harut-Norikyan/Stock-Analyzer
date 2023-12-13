@@ -492,76 +492,73 @@ function Components(props) {
 							</div>
 						) : null}
 
-						{analizeInstrumentFormFields.conId1 &&
-						analizeInstrumentFormFields.conId2 ? (
-							<>
-								<hr />
-								<div className="mb-4">
-									{!itemId ? (
-										<Row>
-											<Col md={6}>
-												<div className="form-group mb-2">
-													<label htmlFor="startDate" className="mb-1 fw-500">
-														{t("startDate")}
-													</label>
-													<input
-														type="date"
-														pattern="\d{2}\.\d{2}\.\d{4}"
-														className="form-control"
-														id="startDate"
-														value={analizeInstrumentFormFields.startDate}
-														onChange={event => {
-															setAnalizeInstrumentFormFields(values => ({
-																...values,
-																startDate: event.target.value,
-															}));
-														}}
-													/>
-												</div>
-											</Col>
-											<Col md={6}>
-												<div className="form-group mb-2">
-													<label htmlFor="endDate" className="mb-1 fw-500">
-														{t("endDate")}
-													</label>
-													<input
-														type="date"
-														pattern="\d{2}\.\d{2}\.\d{4}"
-														className="form-control"
-														id="endDate"
-														value={analizeInstrumentFormFields.endDate}
-														onChange={event => {
-															setAnalizeInstrumentFormFields(values => ({
-																...values,
-																endDate: event.target.value,
-															}));
-														}}
-													/>
-												</div>
-											</Col>
-										</Row>
-									) : null}
-									<div className="form-group mb-2">
-										<label htmlFor="ratio" className="mb-1 fw-500">
-											{t("ratio")}*
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="ratio"
-											value={analizeInstrumentFormFields.ratio}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"ratio",
-												)
-											}
-										/>
-									</div>
+						<>
+							<hr />
+							<div className="mb-4">
+								{!itemId ? (
+									<Row>
+										<Col md={6}>
+											<div className="form-group mb-2">
+												<label htmlFor="startDate" className="mb-1 fw-500">
+													{t("startDate")}
+												</label>
+												<input
+													type="date"
+													pattern="\d{2}\.\d{2}\.\d{4}"
+													className="form-control"
+													id="startDate"
+													value={analizeInstrumentFormFields.startDate}
+													onChange={event => {
+														setAnalizeInstrumentFormFields(values => ({
+															...values,
+															startDate: event.target.value,
+														}));
+													}}
+												/>
+											</div>
+										</Col>
+										<Col md={6}>
+											<div className="form-group mb-2">
+												<label htmlFor="endDate" className="mb-1 fw-500">
+													{t("endDate")}
+												</label>
+												<input
+													type="date"
+													pattern="\d{2}\.\d{2}\.\d{4}"
+													className="form-control"
+													id="endDate"
+													value={analizeInstrumentFormFields.endDate}
+													onChange={event => {
+														setAnalizeInstrumentFormFields(values => ({
+															...values,
+															endDate: event.target.value,
+														}));
+													}}
+												/>
+											</div>
+										</Col>
+									</Row>
+								) : null}
+								<div className="form-group mb-2">
+									<label htmlFor="ratio" className="mb-1 fw-500">
+										{t("ratio")}*
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="ratio"
+										value={analizeInstrumentFormFields.ratio}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"ratio",
+											)
+										}
+									/>
 								</div>
-							</>
-						) : null}
+							</div>
+						</>
 
 						<div className="d-flex justify-content-end mt-3">
 							<button

@@ -185,13 +185,10 @@ export default function Components(props) {
 											<Button
 												onClick={() => {
 													setData(null);
-													setAnalizeInstrumentFormFields({
+													setAnalizeInstrumentFormFields(prev => ({
+														...prev,
 														conId: null,
-														name: "",
-														changePercentage: "",
-														deviationPercentage: "",
-														direction: true,
-													});
+													}));
 												}}
 												variant="outline-dark">
 												<IoCloseSharp />
@@ -307,65 +304,61 @@ export default function Components(props) {
 								</tbody>
 							</Table>
 						) : null}
-
-						{analizeInstrumentFormFields.conId || itemId ? (
-							<div className="mt-3">
-								<div className="mb-4">
-									<div className="form-group mb-2">
-										<label htmlFor="changePercentage" className="mb-1 fw-500">
-											{t("changePercentage")}*
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="changePercentage"
-											value={analizeInstrumentFormFields.changePercentage}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"changePercentage",
-													100,
-												)
-											}
-										/>
-									</div>
-									<div className="form-group mb-2">
-										<label
-											htmlFor="deviationPercentage"
-											className="mb-1 fw-500">
-											{t("deviationPercentage")}*
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="deviationPercentage"
-											value={analizeInstrumentFormFields.deviationPercentage}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"deviationPercentage",
-													100,
-												)
-											}
-										/>
-									</div>
-									<div>
-										<label className="mb-1 fw-500">{t("direction")}*</label>
-										<Switch
-											isOn={analizeInstrumentFormFields?.direction}
-											handleToggle={() => {
-												setAnalizeInstrumentFormFields(prev => ({
-													...prev,
-													direction: !prev.direction,
-												}));
-											}}
-										/>
-									</div>
+						<hr />
+						<div className="mt-3">
+							<div className="mb-4">
+								<div className="form-group mb-2">
+									<label htmlFor="changePercentage" className="mb-1 fw-500">
+										{t("changePercentage")}*
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="changePercentage"
+										value={analizeInstrumentFormFields.changePercentage}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"changePercentage",
+												100,
+											)
+										}
+									/>
+								</div>
+								<div className="form-group mb-2">
+									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
+										{t("deviationPercentage")}*
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="deviationPercentage"
+										value={analizeInstrumentFormFields.deviationPercentage}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"deviationPercentage",
+												100,
+											)
+										}
+									/>
+								</div>
+								<div>
+									<label className="mb-1 fw-500">{t("direction")}*</label>
+									<Switch
+										isOn={analizeInstrumentFormFields?.direction}
+										handleToggle={() => {
+											setAnalizeInstrumentFormFields(prev => ({
+												...prev,
+												direction: !prev.direction,
+											}));
+										}}
+									/>
 								</div>
 							</div>
-						) : null}
+						</div>
 						<div className="d-flex justify-content-end mt-3">
 							<button
 								type="button"

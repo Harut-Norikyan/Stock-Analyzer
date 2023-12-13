@@ -334,15 +334,10 @@ function Components(props) {
 											<Button
 												onClick={() => {
 													setData(null);
-													setAnalizeInstrumentFormFields({
+													setAnalizeInstrumentFormFields(prev => ({
+														...prev,
 														conId: null,
-														startDate: "",
-														endDate: "",
-														bar: "",
-														changePercentage: "",
-														deviationPercentage: "",
-														direction: true,
-													});
+													}));
 												}}
 												variant="outline-dark">
 												<IoCloseSharp />
@@ -458,165 +453,159 @@ function Components(props) {
 							</Table>
 						) : null}
 
-						{analizeInstrumentFormFields.conId ? (
-							<>
-								<hr />
-								<div className="mb-4">
-									<Row>
-										<Col md={6}>
-											<div className="form-group mb-2">
-												<label htmlFor="startDate" className="mb-1 fw-500">
-													{t("startDate")}*
-												</label>
-												<input
-													type="date"
-													pattern="\d{2}\.\d{2}\.\d{4}"
-													className="form-control"
-													id="startDate"
-													value={analizeInstrumentFormFields.startDate}
-													onChange={event => {
-														setAnalizeInstrumentFormFields(values => ({
-															...values,
-															startDate: event.target.value,
-														}));
-													}}
-												/>
-											</div>
-										</Col>
-										<Col md={6}>
-											<div className="form-group mb-2">
-												<label htmlFor="endDate" className="mb-1 fw-500">
-													{t("endDate")}
-												</label>
-												<input
-													type="date"
-													pattern="\d{2}\.\d{2}\.\d{4}"
-													className="form-control"
-													id="endDate"
-													value={analizeInstrumentFormFields.endDate}
-													onChange={event => {
-														setAnalizeInstrumentFormFields(values => ({
-															...values,
-															endDate: event.target.value,
-														}));
-													}}
-												/>
-											</div>
-										</Col>
-									</Row>
-									<div className="form-group mb-2">
-										{barTypes && barTypes.length ? (
-											<div>
-												<label className="mb-1 fw-500">{t("chooseBar")}*</label>
-												<ReactSelectOption
-													value={analizeInstrumentFormFields.bar}
-													isSearchable={true}
-													selectedValue={(() => {
-														let selectedItem;
-														if (lang === "ru") {
-															selectedItem = {
-																...barTypesRu.find(
-																	data =>
-																		data.name ===
-																		analizeInstrumentFormFields.bar,
-																),
-															};
-														} else {
-															selectedItem = {
-																...barTypes.find(
-																	data =>
-																		data.name ===
-																		analizeInstrumentFormFields.bar,
-																),
-															};
-														}
-														if (Object.keys(selectedItem).length) {
-															selectedItem.label = selectedItem.id;
-															selectedItem.value = selectedItem.name;
-															return selectedItem;
-														} else {
-															return { value: null, label: t("choose") };
-														}
-													})()}
-													items={
-														lang === "ru"
-															? barTypesRu.map(data => ({
-																	...data,
-																	label: data.id,
-																	value: data.name,
-															  }))
-															: barTypes.map(data => ({
-																	...data,
-																	label: data.id,
-																	value: data.name,
-															  }))
+						<>
+							<hr />
+							<div className="mb-4">
+								<Row>
+									<Col md={6}>
+										<div className="form-group mb-2">
+											<label htmlFor="startDate" className="mb-1 fw-500">
+												{t("startDate")}*
+											</label>
+											<input
+												type="date"
+												pattern="\d{2}\.\d{2}\.\d{4}"
+												className="form-control"
+												id="startDate"
+												value={analizeInstrumentFormFields.startDate}
+												onChange={event => {
+													setAnalizeInstrumentFormFields(values => ({
+														...values,
+														startDate: event.target.value,
+													}));
+												}}
+											/>
+										</div>
+									</Col>
+									<Col md={6}>
+										<div className="form-group mb-2">
+											<label htmlFor="endDate" className="mb-1 fw-500">
+												{t("endDate")}
+											</label>
+											<input
+												type="date"
+												pattern="\d{2}\.\d{2}\.\d{4}"
+												className="form-control"
+												id="endDate"
+												value={analizeInstrumentFormFields.endDate}
+												onChange={event => {
+													setAnalizeInstrumentFormFields(values => ({
+														...values,
+														endDate: event.target.value,
+													}));
+												}}
+											/>
+										</div>
+									</Col>
+								</Row>
+								<div className="form-group mb-2">
+									{barTypes && barTypes.length ? (
+										<div>
+											<label className="mb-1 fw-500">{t("chooseBar")}*</label>
+											<ReactSelectOption
+												value={analizeInstrumentFormFields.bar}
+												isSearchable={true}
+												selectedValue={(() => {
+													let selectedItem;
+													if (lang === "ru") {
+														selectedItem = {
+															...barTypesRu.find(
+																data =>
+																	data.name === analizeInstrumentFormFields.bar,
+															),
+														};
+													} else {
+														selectedItem = {
+															...barTypes.find(
+																data =>
+																	data.name === analizeInstrumentFormFields.bar,
+															),
+														};
 													}
-													onChange={item =>
-														onSelectOptionChange(
-															item,
-															setAnalizeInstrumentFormFields,
-															"bar",
-														)
+													if (Object.keys(selectedItem).length) {
+														selectedItem.label = selectedItem.id;
+														selectedItem.value = selectedItem.name;
+														return selectedItem;
+													} else {
+														return { value: null, label: t("choose") };
 													}
-												/>
-											</div>
-										) : null}
-									</div>
-									<div className="form-group mb-2">
-										<label htmlFor="changePercentage" className="mb-1 fw-500">
-											{t("changePercentage")}*
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="changePercentage"
-											value={analizeInstrumentFormFields.changePercentage}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"changePercentage",
-													100,
-												)
-											}
-										/>
-									</div>
-									<div className="form-group mb-2">
-										<label
-											htmlFor="deviationPercentage"
-											className="mb-1 fw-500">
-											{t("deviationPercentage")}*
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="deviationPercentage"
-											value={analizeInstrumentFormFields.deviationPercentage}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"deviationPercentage",
-													100,
-												)
-											}
-										/>
-									</div>
-									<div>
-										<label className="mb-1 fw-500">{t("direction")}*</label>
-										<Switch
-											isOn={analizeInstrumentFormFields?.direction}
-											handleToggle={() => {
-												setAnalizeInstrumentFormFields(prev => ({
-													...prev,
-													direction: !prev.direction,
-												}));
-											}}
-										/>
-									</div>
+												})()}
+												items={
+													lang === "ru"
+														? barTypesRu.map(data => ({
+																...data,
+																label: data.id,
+																value: data.name,
+														  }))
+														: barTypes.map(data => ({
+																...data,
+																label: data.id,
+																value: data.name,
+														  }))
+												}
+												onChange={item =>
+													onSelectOptionChange(
+														item,
+														setAnalizeInstrumentFormFields,
+														"bar",
+													)
+												}
+											/>
+										</div>
+									) : null}
 								</div>
-							</>
-						) : null}
+								<div className="form-group mb-2">
+									<label htmlFor="changePercentage" className="mb-1 fw-500">
+										{t("changePercentage")}*
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="changePercentage"
+										value={analizeInstrumentFormFields.changePercentage}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"changePercentage",
+												100,
+											)
+										}
+									/>
+								</div>
+								<div className="form-group mb-2">
+									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
+										{t("deviationPercentage")}*
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="deviationPercentage"
+										value={analizeInstrumentFormFields.deviationPercentage}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"deviationPercentage",
+												100,
+											)
+										}
+									/>
+								</div>
+								<div>
+									<label className="mb-1 fw-500">{t("direction")}*</label>
+									<Switch
+										isOn={analizeInstrumentFormFields?.direction}
+										handleToggle={() => {
+											setAnalizeInstrumentFormFields(prev => ({
+												...prev,
+												direction: !prev.direction,
+											}));
+										}}
+									/>
+								</div>
+							</div>
+						</>
 						{analysisResult && analysisResult.length ? (
 							<Table responsive striped bordered className=" mb-0">
 								<thead>

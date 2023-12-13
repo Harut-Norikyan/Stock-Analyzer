@@ -221,13 +221,10 @@ export default function Components(props) {
 											<Button
 												onClick={() => {
 													setData(null);
-													setAnalizeInstrumentFormFields({
+													setAnalizeInstrumentFormFields(prev => ({
+														...prev,
 														conId: null,
-														name: "",
-														changePercentage: "",
-														deviationPercentage: "",
-														direction: true,
-													});
+													}));
 												}}
 												variant="outline-dark">
 												<IoCloseSharp />
@@ -343,91 +340,83 @@ export default function Components(props) {
 								</tbody>
 							</Table>
 						) : null}
-
-						{analizeInstrumentFormFields.conId || itemId ? (
-							<div className="mt-3">
-								<div className="mb-4">
-									<div className="form-group mb-2">
-										<label htmlFor="changePercentage" className="mb-1 fw-500">
-											{t("desiredPercentage")}*
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="changePercentage"
-											value={analizeInstrumentFormFields.desiredPercent}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"desiredPercent",
-													100,
-												)
-											}
+						<hr />
+						<div className="mt-3">
+							<div className="mb-4">
+								<div className="form-group mb-2">
+									<label htmlFor="changePercentage" className="mb-1 fw-500">
+										{t("desiredPercentage")}*
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="changePercentage"
+										value={analizeInstrumentFormFields.desiredPercent}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"desiredPercent",
+												100,
+											)
+										}
+									/>
+								</div>
+								<div className="form-group mb-2">
+									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
+										{t("undesiredPercentage")}*
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="deviationPercentage"
+										value={analizeInstrumentFormFields.undesiredPercent}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"undesiredPercent",
+												100,
+											)
+										}
+									/>
+								</div>
+								<div className="form-group mb-2">
+									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
+										{t("price")}
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										id="deviationPercentage"
+										value={analizeInstrumentFormFields.price}
+										onChange={event =>
+											onNumberChange(
+												event,
+												setAnalizeInstrumentFormFields,
+												"price",
+											)
+										}
+									/>
+								</div>
+								<div className="form-group mb-2">
+									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
+										{t("direction")}
+									</label>
+									<div className="custom-control custom-checkbox">
+										<Switch
+											isOn={analizeInstrumentFormFields?.direction}
+											handleToggle={() => {
+												setAnalizeInstrumentFormFields(prev => ({
+													...prev,
+													direction: !prev.direction,
+												}));
+											}}
 										/>
-									</div>
-									<div className="form-group mb-2">
-										<label
-											htmlFor="deviationPercentage"
-											className="mb-1 fw-500">
-											{t("undesiredPercentage")}*
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="deviationPercentage"
-											value={analizeInstrumentFormFields.undesiredPercent}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"undesiredPercent",
-													100,
-												)
-											}
-										/>
-									</div>
-									<div className="form-group mb-2">
-										<label
-											htmlFor="deviationPercentage"
-											className="mb-1 fw-500">
-											{t("price")}
-										</label>
-										<input
-											type="number"
-											className="form-control"
-											id="deviationPercentage"
-											value={analizeInstrumentFormFields.price}
-											onChange={event =>
-												onNumberChange(
-													event,
-													setAnalizeInstrumentFormFields,
-													"price",
-												)
-											}
-										/>
-									</div>
-									<div className="form-group mb-2">
-										<label
-											htmlFor="deviationPercentage"
-											className="mb-1 fw-500">
-											{t("direction")}
-										</label>
-										<div className="custom-control custom-checkbox">
-											<Switch
-												isOn={analizeInstrumentFormFields?.direction}
-												handleToggle={() => {
-													setAnalizeInstrumentFormFields(prev => ({
-														...prev,
-														direction: !prev.direction,
-													}));
-												}}
-											/>
-										</div>
 									</div>
 								</div>
 							</div>
-						) : null}
+						</div>
 						<div className="d-flex justify-content-end mt-3">
 							<button
 								type="button"
