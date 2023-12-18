@@ -745,7 +745,22 @@ function Components(props) {
 								</div>
 							</div>
 						</>
-
+						<div className="d-flex justify-content-end mt-3">
+							<button
+								type="button"
+								className="btn btn-primary px-4"
+								disabled={
+									!analizeInstrumentFormFields.conId2 ||
+									!analizeInstrumentFormFields.conId2 ||
+									!analizeInstrumentFormFields.startDate ||
+									!analizeInstrumentFormFields.bar ||
+									typeof analizeInstrumentFormDebounced.ratio !== "number" ||
+									isLoading
+								}
+								onClick={analizeData}>
+								{t("analize")}
+							</button>
+						</div>
 						{analysisResult && analysisResult.length ? (
 							<Table responsive striped bordered className="mb-0">
 								<thead>
@@ -792,22 +807,6 @@ function Components(props) {
 								</tbody>
 							</Table>
 						) : null}
-						<div className="d-flex justify-content-end mt-3">
-							<button
-								type="button"
-								className="btn btn-primary px-4"
-								disabled={
-									!analizeInstrumentFormFields.conId2 ||
-									!analizeInstrumentFormFields.conId2 ||
-									!analizeInstrumentFormFields.startDate ||
-									!analizeInstrumentFormFields.bar ||
-									typeof analizeInstrumentFormDebounced.ratio !== "number" ||
-									isLoading
-								}
-								onClick={analizeData}>
-								{t("analize")}
-							</button>
-						</div>
 					</Col>
 				</Row>
 			</section>
