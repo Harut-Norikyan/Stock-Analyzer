@@ -186,17 +186,36 @@ export default function Components(props) {
 												{t("price")} &rarr; {fields?.price}
 											</li>
 											<li className="list-group-item">
-												{t("desiredPrice")} &rarr; {fields?.desiredPrice}
+												<span
+													dangerouslySetInnerHTML={{
+														__html: t("desiredPrice"),
+													}}
+												/>{" "}
+												&rarr; {fields?.desiredPrice}
 											</li>
 											<li className="list-group-item">
-												{t("desiredPercentage")} &rarr; {fields?.desiredPercent}
+												<span
+													dangerouslySetInnerHTML={{
+														__html: t("desiredPercentage"),
+													}}
+												/>{" "}
+												&rarr; {fields?.desiredPercent}
 											</li>
 											<li className="list-group-item">
-												{t("undesiredPrice")} &rarr; {fields?.undesiredPrice}
+												<span
+													dangerouslySetInnerHTML={{
+														__html: t("undesiredPrice"),
+													}}
+												/>{" "}
+												&rarr; {fields?.undesiredPrice}
 											</li>
 											<li className="list-group-item">
-												{t("undesiredPercentage")} &rarr;{" "}
-												{fields?.undesiredPercent}
+												<span
+													dangerouslySetInnerHTML={{
+														__html: t("undesiredPercentage"),
+													}}
+												/>{" "}
+												&rarr; {fields?.undesiredPercent}
 											</li>
 											<li className="list-group-item">
 												{t("date")} &rarr; {fields?.priceDate}
@@ -344,9 +363,12 @@ export default function Components(props) {
 						<div className="mt-3">
 							<div className="mb-4">
 								<div className="form-group mb-2">
-									<label htmlFor="changePercentage" className="mb-1 fw-500">
-										{t("desiredPercentage")}*
-									</label>
+									<label
+										htmlFor="changePercentage"
+										dangerouslySetInnerHTML={{
+											__html: `${t("changePercentage")}*`,
+										}}
+										className="mb-1 fw-500"></label>
 									<input
 										type="number"
 										className="form-control"
@@ -363,9 +385,12 @@ export default function Components(props) {
 									/>
 								</div>
 								<div className="form-group mb-2">
-									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
-										{t("undesiredPercentage")}*
-									</label>
+									<label
+										htmlFor="deviationPercentage"
+										dangerouslySetInnerHTML={{
+											__html: `${t("deviationPercentage")}*`,
+										}}
+										className="mb-1 fw-500"></label>
 									<input
 										type="number"
 										className="form-control"

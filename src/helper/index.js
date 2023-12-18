@@ -20,11 +20,7 @@ export const convertDateFormat = (dateStr, divisionOfWords = false) => {
 	return formattedDate;
 };
 export const onNumberChange = (event, cb, name, maxValue = Infinity) => {
-	if (
-		event.target.value.includes("e") ||
-		event.target.value.includes("-") ||
-		event.target.value === "0"
-	) {
+	if (event.target.value.includes("e") || event.target.value.includes("-")) {
 		cb(prevFields => ({
 			...prevFields,
 			[name]: "",
@@ -33,9 +29,7 @@ export const onNumberChange = (event, cb, name, maxValue = Infinity) => {
 	}
 	if (
 		event.target.value === "" ||
-		(typeof +event.target.value === "number" &&
-			Number(event.target.value) &&
-			+event.target.value <= maxValue)
+		(typeof +event.target.value === "number" && +event.target.value <= maxValue)
 	) {
 		cb(prevFields => ({
 			...prevFields,

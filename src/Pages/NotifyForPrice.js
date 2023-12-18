@@ -95,13 +95,33 @@ export default function Components(props) {
 									<th className="nowrap">#</th>
 									<th className="nowrap">{t("companyName")}</th>
 									<th className="nowrap">{t("conid")}</th>
-									<th className="nowrap">{t("desiredPercentage")}</th>
-									<th className="nowrap">{t("desiredPrice")}</th>
-									<th className="nowrap">{t("undesiredPercentage")}</th>
-									<th className="nowrap">{t("undesiredPrice")}</th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("desiredPercentage"),
+										}}></th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("desiredPrice"),
+										}}></th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("undesiredPercentage"),
+										}}></th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("undesiredPrice"),
+										}}></th>
 									<th className="nowrap">{t("direction")}</th>
 									<th className="nowrap">{t("price")}</th>
-									<th className="nowrap">{t("priceDate")}</th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("priceDate"),
+										}}></th>
 									<th className="nowrap">{t("actions")}</th>
 								</tr>
 							</thead>

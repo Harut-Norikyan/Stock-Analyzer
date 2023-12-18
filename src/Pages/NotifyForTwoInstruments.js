@@ -98,9 +98,17 @@ function Components(props) {
 									<th className="nowrap">{t("companyName")} 2</th>
 									<th className="nowrap">{t("conid")} 2</th>
 									<th className="nowrap">{t("startDate")} 1</th>
-									<th className="nowrap">{t("startPrice")} 1</th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: `${t("startPrice")} 1`,
+										}}></th>
 									<th className="nowrap">{t("startDate")} 2</th>
-									<th className="nowrap">{t("startPrice")} 1</th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: `${t("startPrice")} 2`,
+										}}></th>
 									<th className="nowrap">{t("ratio")}</th>
 									<th className="nowrap">{t("actions")}</th>
 								</tr>

@@ -555,9 +555,12 @@ function Components(props) {
 									) : null}
 								</div>
 								<div className="form-group mb-2">
-									<label htmlFor="changePercentage" className="mb-1 fw-500">
-										{t("changePercentage")}*
-									</label>
+									<label
+										htmlFor="changePercentage"
+										dangerouslySetInnerHTML={{
+											__html: `${t("changePercentage")}*`,
+										}}
+										className="mb-1 fw-500"></label>
 									<input
 										type="number"
 										className="form-control"
@@ -574,9 +577,12 @@ function Components(props) {
 									/>
 								</div>
 								<div className="form-group mb-2">
-									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
-										{t("deviationPercentage")}*
-									</label>
+									<label
+										htmlFor="deviationPercentage"
+										dangerouslySetInnerHTML={{
+											__html: `${t("deviationPercentage")}*`,
+										}}
+										className="mb-1 fw-500"></label>
 									<input
 										type="number"
 										className="form-control"
@@ -612,7 +618,11 @@ function Components(props) {
 									<tr className="cursor-default">
 										<th className="nowrap">{t("startingPrice")}</th>
 										<th className="nowrap">{t("startingDateTime")}</th>
-										<th className="nowrap">{t("changedPrice")}</th>
+										<th
+											className="nowrap"
+											dangerouslySetInnerHTML={{
+												__html: t("changedPrice"),
+											}}></th>
 										<th className="nowrap">{t("changedDateTime")}</th>
 										<th className="nowrap">{t("сhangedPercent")}</th>
 										<th className="nowrap">{t("deviationedPrice")}</th>

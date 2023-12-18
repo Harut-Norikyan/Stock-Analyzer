@@ -308,9 +308,12 @@ export default function Components(props) {
 						<div className="mt-3">
 							<div className="mb-4">
 								<div className="form-group mb-2">
-									<label htmlFor="changePercentage" className="mb-1 fw-500">
-										{t("changePercentage")}*
-									</label>
+									<label
+										htmlFor="changePercentage"
+										dangerouslySetInnerHTML={{
+											__html: t("changePercentage"),
+										}}
+										className="mb-1 fw-500"></label>
 									<input
 										type="number"
 										className="form-control"
@@ -327,9 +330,12 @@ export default function Components(props) {
 									/>
 								</div>
 								<div className="form-group mb-2">
-									<label htmlFor="deviationPercentage" className="mb-1 fw-500">
-										{t("deviationPercentage")}*
-									</label>
+									<label
+										htmlFor="deviationPercentage"
+										dangerouslySetInnerHTML={{
+											__html: `${t("deviationPercentage")} *`,
+										}}
+										className="mb-1 fw-500"></label>
 									<input
 										type="number"
 										className="form-control"

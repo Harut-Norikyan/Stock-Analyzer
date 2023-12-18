@@ -64,10 +64,20 @@ export default function Components(props) {
 									{t("conid")} &rarr; {data.conId}
 								</li>
 								<li className="list-group-item">
-									{t("deviationPercentage")} &rarr; {data.deviationPercentage}
+									<span
+										dangerouslySetInnerHTML={{
+											__html: t("deviationPercentage"),
+										}}
+									/>{" "}
+									&rarr; {data.deviationPercentage}
 								</li>
 								<li className="list-group-item">
-									{t("changePercentage")} &rarr; {data.changePercentage}
+									<span
+										dangerouslySetInnerHTML={{
+											__html: t("changePercentage"),
+										}}
+									/>{" "}
+									&rarr; {data.changePercentage}
 								</li>
 								<li className="list-group-item">
 									{t("direction")} &rarr;
@@ -78,7 +88,12 @@ export default function Components(props) {
 									)}
 								</li>
 								<li className="list-group-item">
-									{t("startPrice")} &rarr; {data.startPrice}
+									<span
+										dangerouslySetInnerHTML={{
+											__html: t("startPrice"),
+										}}
+									/>{" "}
+									&rarr; {data.startPrice}
 								</li>
 								<li className="list-group-item">
 									{t("startDate")} &rarr;{" "}
@@ -153,79 +168,3 @@ const loader = async ({ params: { id } }) => {
 	}
 };
 export const NotifyForOneInstrumentByid = Object.assign(Components, { loader });
-
-// <div className="mt-2">
-// 	<b>{t("notifyForOneInstrumentItem")}</b>
-// 	{data.oneInstrumentNotifications && data.oneInstrumentNotifications.length ? (
-// 		data.oneInstrumentNotifications.map((item, index) => {
-// 			return (
-// 				<React.Fragment key={index}>
-// 					<h5>
-// 						<b># {index + 1}</b>
-// 					</h5>
-// 					<Card className="card ">
-// 						<ul className="list-group not_rounded">
-// 							<li className="list-group-item">
-// 								<div className="d-flex gap-2">
-// 									<span style={{ flex: 1 }} className="border-end">
-// 										{t("startPrice")} &rarr; {item.startPrice}
-// 									</span>
-// 									<span style={{ flex: 1 }}>
-// 										{t("desiredChangePrice")} &rarr;
-// 										{item.desiredChangePrice}
-// 									</span>
-// 								</div>
-// 							</li>
-// 							<li className="list-group-item">
-// 								<div className="d-flex gap-2">
-// 									<span style={{ flex: 1 }} className="border-end">
-// 										{t("desiredDeviationPrice")} &rarr;
-// 										{item.desiredDeviationPrice}
-// 									</span>
-// 									<span style={{ flex: 1 }}>
-// 										{t("actualChangePrice")} &rarr;
-// 										{item.actualChangePrice}
-// 									</span>
-// 								</div>
-// 							</li>
-// 							<li className="list-group-item">
-// 								<div className="d-flex gap-2">
-// 									<span style={{ flex: 1 }} className="border-end">
-// 										{t("actualChangePercentage")} &rarr;{" "}
-// 										{item.actualChangePercentage}
-// 									</span>
-// 									<span style={{ flex: 1 }}>
-// 										{t("actualDeviationPrice")} &rarr;{" "}
-// 										{item.actualDeviationPrice}
-// 									</span>
-// 								</div>
-// 							</li>
-// 							<li className="list-group-item">
-// 								<div className="d-flex gap-2">
-// 									<span style={{ flex: 1 }} className="border-end">
-// 										{t("actualDeviationPercentage")} &rarr;
-// 										{item.actualDeviationPercentage}
-// 									</span>
-// 									<span style={{ flex: 1 }}>
-// 										{t("changeDate")} &rarr;{" "}
-// 										{convertDateFormat(item.changeDate)}
-// 									</span>
-// 								</div>
-// 							</li>
-// 							<li className="list-group-item">
-// 								{t("deviationDate")} &rarr;{" "}
-// 								{convertDateFormat(item.deviationDate)}
-// 							</li>
-// 						</ul>
-// 					</Card>
-// 				</React.Fragment>
-// 			);
-// 		})
-// 	) : (
-// 		<div className="text-center mt-3">
-// 			<p>
-// 				<b>{t("notNotIfy")}</b>
-// 			</p>
-// 		</div>
-// 	)}
-// </div>;

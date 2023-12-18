@@ -95,10 +95,24 @@ export default function Components(props) {
 								<tr className="cursor-default">
 									<th className="nowrap">#</th>
 									<th className="nowrap">{t("companyName")}</th>
-									<th className="nowrap">{t("deviationPercentage")}</th>
-									<th className="nowrap">{t("changePercentage")}</th>
+									<th className="nowrap">{t("conid")}</th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("startPrice"),
+										}}></th>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("changePercentage"),
+										}}
+									/>
+									<th
+										className="nowrap"
+										dangerouslySetInnerHTML={{
+											__html: t("deviationPercentage"),
+										}}></th>
 									<th className="nowrap">{t("direction")}</th>
-									<th className="nowrap">{t("startPrice")}</th>
 									<th className="nowrap">{t("startDate")}</th>
 									<th className="nowrap">{t("actions")}</th>
 								</tr>
@@ -131,7 +145,7 @@ export default function Components(props) {
 											</td>
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
-													{item.deviationPercentage}
+													{item.startPrice}
 												</p>
 											</td>
 											<td className="fw-500">
@@ -139,6 +153,12 @@ export default function Components(props) {
 													{item.changePercentage}
 												</p>
 											</td>
+											<td className="fw-500">
+												<p className="word-break-break-word max-line-3 m-0">
+													{item.deviationPercentage}
+												</p>
+											</td>
+
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0 d-flex justify-content-around button_container">
 													{item.direction ? (
@@ -148,11 +168,7 @@ export default function Components(props) {
 													)}
 												</p>
 											</td>
-											<td className="fw-500">
-												<p className="word-break-break-word max-line-3 m-0">
-													{item.startPrice}
-												</p>
-											</td>
+
 											<td className="fw-500">
 												<p className="word-break-break-word max-line-3 m-0">
 													{convertDateFormat(item.startPriceDate)}

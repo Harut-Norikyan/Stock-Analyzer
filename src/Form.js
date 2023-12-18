@@ -17,13 +17,13 @@ export default function Form() {
 	}, []);
 
 	const onNumberChange = (event, cb, maxValue = null) => {
-		if (event.target.value.includes("e") || event.target.value.includes(".")) {
+		if (event.target.value.includes("e")) {
 			return false;
 		}
 		if (
 			event.target.value === "" ||
 			(typeof +event.target.value === "number" &&
-				+event.target.value > 0 &&
+				+event.target.value >= 0 &&
 				+event.target.value <= maxValue)
 		) {
 			cb(event.target.value);

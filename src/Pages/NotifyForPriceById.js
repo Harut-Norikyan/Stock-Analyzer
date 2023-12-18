@@ -35,16 +35,36 @@ export default function Components(props) {
 							<ul className="list-group not_rounded">
 								<li className="list-group-item">Price &rarr; {data.price}</li>
 								<li className="list-group-item">
-									{t("desiredPrice")} &rarr; {data.desiredPrice}
+									<span
+										dangerouslySetInnerHTML={{
+											__html: t("desiredPrice"),
+										}}
+									/>{" "}
+									&rarr; {data.desiredPrice}
 								</li>
 								<li className="list-group-item">
-									{t("desiredPercentage")} &rarr; {data.desiredPercent}
+									<span
+										dangerouslySetInnerHTML={{
+											__html: t("desiredPercentage"),
+										}}
+									/>{" "}
+									&rarr; {data.desiredPercent}
 								</li>
 								<li className="list-group-item">
-									{t("undesiredPrice")} &rarr; {data.undesiredPrice}
+									<span
+										dangerouslySetInnerHTML={{
+											__html: t("undesiredPrice"),
+										}}
+									/>{" "}
+									&rarr; {data.undesiredPrice}
 								</li>
 								<li className="list-group-item">
-									{t("undesiredPercentage")} &rarr; {data.undesiredPercent}
+									<span
+										dangerouslySetInnerHTML={{
+											__html: t("undesiredPercentage"),
+										}}
+									/>{" "}
+									&rarr; {data.undesiredPercent}
 								</li>
 								<li className="list-group-item">
 									{t("date")} &rarr; {data.priceDate}
@@ -63,7 +83,11 @@ export default function Components(props) {
 										<tr className="cursor-default">
 											<th className="nowrap">#</th>
 											<th className="nowrap">{t("actualChangePrice")}</th>
-											<th className="nowrap">{t("actualChangePercentage")}</th>
+											<th
+												className="nowrap"
+												dangerouslySetInnerHTML={{
+													__html: t("changePercentage"),
+												}}></th>
 											<th className="nowrap">{t("changeDate")}</th>
 										</tr>
 									</thead>
@@ -78,9 +102,11 @@ export default function Components(props) {
 															</p>
 														</td>
 														<td className="fw-500">
-															<p className="word-break-break-word max-line-3 m-0">
-																{item.actualChangePrice}
-															</p>
+															<p
+																className="word-break-break-word max-line-3 m-0"
+																dangerouslySetInnerHTML={{
+																	__html: t("actualChangePrice"),
+																}}></p>
 														</td>
 														<td className="fw-500">
 															<p className="word-break-break-word max-line-3 m-0">
