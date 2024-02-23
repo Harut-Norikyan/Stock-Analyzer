@@ -400,7 +400,7 @@ function Components(props) {
 															});
 														setSearchFormFields(prevFields => ({
 															...prevFields,
-															// symbol: "",
+															symbol: "",
 														}));
 														setAnalizeInstrumentFormFields(prevFields => ({
 															...prevFields,
@@ -573,6 +573,10 @@ function Components(props) {
 														setAnalizeInstrumentFormFields(prevFields => ({
 															...prevFields,
 															conId2: item.conId,
+														}));
+														setSearchFormFields(prevFields => ({
+															...prevFields,
+															symbol: "",
 														}));
 													}}>
 													<td className="fw-500 w-25">
