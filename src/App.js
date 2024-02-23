@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch } from "react-redux";
 import { setIsLoading } from "./redux/actions/itemActions";
@@ -16,19 +16,24 @@ export default function App() {
 	const navigate = useNavigate();
 	const { lang } = useParams();
 	const defaultLeng = "ru";
+	const { pathname } = useLocation();
 	useEffect(() => {
 		const language = localStorage.getItem("i18nextLng");
 		if (!language) {
 			i18n.changeLanguage(defaultLeng);
+			const path = pathname.split("/").slice(2).join("/");
+
 			// localStorage.setItem("i18nextLng", defaultLeng);
-			navigate(`/${defaultLeng}`);
+			navigate(`/${defaultLeng}/${path}`);
 		}
 	}, [navigate]);
 	useEffect(() => {
 		if (!languages.includes(lang)) {
 			const language = localStorage.getItem("i18nextLng");
+			const path = pathname.split("/").slice(2).join("/");
+
 			i18n.changeLanguage(language);
-			navigate(`/${language}`);
+			navigate(`/${defaultLeng}/${path}`);
 		}
 	}, [lang]);
 	useEffect(() => {
@@ -40,7 +45,7 @@ export default function App() {
 			setIsShowWaitingModal(true);
 			dispatch(setIsLoading(true));
 			const response = await Api.checkUserIsAuth();
-			if (typeof response.data === "boolean") {
+			if (typeof response.data === "boolean" || !response.data) {
 				if (!response.data)
 					window.open(
 						"https://auth.stockanalyzer.online",

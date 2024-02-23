@@ -143,6 +143,9 @@ export class Api {
 	static getContractWithPrice(data) {
 		return api.post(`/stock/GetContractWithPrice`, data);
 	}
+	static GetContractsWithLastPricesAndRatios(data) {
+		return api.post(`/stock/getContractsWithLastPricesAndRatios`, data);
+	}
 	static getAllPriceChangeNotifiers() {
 		return api.get(`/stock/GetAllPriceChangeNotifiers`);
 	}
@@ -157,6 +160,9 @@ export class Api {
 	}
 	static deletePriceChangeNotifier(id) {
 		return api.delete(`stock/DeletePriceChangeNotifier/${id}`);
+	}
+	static getFindTwoInstrumentsNotifier(id) {
+		return api.get(`stock/FindTwoInstrumentsNotifier/${id}`);
 	}
 }
 export default Api;

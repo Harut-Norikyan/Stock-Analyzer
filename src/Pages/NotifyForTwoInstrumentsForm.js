@@ -19,6 +19,7 @@ function Components(props) {
 	const { secTypes, fields } = useLoaderData();
 	const [firstData, setFirstdata] = useState(null);
 	const [secondData, setSecondData] = useState(null);
+	const [pricesAndRatios, setPricesAndRatios] = useState(null);
 	const [searchFormFields, setSearchFormFields] = useState({
 		secType: "",
 		name: false,
@@ -41,6 +42,45 @@ function Components(props) {
 	const [securities, setSecurities] = useState([]);
 	const [_securities, _setSecurities] = useState([]);
 	const [searchFormDebounced] = useDebounce(searchFormFields, 500);
+
+	useEffect(() => {
+		if (firstData && secondData) {
+			const data = {
+				contract1: {
+					companyName: firstData.companyName || "",
+					conId: firstData.conId || "",
+					price: firstData.price || "",
+					priceDate: firstData.priceDate || "",
+				},
+				contract2: {
+					companyName: secondData.companyName || "",
+					conId: secondData.conId || "",
+					price: secondData.price || "",
+					priceDate: secondData.priceDate || "",
+				},
+			};
+			getContractsWithLastPricesAndRatios(data);
+		}
+	}, [firstData, secondData]);
+
+	const getContractsWithLastPricesAndRatios = data => {
+		if (!data || data.contract1.price || data.contract2.price) return;
+		dispatch(setIsLoading(true));
+		Api.GetContractsWithLastPricesAndRatios(data)
+			.then(response => {
+				if (response && response.data) {
+					setPricesAndRatios(response.data);
+				} else {
+					setSecurities(null);
+				}
+			})
+			.catch(error => {
+				console.error(error.message || error.respmess || error);
+			})
+			.finally(() => {
+				dispatch(setIsLoading(true));
+			});
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -345,6 +385,21 @@ function Components(props) {
 												conId1: prev.conId2,
 												name1: prev.name2,
 											}));
+											const data = {
+												contract1: {
+													companyName: secondData.companyName || "",
+													conId: secondData.conId || "",
+													price: secondData.price || "",
+													priceDate: secondData.priceDate || "",
+												},
+												contract2: {
+													companyName: firstData.companyName || "",
+													conId: firstData.conId || "",
+													price: firstData.price || "",
+													priceDate: firstData.priceDate || "",
+												},
+											};
+											getContractsWithLastPricesAndRatios(data);
 										}}>
 										<Arrow style={{ width: 40, height: 40 }} />
 									</Button>
@@ -386,6 +441,11 @@ function Components(props) {
 									</Card>
 								</Col>
 							</Row>
+						)}
+						{pricesAndRatios && pricesAndRatios.computedRatio && (
+							<h5>
+								{"Computed Ratio"} &rarr; {pricesAndRatios.computedRatio}
+							</h5>
 						)}
 						{_securities && _securities.length && !secondData && !itemId ? (
 							<div className="mt-3">
@@ -495,7 +555,7 @@ function Components(props) {
 						<>
 							<hr />
 							<div className="mb-4">
-								{!itemId ? (
+								{/* {!itemId ? (
 									<Row>
 										<Col md={6}>
 											<div className="form-group mb-2">
@@ -538,7 +598,7 @@ function Components(props) {
 											</div>
 										</Col>
 									</Row>
-								) : null}
+								) : null} */}
 								<div className="form-group mb-2">
 									<label htmlFor="ratio" className="mb-1 fw-500">
 										{t("ratio")}*

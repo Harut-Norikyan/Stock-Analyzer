@@ -1,13 +1,38 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Row, Col, Table, Card } from "react-bootstrap";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Api from "../Api";
-import { newPath } from "../helper";
+import { convertDateFormat, newPath } from "../helper";
 
 function Components(props) {
 	const { t } = useTranslation();
 	const data = useLoaderData();
+	const tableData = useMemo(() => {
+		if (
+			data.TwoInstrumentsNotifications &&
+			data.TwoInstrumentsNotifications.length
+		) {
+			const a = data.oneInstrumentNotifications.reduce((acum, el) => {
+				Object.keys(el).forEach(item => {
+					if (acum.hasOwnProperty(item)) {
+						acum = {
+							...acum,
+							[item]: [...acum[item], el[item]],
+						};
+					} else {
+						acum = {
+							...acum,
+							[item]: [el[item]],
+						};
+					}
+				});
+				return acum;
+			}, {});
+			return a;
+		}
+		return {};
+	}, [data]);
 
 	return (
 		<section style={{ marginTop: "90px", marginBottom: "80px" }}>
@@ -69,6 +94,56 @@ function Components(props) {
 								</li>
 							</ul>
 						</Card>
+					</div>
+					<div className="mt-2">
+						<b>{t("notifyForOneInstrumentItem")}</b>
+						{data.oneInstrumentNotifications &&
+						Object.keys(tableData).length ? (
+							<Table responsive striped bordered className="mt-2 mb-0">
+								<thead>
+									<tr className="cursor-default">
+										<th className="nowrap">#</th>
+										{tableData["dateTime"].map((_, i) => (
+											<th key={i} className="nowrap">
+												{i + 1}
+											</th>
+										))}
+									</tr>
+								</thead>
+								<tbody>
+									{Object.keys(tableData).map((item, index) => {
+										return (
+											<React.Fragment key={index}>
+												<tr key={index}>
+													<td className="fw-500">
+														<p className="word-break-break-word max-line-3 m-0">
+															<b>{item === "dateTime" ? t("date") : t(item)}</b>
+														</p>
+													</td>
+													{tableData[item].map((element, i) => {
+														return (
+															<td key={i} className="fw-500">
+																<p className="word-break-break-word max-line-3 m-0">
+																	{item === "dateTime"
+																		? convertDateFormat(element, true)
+																		: element}
+																</p>
+															</td>
+														);
+													})}
+												</tr>
+											</React.Fragment>
+										);
+									})}
+								</tbody>
+							</Table>
+						) : (
+							<div className="text-center mt-3">
+								<p>
+									<b>{t("notNotIfy")}</b>
+								</p>
+							</div>
+						)}
 					</div>
 				</Col>
 			</Row>

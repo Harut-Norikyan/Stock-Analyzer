@@ -170,12 +170,51 @@ function Components(props) {
 	const [analysisResult, setAnalysisResult] = useState([]);
 	const [firstData, setFirstdata] = useState(null);
 	const [secondData, setSecondData] = useState(null);
+	const [pricesAndRatios, setPricesAndRatios] = useState(null);
 
 	const [searchFormDebounced] = useDebounce(searchFormFields, 500);
 	const [analizeInstrumentFormDebounced] = useDebounce(
 		analizeInstrumentFormFields,
 		500,
 	);
+	useEffect(() => {
+		if (firstData && secondData) {
+			const data = {
+				contract1: {
+					companyName: firstData.companyName || "",
+					conId: firstData.conId || "",
+					price: firstData.price || "",
+					priceDate: firstData.priceDate || "",
+				},
+				contract2: {
+					companyName: secondData.companyName || "",
+					conId: secondData.conId || "",
+					price: secondData.price || "",
+					priceDate: secondData.priceDate || "",
+				},
+			};
+			getContractsWithLastPricesAndRatios(data);
+		}
+	}, [firstData, secondData]);
+
+	const getContractsWithLastPricesAndRatios = data => {
+		if (!data) return;
+		dispatch(setIsLoading(true));
+		Api.GetContractsWithLastPricesAndRatios(data)
+			.then(response => {
+				if (response && response.data) {
+					setPricesAndRatios(response.data);
+				} else {
+					setSecurities(null);
+				}
+			})
+			.catch(error => {
+				console.error(error.message || error.respmess || error);
+			})
+			.finally(() => {
+				dispatch(setIsLoading(true));
+			});
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -380,6 +419,7 @@ function Components(props) {
 													className="cursor-pointer"
 													onClick={async () => {
 														dispatch(setIsLoading(true));
+
 														const data = {
 															conId: item.conId,
 															companyName: item.companyName,
@@ -474,14 +514,6 @@ function Components(props) {
 											const cloneSecondData = secondData;
 											const cloneSecurities = securities;
 											const _cloneSecurities = _securities;
-											console.log(
-												cloneFirstData,
-												"firstData",
-												cloneSecondData,
-												"secondData",
-												cloneSecurities,
-												_cloneSecurities,
-											);
 											setSecurities(_cloneSecurities);
 											_setSecurities(cloneSecurities);
 											setFirstdata(cloneSecondData);
@@ -531,6 +563,11 @@ function Components(props) {
 									</Card>
 								</Col>
 							</Row>
+						)}
+						{pricesAndRatios && pricesAndRatios.computedRatio && (
+							<h5>
+								{"Computed Ratio"} &rarr; {pricesAndRatios.computedRatio}
+							</h5>
 						)}
 						{_securities && _securities.length && !secondData ? (
 							<div className="mt-3">

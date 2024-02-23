@@ -10,6 +10,7 @@ import { DowenTable, UpTable } from "../assets";
 export default function Components(props) {
 	const { t } = useTranslation();
 	const data = useLoaderData();
+
 	const tableData = useMemo(() => {
 		if (
 			data.oneInstrumentNotifications &&
@@ -34,7 +35,8 @@ export default function Components(props) {
 			return a;
 		}
 		return {};
-	});
+	}, [data]);
+
 	return (
 		<>
 			<section style={{ marginTop: "90px", marginBottom: "80px" }}>
