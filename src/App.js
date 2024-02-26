@@ -13,6 +13,7 @@ export default function App() {
 	const { t, i18n } = useTranslation();
 	const dispatch = useDispatch();
 	const [isShowWaitingModal, setIsShowWaitingModal] = useState(false);
+	const [checkAuth, setCheckAuth] = useState(false);
 	const navigate = useNavigate();
 	const { lang } = useParams();
 	const defaultLeng = "ru";
@@ -39,27 +40,30 @@ export default function App() {
 	useEffect(() => {
 		checkUserAuth();
 	}, []);
-
+	console.log(checkAuth);
 	const checkUserAuth = async () => {
-		try {
-			setIsShowWaitingModal(true);
-			dispatch(setIsLoading(true));
-			const response = await Api.checkUserIsAuth();
-			if (typeof response.data === "boolean" || !response.data) {
-				if (!response.data)
-					window.open(
-						"https://auth.stockanalyzer.online",
-						"",
-						`width=${500},height=${700}`,
-					);
-				else {
-					setIsShowWaitingModal(false);
+		if (!checkAuth) {
+			try {
+				setIsShowWaitingModal(true);
+				dispatch(setIsLoading(true));
+				const response = await Api.checkUserIsAuth();
+				if (typeof response.data === "boolean" || !response.data) {
+					if (!response.data)
+						window.open(
+							"https://auth.stockanalyzer.online",
+							"",
+							`width=${500},height=${700}`,
+						);
+					else {
+						setCheckAuth(true);
+						setIsShowWaitingModal(false);
+					}
 				}
+			} catch (error) {
+				console.error(error);
+			} finally {
+				dispatch(setIsLoading(false));
 			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			dispatch(setIsLoading(false));
 		}
 	};
 	return (

@@ -198,7 +198,7 @@ function Components(props) {
 	}, [firstData, secondData]);
 
 	const getContractsWithLastPricesAndRatios = data => {
-		if (!data) return;
+		if (!data || (!data.contract1.price && !data.contract1.price)) return;
 		dispatch(setIsLoading(true));
 		Api.GetContractsWithLastPricesAndRatios(data)
 			.then(response => {
@@ -212,7 +212,7 @@ function Components(props) {
 				console.error(error.message || error.respmess || error);
 			})
 			.finally(() => {
-				dispatch(setIsLoading(true));
+				dispatch(setIsLoading(false));
 			});
 	};
 
@@ -564,9 +564,9 @@ function Components(props) {
 								</Col>
 							</Row>
 						)}
-						{pricesAndRatios && pricesAndRatios.computedRatio && (
-							<h5>
-								{"Computed Ratio"} &rarr; {pricesAndRatios.computedRatio}
+						{pricesAndRatios && pricesAndRatios && (
+							<h5 className="my-3">
+								{t("computedRatio")} &rarr; {pricesAndRatios?.computedRatio}
 							</h5>
 						)}
 						{_securities && _securities.length && !secondData ? (

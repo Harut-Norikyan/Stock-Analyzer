@@ -10,10 +10,10 @@ function Components(props) {
 	const data = useLoaderData();
 	const tableData = useMemo(() => {
 		if (
-			data.TwoInstrumentsNotifications &&
-			data.TwoInstrumentsNotifications.length
+			data.twoInstrumentsNotifications &&
+			data.twoInstrumentsNotifications.length
 		) {
-			const a = data.oneInstrumentNotifications.reduce((acum, el) => {
+			const a = data.twoInstrumentsNotifications.reduce((acum, el) => {
 				Object.keys(el).forEach(item => {
 					if (acum.hasOwnProperty(item)) {
 						acum = {
@@ -97,7 +97,7 @@ function Components(props) {
 					</div>
 					<div className="mt-2">
 						<b>{t("notifyForOneInstrumentItem")}</b>
-						{data.oneInstrumentNotifications &&
+						{data.twoInstrumentsNotifications &&
 						Object.keys(tableData).length ? (
 							<Table responsive striped bordered className="mt-2 mb-0">
 								<thead>
